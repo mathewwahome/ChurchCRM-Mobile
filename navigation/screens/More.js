@@ -5,7 +5,7 @@ export default function More({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => alert("This is More screen")}
         style={{ fontSize: 26, fontWeight: "bold" }}
       >
         More
