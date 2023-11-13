@@ -29,11 +29,11 @@ export default function MainContainer() {
             if (rn === Home) {
               iconName = focused ? "home" : "home-outline";
             } else if (rn === Sermons) {
-              iconName = focused ? "musical-notes" : "musical-notes-outline";
+              iconName = focused ? "list" : "list-outline";
             } else if (rn === notes) {
               iconName = focused ? "document-text" : "document-text-outline";
             } else if (rn === more) {
-              iconName = focused ? "list" : "list-outline";
+              iconName = focused ? "ellipsis-horizontal" : "ellipsis-horizontal-outline";
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
