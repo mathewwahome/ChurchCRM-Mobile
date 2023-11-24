@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { SafeAreaView, TextInput, TouchableOpacity, StyleSheet, Image, Text, Button, ScrollView, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
+
 export default function LoginScreen() {
     const styles = StyleSheet.create({
         img_view: {
@@ -60,6 +62,14 @@ export default function LoginScreen() {
         setShowPassword(!showPassword);
     };
 
+    const navigation = useNavigation();
+
+
+
+
+    const handleMain = () => {
+        navigation.navigate('MainContainer');
+    };
     return (
         <View style={{ padding: 20, }}>
             <ScrollView>
@@ -95,7 +105,7 @@ export default function LoginScreen() {
                             </TouchableOpacity>
                         </View>
 
-                        <Button style={{ backgroundColor: 'lightblue',  marginTop: 30, borderRadius: 30, }} title="Login"/>
+                        <Button onPress={handleMain} style={{ backgroundColor: 'lightblue',  marginTop: 30, borderRadius: 30, }} title="Login"/>
 
                         <Text style={{ color: 'blue', fontWeight: '900', fontSize: 18, alignSelf: 'center', marginTop: 30, }}>Forgot password?</Text>
                     </SafeAreaView>

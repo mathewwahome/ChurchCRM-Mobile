@@ -10,13 +10,15 @@ const Stack = createStackNavigator();
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="LandingScreen">
-        <Stack.Screen name="LandingScreen" component={LandingScreen} />
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        <Stack.Screen name="SignupScreen" component={SignupScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <Stack.Navigator initialRouteName="LandingScreen">
+    //     <Stack.Screen name="LandingScreen" component={LandingScreen} />
+    //     <Stack.Screen name="LoginScreen" component={LoginScreen} />
+    //     <Stack.Screen name="SignupScreen" component={SignupScreen} />
+    //     <Stack.Screen name="MainContainer" component={MainContainer} /> 
+    //   </Stack.Navigator>
+    // </NavigationContainer>  
+    <MainContainer />
   )
 }
 
