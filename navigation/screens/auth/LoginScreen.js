@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { SafeAreaView, TextInput, TouchableOpacity, StyleSheet, Image, Text, Button, ScrollView, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
+
 export default function LoginScreen() {
     const styles = StyleSheet.create({
         img_view: {
@@ -34,7 +36,7 @@ export default function LoginScreen() {
             backgroundColor: 'gray',
             borderRadius: 5,
             padding: 10,
-            marginTop:20,
+            marginTop: 20,
         },
         input: {
             flex: 1,
@@ -59,6 +61,16 @@ export default function LoginScreen() {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+    const navigation = useNavigation();
+    const handleMain = () => {
+        navigation.navigate('MainContainer');
+    };
+    const ProfileScreen = () => {
+        navigation.navigate('ProfileScreen');
+    };
+    const SettingScreen = () => {
+        navigation.navigate('SettingScreen');
+    };
 
     return (
         <View style={{ padding: 20, }}>
@@ -76,7 +88,7 @@ export default function LoginScreen() {
                             <TextInput
                                 style={styles.input}
                                 placeholder="Email"
-                               value={email}
+                                value={email}
                                 onChangeText={(text) => setEmail(text)}
                             />
                         </View>
@@ -95,14 +107,13 @@ export default function LoginScreen() {
                             </TouchableOpacity>
                         </View>
 
-                        <Button style={{ backgroundColor: 'lightblue',  marginTop: 30, borderRadius: 30, }} title="Login"/>
+                        <Button onPress={handleMain} style={{ backgroundColor: 'lightblue', marginTop: 30, borderRadius: 30, }} title="Login" />
 
                         <Text style={{ color: 'blue', fontWeight: '900', fontSize: 18, alignSelf: 'center', marginTop: 30, }}>Forgot password?</Text>
+                        <Text onPress={ProfileScreen}>ProfileScreen</Text>
+                        <Text style={{ marginTop: 20, }} onPress={SettingScreen}>SettingScreen</Text>
                     </SafeAreaView>
-
                 </View>
-
-
             </ScrollView>
         </View>
     );
