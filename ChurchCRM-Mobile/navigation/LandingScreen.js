@@ -29,7 +29,7 @@ export default function LandingScreen() {
         img_view: {
             flex: 1,
             flexDirection: 'row',
-            justifyContent: 'flex-end',
+            justifyContent: 'center',
             alignItems: 'center'
         },
         img: {

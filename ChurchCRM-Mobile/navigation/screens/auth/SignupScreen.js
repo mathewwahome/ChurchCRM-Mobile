@@ -7,7 +7,7 @@ export default function SignupScreen() {
     const navigation = useNavigation();
 
     const handleSignUp = () => {
-        // Perform sign-up logic if needed
+        // Perform sign-up logic then
         // Navigate to the 'Main' screen
         navigation.navigate('MainContainer');
     };
@@ -18,7 +18,7 @@ export default function SignupScreen() {
         img_view: {
             flex: 1,
             flexDirection: 'row',
-            justifyContent: 'flex-end',
+            justifyContent: 'center',
             alignItems: 'center'
         },
         img: {
