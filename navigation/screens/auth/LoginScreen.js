@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   SafeAreaView,
   TextInput,
@@ -70,9 +71,7 @@ export default function LoginScreen() {
     setShowPassword(!showPassword);
   };
   const navigation = useNavigation();
-  const handleMain = () => {
-    navigation.navigate("MainContainer");
-  };
+  
   const ProfileScreen = () => {
     navigation.navigate("ProfileScreen");
   };
@@ -86,14 +85,12 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("apiurl/login", {
+      const response = await axios.post("https://2137-197-232-61-201.ngrok-free.app/api/login", {
         email,
         password,
       });
-
       const token = response.data.token;
-
-      
+      navigation.navigate("MainContainer");
     } catch (error) {
       console.error("Login failed:", error.response.data.error);
     }
@@ -145,9 +142,8 @@ export default function LoginScreen() {
               </TouchableOpacity>
             </View>
 
-            {/* <Button onPress={handleMain} style={{ backgroundColor: 'lightblue', marginTop: 30, borderRadius: 30, }} title="Login" /> */}
             <Pressable
-              onPress={handleMain}
+              onPress={handleLogin}
               style={{
                 paddingVertical: 10,
                 width: "100%",

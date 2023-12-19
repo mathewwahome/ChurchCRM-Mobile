@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   SafeAreaView,
   TextInput,
@@ -70,28 +71,37 @@ export default function SignupScreen() {
   //auth functionality
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const handleRegister = async () => {
     try {
-      const response = await axios.post("apiurl/register", {
-        name,
-        email,
-        password,
-      });
-
-      const token = response.data.token;
-
-      
+      const response = await axios.post(
+        "https://2137-197-232-61-201.ngrok-free.app/api/register",
+        {
+          name,
+          email,
+          password,
+        }
+      );
+      if (response && response.data) {
+        const token = response.data.token;
+        navigation.navigate("MainContainer");
+      } else {
+        console.error("Registration failed: No data in the response");
+      }
     } catch (error) {
-      console.error("Registration failed:", error.response.data.errors);
+      console.error(
+        "Registration failed:",
+        error.response ? error.response.data.errors : error.message
+      );
     }
   };
+
   //end auth functionality
 
   return (
     <View style={{ padding: 20 }}>
       <ScrollView>
-        {/* the logo */}
         <View style={styles.img_view}>
           <Image
             style={styles.img}
@@ -131,7 +141,7 @@ export default function SignupScreen() {
               />
             </View>
             <View style={styles.inputContainer}>
-              <Icon name="eye" size={20} color="black" style={styles.icon} />
+              <Icon name="phone" size={20} color="black" style={styles.icon} />
               <TextInput
                 placeholder="Password"
                 secureTextEntry

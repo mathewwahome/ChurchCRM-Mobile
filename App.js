@@ -7,6 +7,7 @@ import LoginScreen from "./navigation/screens/auth/LoginScreen";
 import SignupScreen from "./navigation/screens/auth/SignupScreen";
 import ProfileScreen from "./navigation/screens/auth/ProfileScreen";
 import SettingScreen from "./navigation/screens/auth/SettingScreen";
+import NewNotes from "./navigation/screens/notes/NewNotes";
 import axios from "axios";
 import { View, Text } from "react-native";
 
@@ -16,7 +17,7 @@ function App() {
   // const [data, setData] = useState([]);
   // const [loading, setLoading] = useState(true);
 
-  // const url = "https://ynetsolution.com/revision/api/fetch-data";
+  // const url = "https://2137-197-232-61-201.ngrok-free.app/api/fetchEvents";
 
   // useEffect(() => {
   //   fetch(url)
@@ -35,19 +36,27 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LandingScreen">
-        <Stack.Screen name="LandingScreen" component={LandingScreen}  options={{ headerShown: false }}/>
+        <Stack.Screen
+          name="LandingScreen"
+          component={LandingScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        
         <Stack.Screen name="SignupScreen" component={SignupScreen} />
-        <Stack.Screen name="MainContainer" component={MainContainer}  options={{ headerShown: false }}/>
+        <Stack.Screen name="MainContainer" component={MainContainer} options={{ headerShown: false }} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         <Stack.Screen name="SettingScreen" component={SettingScreen} />
+        <Stack.Screen name="NewNotes" component={NewNotes} />
       </Stack.Navigator>
     </NavigationContainer>
     // <View>
     //   {data.map((post) => (
     //     <View>
-    //       <Text style={{ fontSize: 20 }}>{post.name}</Text>
-    //       <Text style={{ color: "blue" }}>{post.email}</Text>
+    //       <Text style={{ fontSize: 20 }}>Event Id = {post.id}</Text>
+    //       <Text style={{ color: "blue" }}>Event Title = {post.Event_Title}</Text>
+    //       <Text style={{ color: "blue" }}>Event Date = {post.Event_Date}</Text>
+    //       <Text style={{ color: "blue" }}>Event Description = {post.Event_Description}</Text>
     //     </View>
     //   ))}
     // </View>
