@@ -84,11 +84,13 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
+  
     try {
-      const response = await axios.post("https://2137-197-232-61-201.ngrok-free.app/api/login", {
+      const response = await axios.post("https://2a1e-197-232-61-217.ngrok-free.app/api/login", {
         email,
         password,
       });
+      console.log(email);
       const token = response.data.token;
       navigation.navigate("MainContainer");
     } catch (error) {
