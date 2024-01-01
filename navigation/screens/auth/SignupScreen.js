@@ -46,9 +46,8 @@ export default function SignupScreen() {
     inputContainer: {
       flexDirection: "row",
       alignItems: "center",
-      borderWidth: 1,
-      borderColor: "white",
-      backgroundColor: "gray",
+      borderStyle: "none",
+      // backgroundColor: "gray",
       borderRadius: 5,
       padding: 10,
       marginTop: 20,
@@ -66,6 +65,20 @@ export default function SignupScreen() {
       height: 20,
       resizeMode: "contain",
     },
+    pickerStyles: {
+      width: '100%',
+      color: 'black'
+    },
+    touchButton: {
+      paddingVertical: 10,
+      width: "100%",
+      height: "auto",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#163c94",
+      marginTop: 30,
+      borderRadius: 30,
+    }
   });
 
   //auth functionality
@@ -73,13 +86,15 @@ export default function SignupScreen() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [membership, setMembership] = useState();
   const handleRegister = async () => {
     try {
       const response = await axios.post(
-        "https://2137-197-232-61-201.ngrok-free.app/api/register",
+        "https://2a1e-197-232-61-217.ngrok-free.app/api/register",
         {
           name,
           email,
+          phone,
           password,
         }
       );
@@ -135,35 +150,30 @@ export default function SignupScreen() {
               <Icon name="phone" size={20} color="black" style={styles.icon} />
               <TextInput
                 style={styles.input}
-                placeholder="phone"
+                placeholder="Phone"
                 value={phone}
                 onChangeText={(text) => setPhone(text)}
               />
             </View>
+  
             <View style={styles.inputContainer}>
-              <Icon name="phone" size={20} color="black" style={styles.icon} />
+              <Icon name="lock" size={20} color="black" style={styles.icon} />
               <TextInput
+                style={styles.input}
                 placeholder="Password"
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
               />
             </View>
-            <Pressable
+
+            <TouchableOpacity
               onPress={handleRegister}
-              style={{
-                paddingVertical: 10,
-                width: "100%",
-                height: "auto",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "lightblue",
-                marginTop: 30,
-                borderRadius: 30,
-              }}
+              title="Submit"
+              style={styles.touchButton}
             >
-              <Text style={{ fontSize: 20, color: "white" }}>Sign up</Text>
-            </Pressable>
+            <Text style={{ fontSize: 20, color: "white" }}>Sign up</Text>
+            </TouchableOpacity>
             <Text
               style={{
                 color: "blue",

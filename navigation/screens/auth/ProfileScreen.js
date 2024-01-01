@@ -1,7 +1,9 @@
 import * as React from "react";
-import { View, ScrollView, Text, Image, ImageBackground, StyleSheet, } from "react-native";
+import { useState } from "react";
+import { View, useEffect, ScrollView, Text, Image, ImageBackground, StyleSheet, } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 export default function ProfileScreen({ navigation }) {
+   
   const styles = StyleSheet.create({
     Container: {
       flex: 1,
@@ -22,6 +24,22 @@ export default function ProfileScreen({ navigation }) {
       height: 20,
     },
   });
+
+  // Get the user profile data
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    if (userId) {
+      axiosClient.get(`https://0da7-197-232-61-252.ngrok-free.app/api/profile/${userId}`)
+        .then(response => {
+          setData(response.data);
+        })
+        .catch(error => {
+          console.log("Error exists: ", error)
+        })
+    }
+
+  }, [userId]);
   return (
     <ScrollView>
       <View>
@@ -44,13 +62,13 @@ export default function ProfileScreen({ navigation }) {
             textAlign: "right",
             color: 'white',
             padding: 10,
-          }}>Jane Doe <Icon name="person" style={styles.icon} /> </Text>
+          }}>{data.name} <Icon name="person" style={styles.icon} /> </Text>
         </View>
 
         <View style={{ ...styles.Container, flexDirection: 'col' }}>
           <View style={{ ...styles.Container_section, flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.icon}>
-              <Icon name="email" />email@gmail.email
+              <Icon name="email" />{data.email}
             </Text>
             <Icon name="edit" />
 
