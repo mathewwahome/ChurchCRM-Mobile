@@ -14,7 +14,7 @@ const more = 'More';
 
 const Tab = createBottomTabNavigator();
 
-export default function MainContainer() {
+export default function MainContainer( {userId}) {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -52,7 +52,7 @@ export default function MainContainer() {
       <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarVisible: false }} />
       <Tab.Screen name="Sermons" component={SermonsScreen} />
       <Tab.Screen name="Notes" component={Notes} />
-      <Tab.Screen name="More" component={More} />
+      <Tab.Screen name="More" children={() => <More userId={userId}/>} />
     </Tab.Navigator>
   );
 }

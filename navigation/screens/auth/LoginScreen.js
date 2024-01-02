@@ -15,7 +15,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 
-export default function LoginScreen() {
+export default function LoginScreen( {setUserId}) {
   const styles = StyleSheet.create({
     img_view: {
       flex: 1,
@@ -84,20 +84,23 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-  
     try {
-      const response = await axios.post("https://2a1e-197-232-61-217.ngrok-free.app/api/login", {
+      const response = await axios.post("https://b73c-197-232-61-219.ngrok-free.app/api/login", {
         email,
         password,
       });
       console.log(email);
       const token = response.data.token;
+      const loggedId = response.data.userId;
+      console.log(loggedId)
+      setUserId(loggedId);
       navigation.navigate("MainContainer");
     } catch (error) {
-      console.error("Login failed:", error.response.data.error);
+      console.error("Login failed:", error);
     }
   };
   //end auth functionality
+
 
   return (
     <View style={{ padding: 20 }}>

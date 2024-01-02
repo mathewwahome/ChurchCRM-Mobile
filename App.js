@@ -14,6 +14,7 @@ import { View, Text } from "react-native";
 const Stack = createStackNavigator();
 
 function App() {
+  const [userId, setUserId] = useState(null);
   // const [data, setData] = useState([]);
   // const [loading, setLoading] = useState(true);
 
@@ -41,11 +42,10 @@ function App() {
           component={LandingScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        
+        <Stack.Screen name="LoginScreen" children={() => <LoginScreen setUserId={setUserId}/>} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} />
-        <Stack.Screen name="MainContainer" component={MainContainer} options={{ headerShown: false }} />
-        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Stack.Screen name="MainContainer" children={() => <MainContainer userId={userId} />} options={{ headerShown: false }} />
+        <Stack.Screen name="ProfileScreen" children={() => <ProfileScreen userId={userId} />} />
         <Stack.Screen name="SettingScreen" component={SettingScreen} />
         <Stack.Screen name="NewNotes" component={NewNotes} />
       </Stack.Navigator>

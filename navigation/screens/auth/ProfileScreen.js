@@ -1,9 +1,10 @@
 import * as React from "react";
-import { useState } from "react";
-import { View, useEffect, ScrollView, Text, Image, ImageBackground, StyleSheet, } from "react-native";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { View, ScrollView, Text, Image, ImageBackground, StyleSheet, } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-export default function ProfileScreen({ navigation }) {
-   
+export default function ProfileScreen({ navigation, userId }) {
+
   const styles = StyleSheet.create({
     Container: {
       flex: 1,
@@ -30,9 +31,11 @@ export default function ProfileScreen({ navigation }) {
 
   useEffect(() => {
     if (userId) {
-      axiosClient.get(`https://0da7-197-232-61-252.ngrok-free.app/api/profile/${userId}`)
+      console.log(userId)
+      axios.get(`https://b73c-197-232-61-219.ngrok-free.app/api/profile/${userId}`)
         .then(response => {
           setData(response.data);
+          console.log(response.data)
         })
         .catch(error => {
           console.log("Error exists: ", error)
@@ -75,14 +78,14 @@ export default function ProfileScreen({ navigation }) {
           </View>
           <View style={{ ...styles.Container_section, flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.icon}>
-              <Icon name="phone" />0720 000 000
+              <Icon name="phone" />{data.phone}
             </Text>
             <Icon name="edit" />
 
           </View>
           <View style={{ ...styles.Container_section, flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.icon}>
-              <Icon name="person" />Membership Status
+              <Icon name="person" />{data.membership_status}
             </Text>
             <Icon name="edit" />
 
