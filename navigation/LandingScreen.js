@@ -20,6 +20,9 @@ export default function LandingScreen() {
   const handleLogin = () => {
     navigation.navigate("LoginScreen");
   };
+  const screens = ()=> {
+    navigation.navigate("MainContainer");
+  };
 
   const buttonStyle = {
     paddingHorizontal: 20,
@@ -125,7 +128,10 @@ export default function LandingScreen() {
           <Pressable onPress={handleSignUp} style={styles.signin_btn}>
             <Text style={{ fontSize: 20, color: "white" }}>Sign up</Text>
           </Pressable>
-          <Text style={styles.forgot_password}>Forgot password?</Text>
+          <Pressable onPress={screens}>
+                      <Text style={styles.forgot_password}>Forgot password?</Text>
+
+          </Pressable>
         </View>
         {/* <StatusBar style="auto" /> */}
       </ScrollView>

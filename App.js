@@ -18,7 +18,7 @@ function App() {
   // const [data, setData] = useState([]);
   // const [loading, setLoading] = useState(true);
 
-  // const url = "https://2137-197-232-61-201.ngrok-free.app/api/fetchEvents";
+  // const url = "https://b73c-197-232-61-219.ngrok-free.app/api/fetchEvents";
 
   // useEffect(() => {
   //   fetch(url)

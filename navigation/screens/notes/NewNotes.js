@@ -8,7 +8,6 @@ import {
   Pressable,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-// Import of the styles file
 import { styles } from "../../../assets/css/styles";
 
 export default function NewNotes({ navigation }) {
