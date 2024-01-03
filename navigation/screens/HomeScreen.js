@@ -3,7 +3,7 @@ import { View, ScrollView, Text, Image, ImageBackground } from "react-native";
 import { styles } from "../../assets/css/HomeScreen";
 
 export default function HomeScreen({ navigation }) {
-  const BASE_URL = "https://720b-41-90-188-101.ngrok-free.app/api/";
+  const BASE_URL = "https://d8b0-197-232-61-243.ngrok-free.app/api/";
 
   const [sermonsData, setSermonsData] = useState([]);
   const [sermonNotesData, setSermonNotesData] = useState([]); //==

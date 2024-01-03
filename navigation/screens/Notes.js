@@ -9,25 +9,10 @@ import {
   StyleSheet,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { styles } from "../../assets/css/styles";
+
 
 export default function Notes({ navigation }) {
-  const styles = StyleSheet.create({
-    rowContainer: {
-      flexDirection: "col",
-      padding: 10,
-      resizeMode: "cover",
-    },
-    itemContainer: {
-      marginTop: 10,
-      flex: 1,
-    },
-    image: {
-      width: "100%",
-      height: 200,
-      borderRadius: 10,
-    },
-  });
-
   const NewNoteScreen = () => {
     console.log("handleMain executed");
 
@@ -36,61 +21,34 @@ export default function Notes({ navigation }) {
   return (
     <View>
       <TouchableOpacity onPress={NewNoteScreen} style={styles.touchableOpacity}>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "900",
-            marginTop: 30,
-            paddingStart: 20,
-            textAlign: "right",
-            color: "blue",
-          }}
-        >
-          <Icon name="assignment" size={20} style={styles.icon} /> NEW NOTE
+        <Text style={styles.notesTitle}>
+          <Icon name="note-add" size={19} /> NEW NOTE
         </Text>
       </TouchableOpacity>
 
       <ScrollView>
         <View style={{ padding: 10 }}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "900",
-              marginTop: 30,
-              paddingStart: 20,
-              textAlign: "right",
-              color: "blue",
-              padding: 10,
-            }}
-          >
-            <Icon name="assignment" size={20} style={styles.icon} /> NEW NOTE
-          </Text>
           <ScrollView horizontal={false}>
             <View style={styles.rowContainer}>
-              <View style={styles.itemContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/images/one.jpg")}
-                />
+
+              <View style={styles.notesContainer}>
+                <Image source={require("../../assets/images/one.jpg")} style={styles.notesImage} />
+                <Text style={styles.notesDateText}>Dec 20th 2022</Text>
+                <Text style={styles.notesTopic}>Transform Your Life Journal</Text>
               </View>
-              <View style={styles.itemContainer}>
-                <Image
-                  source={require("../../assets/images/one.jpg")}
-                  style={styles.image}
-                />
+
+              <View style={styles.notesContainer}>
+                <Image source={require("../../assets/images/one.jpg")} style={styles.notesImage} />
+                <Text style={styles.notesDateText}>Dec 20th 2022</Text>
+                <Text style={styles.notesTopic}>Transform Your Life Journal</Text>
               </View>
-              <View style={styles.itemContainer}>
-                <Image
-                  source={require("../../assets/images/bg.jpg")}
-                  style={styles.image}
-                />
+
+              <View style={styles.notesContainer}>
+                <Image source={require("../../assets/images/one.jpg")} style={styles.notesImage} />
+                <Text style={styles.notesDateText}>Dec 20th 2022</Text>
+                <Text style={styles.notesTopic}>Transform Your Life Journal</Text>
               </View>
-              <View style={styles.itemContainer}>
-                <Image
-                  source={require("../../assets/images/bg.jpg")}
-                  style={styles.image}
-                />
-              </View>
+       
             </View>
           </ScrollView>
         </View>

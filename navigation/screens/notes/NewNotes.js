@@ -15,10 +15,10 @@ export default function NewNotes({ navigation }) {
   const [Subtopic, setSubject] = useState("");
   const [Notes, setNotes] = useState("");
 
-  const handleLogin = async () => {
+  const saveNotes = async () => {
     try {
       const response = await axios.post(
-        "https://2137-197-232-61-201.ngrok-free.app/api/login",
+        "https://2137-197-232-61-201.ngrok-free.app/api/newnotes",
         {
           Topic,
           Subtopic,
@@ -26,43 +26,39 @@ export default function NewNotes({ navigation }) {
         }
       );
       const token = response.data.token;
-      navigation.navigate("MainContainer");
+      navigation.navigate("Notes");
     } catch (error) {
       console.error("Login failed:", error.response.data.error);
     }
   };
   return (
     <ScrollView>
-      <View style={styles.inputContainer}>
-
-        <Text>Add Topic</Text>
+      <View style={styles.newNotesContainer}>
+        <Text style={styles.notesLabel}>Add Topic</Text>
         <TextInput
-          style={styles.input}
+          style={styles.notesInput}
           value={Topic}
           onChangeText={setTopic}
-          placeholder="Add Topic"
         />
 
-        <Text>Add Subject</Text>
+        <Text style={styles.notesLabel}>Add Subject</Text>
         <TextInput
-          style={styles.input}
+          style={styles.notesInput} 
           value={Subtopic}
           onChangeText={setSubject}
-          placeholder="Add Subject"
         />
 
-        <Text>Take notes</Text>
+        <Text style={styles.notesLabel}>Take notes</Text>
         <TextInput
-          style={styles.textarea}
-          placeholder="Take notes"
+          style={styles.notesTextArea}
           multiline={true}
           value={Notes}
           onChangeText={setNotes}
         />
 
-        
-        <Pressable onPress={SaveNotes}>
-          <Text> Add Notes</Text>
+
+        <Pressable style={styles.submitNotesButton} onPress={saveNotes}>
+          <Text style={styles.submitNotes}> Add Notes</Text>
         </Pressable>
       </View>
     </ScrollView>
