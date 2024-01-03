@@ -29,7 +29,7 @@ export default function SignupScreen() {
     img: {
       width: 150,
       height: 150,
-      resizeMode: "contain",
+      // resizeMode: "contain",
     },
 
     login_view: {
@@ -46,8 +46,7 @@ export default function SignupScreen() {
     inputContainer: {
       flexDirection: "row",
       alignItems: "center",
-      borderStyle: "none",
-      // backgroundColor: "gray",
+      backgroundColor: "gray",
       borderRadius: 5,
       padding: 10,
       marginTop: 20,
@@ -63,7 +62,7 @@ export default function SignupScreen() {
     icon: {
       width: 20,
       height: 20,
-      resizeMode: "contain",
+      // resizeMode: "contain",
     },
     pickerStyles: {
       width: '100%',
@@ -90,7 +89,7 @@ export default function SignupScreen() {
   const handleRegister = async () => {
     try {
       const response = await axios.post(
-        "https://b73c-197-232-61-219.ngrok-free.app/api/register",
+        "https://d8b0-197-232-61-243.ngrok-free.app/api/register",
         {
           name,
           email,

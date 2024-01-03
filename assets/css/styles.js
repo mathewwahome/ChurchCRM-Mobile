@@ -1,11 +1,4 @@
-import * as React from "react";
 import {
-  View,
-  ScrollView,
-  Text,
-  Image,
-  TextInput,
-  ImageBackground,
   StyleSheet,
 } from "react-native";
 
