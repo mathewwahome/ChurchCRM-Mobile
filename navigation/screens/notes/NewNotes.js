@@ -7,28 +7,32 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { styles } from "../../../assets/css/styles";
+import axios from "axios";
 
-export default function NewNotes({ navigation }) {
-  const [Topic, setTopic] = useState("");
-  const [Subtopic, setSubject] = useState("");
-  const [Notes, setNotes] = useState("");
-
+export default function NewNotes({ userId }) {
+  const [note_topic, setTopic] = useState("");
+  const [content, setContent] = useState("");
+  const navigation = useNavigation();
+  
   const saveNotes = async () => {
     try {
+      console.log("The content: ", note_topic, content)
+      const user_id_fk = userId
       const response = await axios.post(
-        "https://2137-197-232-61-201.ngrok-free.app/api/newnotes",
+        "https://3e4b-197-232-61-204.ngrok-free.app/api/newNotes",
         {
-          Topic,
-          Subtopic,
-          Notes,
+          user_id_fk,
+          note_topic,
+          content,
         }
       );
-      const token = response.data.token;
+      console.log("Notes data: ", response.data)
       navigation.navigate("Notes");
     } catch (error) {
-      console.error("Login failed:", error.response.data.error);
+      console.error("Notes Save failed:", error);
     }
   };
   return (
@@ -37,23 +41,23 @@ export default function NewNotes({ navigation }) {
         <Text style={styles.notesLabel}>Add Topic</Text>
         <TextInput
           style={styles.notesInput}
-          value={Topic}
+          value={note_topic}
           onChangeText={setTopic}
         />
 
-        <Text style={styles.notesLabel}>Add Subject</Text>
+        {/* <Text style={styles.notesLabel}>Add Subject</Text>
         <TextInput
           style={styles.notesInput} 
           value={Subtopic}
           onChangeText={setSubject}
-        />
+        /> */}
 
         <Text style={styles.notesLabel}>Take notes</Text>
         <TextInput
           style={styles.notesTextArea}
           multiline={true}
-          value={Notes}
-          onChangeText={setNotes}
+          value={content}
+          onChangeText={setContent}
         />
 
 
