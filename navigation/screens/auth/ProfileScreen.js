@@ -32,7 +32,7 @@ export default function ProfileScreen({ navigation, userId }) {
   useEffect(() => {
     if (userId) {
       console.log(userId)
-      axios.get(`https://b73c-197-232-61-219.ngrok-free.app/api/profile/${userId}`)
+      axios.get(`https://3e4b-197-232-61-204.ngrok-free.app/api/profile/${userId}`)
         .then(response => {
           setData(response.data);
           console.log(response.data)
@@ -41,7 +41,6 @@ export default function ProfileScreen({ navigation, userId }) {
           console.log("Error exists: ", error)
         })
     }
-
   }, [userId]);
   return (
     <ScrollView>

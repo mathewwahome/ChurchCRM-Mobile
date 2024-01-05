@@ -58,6 +58,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
   },
+  loadingText: {
+    fontSize: 32,
+    fontWeight: "800",
+    color: "#087E8B"
+  },
 
   // Styling NewNotes Page
   newNotesContainer: {
