@@ -7,62 +7,62 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { styles } from "../../../assets/css/styles";
+import axios from "axios";
 
-export default function NewNotes({ navigation }) {
-  const [Topic, setTopic] = useState("");
-  const [Subtopic, setSubject] = useState("");
-  const [Notes, setNotes] = useState("");
-
-  const handleLogin = async () => {
+export default function NewNotes({ userId }) {
+  const [note_topic, setTopic] = useState("");
+  const [content, setContent] = useState("");
+  const navigation = useNavigation();
+  
+  const saveNotes = async () => {
     try {
+      console.log("The content: ", note_topic, content)
+      const user_id_fk = userId
       const response = await axios.post(
-        "https://2137-197-232-61-201.ngrok-free.app/api/login",
+        "https://3e4b-197-232-61-204.ngrok-free.app/api/newNotes",
         {
-          Topic,
-          Subtopic,
-          Notes,
+          user_id_fk,
+          note_topic,
+          content,
         }
       );
-      const token = response.data.token;
-      navigation.navigate("MainContainer");
+      console.log("Notes data: ", response.data)
+      navigation.navigate("Notes");
     } catch (error) {
-      console.error("Login failed:", error.response.data.error);
+      console.error("Notes Save failed:", error);
     }
   };
   return (
     <ScrollView>
-      <View style={styles.inputContainer}>
-
-        <Text>Add Topic</Text>
+      <View style={styles.newNotesContainer}>
+        <Text style={styles.notesLabel}>Add Topic</Text>
         <TextInput
-          style={styles.input}
-          value={Topic}
+          style={styles.notesInput}
+          value={note_topic}
           onChangeText={setTopic}
-          placeholder="Add Topic"
         />
 
-        <Text>Add Subject</Text>
+        {/* <Text style={styles.notesLabel}>Add Subject</Text>
         <TextInput
-          style={styles.input}
+          style={styles.notesInput} 
           value={Subtopic}
           onChangeText={setSubject}
-          placeholder="Add Subject"
-        />
+        /> */}
 
-        <Text>Take notes</Text>
+        <Text style={styles.notesLabel}>Take notes</Text>
         <TextInput
-          style={styles.textarea}
-          placeholder="Take notes"
+          style={styles.notesTextArea}
           multiline={true}
-          value={Notes}
-          onChangeText={setNotes}
+          value={content}
+          onChangeText={setContent}
         />
 
-        
-        <Pressable onPress={SaveNotes}>
-          <Text> Add Notes</Text>
+
+        <Pressable style={styles.submitNotesButton} onPress={saveNotes}>
+          <Text style={styles.submitNotes}> Add Notes</Text>
         </Pressable>
       </View>
     </ScrollView>

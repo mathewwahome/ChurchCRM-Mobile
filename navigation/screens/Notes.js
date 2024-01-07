@@ -8,89 +8,72 @@ import {
   ImageBackground,
   StyleSheet,
 } from "react-native";
+import axios from "axios";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { styles } from "../../assets/css/styles";
+import { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Notes({ navigation }) {
-  const styles = StyleSheet.create({
-    rowContainer: {
-      flexDirection: "col",
-      padding: 10,
-      resizeMode: "cover",
-    },
-    itemContainer: {
-      marginTop: 10,
-      flex: 1,
-    },
-    image: {
-      width: "100%",
-      height: 200,
-      borderRadius: 10,
-    },
-  });
+
+export default function Notes({ userId }) {
+  const navigation = useNavigation();
 
   const NewNoteScreen = () => {
     console.log("handleMain executed");
 
     navigation.navigate("NewNotes");
   };
+
+  const editNoteScreen = () => {
+    console.log("handleMain executed");
+
+    navigation.navigate("EditNotes");
+  };
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    if(userId) {
+      try {
+        const fetchData = async () => {
+          const response = await axios.get(
+            `https://3e4b-197-232-61-204.ngrok-free.app/api/showNotes/${userId}`
+          );
+          setData(response.data);
+        };
+        fetchData();
+      } catch (error) {
+        console.error("Displaying notes failed:", error);
+      }
+    }
+  }, [userId]);
   return (
     <View>
       <TouchableOpacity onPress={NewNoteScreen} style={styles.touchableOpacity}>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "900",
-            marginTop: 30,
-            paddingStart: 20,
-            textAlign: "right",
-            color: "blue",
-          }}
-        >
-          <Icon name="assignment" size={20} style={styles.icon} /> NEW NOTE
+        <Text style={styles.notesTitle}>
+          <Icon name="note-add" size={19} /> NEW NOTE
         </Text>
       </TouchableOpacity>
 
       <ScrollView>
         <View style={{ padding: 10 }}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "900",
-              marginTop: 30,
-              paddingStart: 20,
-              textAlign: "right",
-              color: "blue",
-              padding: 10,
-            }}
-          >
-            <Icon name="assignment" size={20} style={styles.icon} /> NEW NOTE
-          </Text>
           <ScrollView horizontal={false}>
             <View style={styles.rowContainer}>
-              <View style={styles.itemContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/images/one.jpg")}
-                />
-              </View>
-              <View style={styles.itemContainer}>
-                <Image
-                  source={require("../../assets/images/one.jpg")}
-                  style={styles.image}
-                />
-              </View>
-              <View style={styles.itemContainer}>
-                <Image
-                  source={require("../../assets/images/bg.jpg")}
-                  style={styles.image}
-                />
-              </View>
-              <View style={styles.itemContainer}>
-                <Image
-                  source={require("../../assets/images/bg.jpg")}
-                  style={styles.image}
-                />
-              </View>
+              {data.length > 0 ? (
+                data.map((note) => (
+                  <View style={styles.notesContainer} key={note.id}>
+                    <Image
+                      source={require("../../assets/images/one.jpg")}
+                      style={styles.notesImage}
+                    />
+                    <Text style={styles.notesDateText}>
+                      {new Date(note.created_at).toDateString()}
+                    </Text>
+                    <Text style={styles.notesTopic}>{note.note_topic}</Text>
+                  </View>
+                ))
+              ) : (
+                <Text style={styles.loadingText}>Loading ...</Text>
+              )}
             </View>
           </ScrollView>
         </View>

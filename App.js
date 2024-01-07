@@ -30,6 +30,7 @@ function App() {
         <Stack.Screen name="MainContainer" children={() => <MainContainer userId={userId} />} options={{ headerShown: false }} />
         <Stack.Screen name="ProfileScreen" children={() => <ProfileScreen userId={userId} />} />
         <Stack.Screen name="SettingScreen" component={SettingScreen} />
+        <Stack.Screen name="NewNotes" children={() => <NewNotes userId={userId} />} />
         <Stack.Screen name="NewNotes" component={NewNotes} />
         <Stack.Screen name="DocumentViewer" component={DocumentViewer} />
       </Stack.Navigator>
