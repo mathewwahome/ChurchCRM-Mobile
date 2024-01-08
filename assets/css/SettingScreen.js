@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   viewContainer: {
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   header: {
     flexDirection: "row",
@@ -13,14 +13,21 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   headerText: {
+    fontFamily: 'Poppins',
+    fontWeight: "800",
+    fontSize: 20,
+    color: "#0A7E8B",
     marginLeft: 10,
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "blue",
   },
   themeOptions: {
     marginTop: 20,
     paddingHorizontal: 20,
+    alignItems: 'flex-start',
+  },
+  radio:{
+    alignItems: 'flex-start',
+    color: "#0A7E8B",
+
   },
   option: {
     flexDirection: "row",
@@ -30,7 +37,14 @@ const styles = StyleSheet.create({
   optionText: {
     marginLeft: 10,
     fontSize: 16,
-    color: "blue",
-  },
+    color: "#0A7E8B",
+  }, 
+  textStyle:{  
+      margin: 24,  
+      fontSize: 25,  
+      fontWeight: 'bold',  
+      textAlign: 'center',  
+      color: '#344953'  
+  }  
 });
 export { styles };
