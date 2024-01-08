@@ -63,7 +63,7 @@ export default function ProfileScreen({ navigation, userId }) {
     if (userId) {
       console.log(userId);
       axios
-        .get(`https://3e4b-197-232-61-204.ngrok-free.app/api/profile/${userId}`)
+        .get(`https://3829-197-232-61-194.ngrok-free.app/api/profile/${userId}`)
         .then((response) => {
           setData(response.data);
           console.log(response.data);

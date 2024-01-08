@@ -22,7 +22,7 @@ export default function NewNotes({ userId }) {
       console.log("The content: ", note_topic, content)
       const user_id_fk = userId
       const response = await axios.post(
-        "https://3e4b-197-232-61-204.ngrok-free.app/api/newNotes",
+        "https://3829-197-232-61-194.ngrok-free.app/api/newNotes",
         {
           user_id_fk,
           note_topic,

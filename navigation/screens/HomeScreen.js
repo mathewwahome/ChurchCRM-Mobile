@@ -10,8 +10,8 @@ import {
 import { styles } from "../../assets/css/HomeScreen";
 
 export default function HomeScreen({ navigation }) {
-  const BASE_URL = "https://e51a-41-90-179-173.ngrok-free.app/api/";
-  const FILe_BASE = "https://e51a-41-90-179-173.ngrok-free.app";
+  const BASE_URL = "https://3829-197-232-61-194.ngrok-free.app/api/";
+  const FILe_BASE = "https://3829-197-232-61-194.ngrok-free.app";
   const [sermonsData, setSermonsData] = useState([]);
   const [sermonNotesData, setSermonNotesData] = useState([]); //==
 

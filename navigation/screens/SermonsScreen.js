@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   ScrollView,
@@ -7,68 +7,39 @@ import {
   ImageBackground,
   StyleSheet,
 } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import { styles } from "../../assets/css/SermonsScreen";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function Sermons({ navigation }) {
+export default function Sermons() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const FILE_BASE = "https://3829-197-232-61-194.ngrok-free.app";
 
-  const url = "https://d8b0-197-232-61-243.ngrok-free.app/api/fetchEvents";
+  const url = "https://3829-197-232-61-194.ngrok-free.app/api/fetchSermons";
 
   useEffect(() => {
     fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
+      .then((response) => response.json())
+      .then((json) => {
+        setData(json);
+        setLoading(false);
       })
-      .then((json) => setData(json))
       .catch((error) => {
-        console.error("Error fetching data:", error);
-        // You can handle the error state or show a user-friendly message here
+        console.error(`Error fetching data from ${url}:`, error);
+        setLoading(false);
       });
   }, []);
 
+  // Function to redirect to sermon notes
+  const navigation = useNavigation()
+  const handlePress = (sermonId) => {
+    navigation.navigate("SermonNotes", {sermonId});
+    console.log("Going to sermon Notes")
+  }
+
   return (
     <ScrollView>
-
-
-
-      {/* <View>
-        {data.map((post) => (
-          <View>
-            <Text style={{ fontSize: 20 }}>Event Id = {post.id}</Text>
-            <Text style={{ color: "blue" }}>
-              Event Title = {post.Event_Title}
-            </Text>
-            <Text style={{ color: "blue" }}>
-              Event Date = {post.Event_Date}
-            </Text>
-            <Text style={{ color: "blue" }}>
-              Event Description = {post.Event_Description}
-            </Text>
-          </View>
-        ))}
-      </View> */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <ImageBackground
         source={require("../../assets/images/bg.jpg")}
         style={styles.backgroundImage}
@@ -118,35 +89,26 @@ export default function Sermons({ navigation }) {
         </Text>
         <ScrollView horizontal={false}>
           <View style={styles.rowContainer}>
-            <View style={styles.itemContainer}>
-              <Image
-                style={styles.image}
-                source={require("../../assets/images/one.jpg")}
-              />
-            </View>
-            <View style={styles.itemContainer}>
-              <Image
-                source={require("../../assets/images/one.jpg")}
-                style={styles.image}
-              />
-            </View>
+            {loading ? (
+              <Text>Loading Sermons...</Text>
+            ) : (
+              data.map((sermon) => (
+                <View style={styles.itemContainer} key={sermon.id}>
+                  <TouchableOpacity onPress={() => handlePress(sermon.id)} >
+                    <Image 
+                      style={styles.image}
+                      source={{
+                        uri: `${FILE_BASE}/SermonThumbnails/${sermon.Thumbnail}`,
+                      }}
+                    />
+                    <Text>{sermon.Title}</Text>
+                  </TouchableOpacity>
+                </View>
+                
+              ))
+            )}
           </View>
-
-          <View style={styles.rowContainer}>
-            <View style={styles.itemContainer}>
-              <Image
-                source={require("../../assets/images/bg.jpg")}
-                style={styles.image}
-              />
-            </View>
-            <View style={styles.itemContainer}>
-              <Image
-                source={require("../../assets/images/bg.jpg")}
-                style={styles.image}
-              />
-            </View>
-          </View>
-        </ScrollView>
+                </ScrollView>
       </View>
     </ScrollView>
   );
