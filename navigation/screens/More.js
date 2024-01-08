@@ -1,89 +1,81 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { View, ScrollView, Text, Image, ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { ScrollView, View, Text, Image, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { styles } from "../../assets/css/MoreScreen";
+
+const menuItems = [
+  { iconName: "book", text: "Saved Sermons", screenName: "SavedSermonsScreen" },
+  { iconName: "bookmarks", text: "Verse of the Day", screenName: "VerseOfDayScreen" },
+  { iconName: "note", text: "Notes", screenName: "NotesScreen" },
+  { iconName: "event", text: "Events", screenName: "EventsScreen" },
+  { iconName: "share", text: "Share App", screenName: "ShareAppScreen" },
+  { iconName: "info", text: "About App", screenName: "AboutAppScreen" },
+  { iconName: "person", text: "Church Websites", screenName: "ChurchWebsitesScreen" },
+  { iconName: "settings", text: "Settings", screenName: "SettingScreen" },
+  { iconName: "person", text: "Profile Screen", screenName: "ProfileScreen" },
+];
+
 export default function More({ userId }) {
-  const styles = StyleSheet.create({
-    Container: {
-      flex: 1,
-      resizeMode: 'cover',
-      padding: 20,
-    },
-    image_logo: {
-      borderWidth: 10,
-      width: 80,
-      height: 80,
-      borderRadius: 100,
-    },
-    icon: {
-      marginRight: 20,
-      height: 20,
-    },
-  });
-
-  const [data, setData] = useState([])
-
+  const [data, setData] = useState([]);
   useEffect(() => {
     if (userId) {
-      console.log(userId)
-      axios.get(`https://b73c-197-232-61-219.ngrok-free.app/api/profile/${userId}`)
-        .then(response => {
+      axios
+        .get(`https://b73c-197-232-61-219.ngrok-free.app/api/profile/${userId}`)
+        .then((response) => {
           setData(response.data);
-          console.log(response.data)
         })
-        .catch(error => {
-          console.log("Error exists: ", error)
-        })
+        .catch((error) => {
+          console.log("Error exists: ", error);
+        });
     }
-
   }, [userId]);
 
-  // Navigate to profile screen
   const navigation = useNavigation();
 
-  const navigateToProfile = () => {
-    navigation.navigate('ProfileScreen');
+  const navigateToScreen = (screenName) => {
+    navigation.navigate(screenName);
   };
+
+  const renderMenuItem = ({ iconName, text, screenName }) => {
+    return (
+      <TouchableOpacity key={screenName} onPress={() => navigateToScreen(screenName)}>
+        <View style={styles.iconContainer}>
+          <Icon name={iconName} style={styles.icon} />
+          <Text style={styles.linktext}>{text}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
-      <ScrollView>
-        <View>
-          <View style={{
+    <ScrollView>
+      <View>
+        <View
+          style={{
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
             paddingVertical: 30,
-            backgroundColor: 'blue',
-          }}>
-            <View style={styles.itemContainer}>
-              <Image source={require('../../assets/images/one.jpg')} style={styles.image_logo} />
-
-            </View>
-            <Text style={{
-              fontSize: 18,
-              fontWeight: '900',
-              marginTop: 30,
-              paddingStart: 20,
-              textAlign: "right",
-              color: 'white',
-              padding: 10,
-          }}>{data.name} <Icon name="person" style={styles.icon} /> </Text>
+            backgroundColor: "#03686e",
+          }}
+        >
+          <View style={styles.itemContainer}>
+            <Image
+              source={require("../../assets/images/one.jpg")}
+              style={styles.image_logo}
+            />
           </View>
-          <View style={styles.Container}>
-            <Text style={styles.icon}><Icon name="person"/>Verse of the Day</Text>
-            <Text style={styles.icon}><Icon name="person"/>Notes</Text>
-            <Text style={styles.icon}><Icon name="person"/>Saved Sermons</Text>
-            <Text style={styles.icon}><Icon name="person"/>Events</Text>
-            <Text style={styles.icon}><Icon name="person"/>Share App</Text>
-            <Text style={styles.icon}><Icon name="person"/>About App</Text>
-            <Text style={styles.icon}><Icon name="person"/>Church Websites</Text>
-            <Text style={styles.icon}><Icon name="person"/>Settings</Text>
-          <TouchableOpacity onPress={navigateToProfile}>
-            <Text style={styles.icon}><Icon name="person" />ProfileScreen</Text>
-          </TouchableOpacity>
-          </View>
+          <Text style={styles.username}>
+            {data.name} <Icon name="person" style={styles.icon} />{" "}
+          </Text>
         </View>
-      </ScrollView>
+
+        <View style={styles.container}>
+          {menuItems.map((item) => renderMenuItem(item))}
+        </View>
+      </View>
+    </ScrollView>
   );
 }
