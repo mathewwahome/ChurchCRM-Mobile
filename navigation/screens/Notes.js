@@ -36,7 +36,7 @@ export default function Notes({ userId }) {
       try {
         const fetchData = async () => {
           const response = await axios.get(
-            `https://3829-197-232-61-194.ngrok-free.app/api/showNotes/${userId}`
+            `https://39af-197-232-61-198.ngrok-free.app/api/showNotes/${userId}`
           );
           setData(response.data);
         };
