@@ -13,7 +13,8 @@ import axios from "axios";
 import { View, Text } from "react-native";
 import EventsScreen from "./navigation/screens/EventsScreen";
 
-import AnnouncementView from "./navigation/screens/announcements/AnnouncementView";
+import AnnouncementView from "./navigation/screens/view/AnnouncementView";
+import VideoPlayer from "./navigation/screens/view/VideoPlayer";
 
 import SermonNotes from "./navigation/screens/SermonNotes";
 
@@ -42,6 +43,7 @@ function App() {
         <Stack.Screen name="DocumentViewer" component={DocumentViewer} />
         <Stack.Screen name="EventsScreen" component={EventsScreen} />
         <Stack.Screen name="AnnouncementView" component={AnnouncementView} />
+        <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
 
       </Stack.Navigator>
     </NavigationContainer>
