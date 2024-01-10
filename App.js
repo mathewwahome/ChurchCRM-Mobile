@@ -42,6 +42,7 @@ function App() {
         <Stack.Screen name="DocumentViewer" component={DocumentViewer} />
         <Stack.Screen name="EventsScreen" component={EventsScreen} />
         <Stack.Screen name="AnnouncementView" component={AnnouncementView} />
+        <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
 
       </Stack.Navigator>
     </NavigationContainer>

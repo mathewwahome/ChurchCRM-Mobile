@@ -142,31 +142,37 @@ export default function HomeScreen({ navigation }) {
             <Text>Loading sermons...</Text>
           ) : (
             sermonsData.map((sermon) => (
-              <View key={sermon.id}>
-                <View style={{ flexDirection: "row", padding: 10 }}>
-                  <View style={{ marginRight: 10 }}>
-                    <Image
-                      style={styles.image}
-                      source={{
-                        uri: `${FILe_BASE}/SermonThumbnails/${sermon.Thumbnail}`,
-                      }}
-                    />
-                    <Text>
-                      {new Date(sermon.created_at).toLocaleDateString(
-                        undefined,
-                        {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        }
-                      )}
-                    </Text>
-                    <Text>{sermon.Thumbnail}</Text>
-
-                    <Text>{sermon.Message}</Text>
+              <TouchableOpacity
+                  key={sermon.id}
+                  onPress={() =>
+                    navigation.navigate("VideoPlayer", { sermon: sermon, })
+                  }
+                >
+                  <View>
+                    <View style={{ flexDirection: "row", padding: 10 }}>
+                      <View style={{ marginRight: 10 }}>
+                        <Image
+                          style={styles.image}
+                          source={{
+                            uri: `${FILe_BASE}SermonThumbnails/${sermon.Thumbnail}`,
+                          }}
+                        />
+                        <Text>
+                          {new Date(sermon.created_at).toLocaleDateString(
+                            undefined,
+                            {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            }
+                          )}
+                        </Text>
+                        <Text>{sermon.Thumbnail}</Text>
+                        <Text>{sermon.Message}</Text>
+                      </View>
+                    </View>
                   </View>
-                </View>
-              </View>
+                </TouchableOpacity>
             ))
           )}
         </ScrollView>
