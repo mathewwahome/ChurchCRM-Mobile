@@ -8,19 +8,25 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { styles } from "../../assets/css/HomeScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+const Stack = createStackNavigator();
 
 export default function HomeScreen({ navigation }) {
+
   const BASE_URL = "https://3829-197-232-61-194.ngrok-free.app/api/";
   const FILe_BASE = "https://3829-197-232-61-194.ngrok-free.app";
-  const [sermonsData, setSermonsData] = useState([]);
-  const [sermonNotesData, setSermonNotesData] = useState([]); //==
 
-  const [AnnouncementsData, setAnnouncementsData] = useState([]); //==
+  const [sermonsData, setSermonsData] = useState([]);
+  const [sermonNotesData, setSermonNotesData] = useState([]);
+
+  const [AnnouncementsData, setAnnouncementsData] = useState([]);
 
   const [sermonsLoading, setSermonsLoading] = useState(true);
-  const [sermonNotesLoading, setsermonNotesLoading] = useState(true); //==
+  const [sermonNotesLoading, setsermonNotesLoading] = useState(true);
 
-  const [AnnouncementsLoading, setAnnouncementsLoading] = useState(true); //==
+  const [AnnouncementsLoading, setAnnouncementsLoading] = useState(true);
 
   const generateUrl = (endpoint) => {
     return `${BASE_URL}${endpoint}`;
@@ -55,11 +61,11 @@ export default function HomeScreen({ navigation }) {
     fetchData(announcementsUrl, setAnnouncementsData, setAnnouncementsLoading);
   }, []);
 
- 
+
 
   return (
     <ScrollView>
-     
+
 
       <ImageBackground
         source={require("../../assets/images/bg.jpg")}
@@ -93,30 +99,40 @@ export default function HomeScreen({ navigation }) {
             <Text>Loading Announcements...</Text>
           ) : (
             AnnouncementsData.map((announcements) => (
-              <View key={announcements.id}>
-                <View style={{ flexDirection: "row", padding: 10 }}>
-                  <View style={{ marginRight: 10 }}>
-                    <Image
-                      style={styles.image}
-                      source={{
-                        uri: `${FILe_BASE}/SermonThumbnails/${announcements.Thumbnail}`,
-                      }}
-                    />
-                    <Text>
-                      {new Date(announcements.created_at).toLocaleDateString(
-                        undefined,
-                        {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        }
-                      )}
-                    </Text>
-                    <Text>{announcements.Topic}</Text>
-                    <Text>{announcements.Message}</Text>
+              <TouchableOpacity
+                key={announcements.id}
+                onPress={() =>
+                  navigation.navigate("AnnouncementView", {
+                    announcement: announcements,
+                    imageUri: `${FILe_BASE}Announcements/${announcements.poster}`,
+                  })
+                }
+              >
+                <View>
+                  <View style={{ flexDirection: "row", padding: 10 }}>
+                    <View style={{ marginRight: 10 }}>
+                      <Image
+                        style={styles.image}
+                        source={{
+                          uri: `${FILe_BASE}Announcements/${announcements.poster}`,
+                        }}
+                      />
+                      <Text>
+                        {new Date(announcements.created_at).toLocaleDateString(
+                          undefined,
+                          {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          }
+                        )}
+                      </Text>
+                      <Text>{announcements.Topic}</Text>
+                      <Text>{announcements.Message}</Text>
+                    </View>
                   </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             ))
           )}
         </ScrollView>
