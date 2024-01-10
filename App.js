@@ -12,6 +12,8 @@ import DocumentViewer from "./navigation/screens/DocumentViewer";
 import axios from "axios";
 import { View, Text } from "react-native";
 import EventsScreen from "./navigation/screens/EventsScreen";
+import AnnouncementView from "./navigation/screens/announcements/AnnouncementView";
+
 
 const Stack = createStackNavigator();
 
@@ -34,6 +36,8 @@ function App() {
         <Stack.Screen name="NewNotes" children={() => <NewNotes userId={userId} />} />
         <Stack.Screen name="DocumentViewer" component={DocumentViewer} />
         <Stack.Screen name="EventsScreen" component={EventsScreen} />
+        <Stack.Screen name="AnnouncementView" component={AnnouncementView} />
+
       </Stack.Navigator>
     </NavigationContainer>
    
