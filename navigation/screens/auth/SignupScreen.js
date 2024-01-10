@@ -89,7 +89,7 @@ export default function SignupScreen() {
   const handleRegister = async () => {
     try {
       const response = await axios.post(
-        "https://3829-197-232-61-194.ngrok-free.app/api/register",
+        "https://2b2c-197-232-61-232.ngrok-free.app/api/register",
         {
           name,
           email,

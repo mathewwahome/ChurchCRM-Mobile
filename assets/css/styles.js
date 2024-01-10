@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   notesInput: {
     flex: 1,
-    height: 40,
+    height: 150,
     borderWidth: 1,
     borderColor: "#707070",
     borderRadius: 5,
@@ -137,6 +137,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "900",
     paddingBottom: 10,
+  },
+
+  sermonTextArea: {
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "#707070",
+    borderRadius: 5,
+    padding: 5,
+    backgroundColor: "white",
+    textAlign: "left",
+    width: "100%",
   }
 
 });

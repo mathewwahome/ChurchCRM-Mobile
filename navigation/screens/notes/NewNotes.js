@@ -22,7 +22,7 @@ export default function NewNotes({ userId }) {
       console.log("The content: ", note_topic, content)
       const user_id_fk = userId
       const response = await axios.post(
-        "https://3829-197-232-61-194.ngrok-free.app/api/newNotes",
+        "https://2b2c-197-232-61-232.ngrok-free.app/api/newNotes",
         {
           user_id_fk,
           note_topic,
@@ -45,13 +45,6 @@ export default function NewNotes({ userId }) {
           onChangeText={setTopic}
         />
 
-        {/* <Text style={styles.notesLabel}>Add Subject</Text>
-        <TextInput
-          style={styles.notesInput} 
-          value={Subtopic}
-          onChangeText={setSubject}
-        /> */}
-
         <Text style={styles.notesLabel}>Take notes</Text>
         <TextInput
           style={styles.notesTextArea}
@@ -59,7 +52,6 @@ export default function NewNotes({ userId }) {
           value={content}
           onChangeText={setContent}
         />
-
 
         <Pressable style={styles.submitNotesButton} onPress={saveNotes}>
           <Text style={styles.submitNotes}> Add Notes</Text>

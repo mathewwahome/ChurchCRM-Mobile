@@ -50,7 +50,7 @@ export default function MainContainer( {userId}) {
       }}
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarVisible: false }} />
-      <Tab.Screen name="Sermons" component={SermonsScreen} />
+      <Tab.Screen name="Sermons" children={() => <SermonsScreen userId={userId} />} />
       <Tab.Screen name="Notes" children={() => <Notes userId={userId} />} />
       <Tab.Screen name="More" children={() => <More userId={userId}/>} />
     </Tab.Navigator>

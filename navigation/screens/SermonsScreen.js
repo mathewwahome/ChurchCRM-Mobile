@@ -11,12 +11,13 @@ import { useNavigation } from "@react-navigation/core";
 import { styles } from "../../assets/css/SermonsScreen";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function Sermons() {
+export default function Sermons({ userId }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const FILE_BASE = "https://3829-197-232-61-194.ngrok-free.app";
+  const navigation = useNavigation()
+  const FILE_BASE = "https://39af-197-232-61-198.ngrok-free.app";
 
-  const url = "https://3829-197-232-61-194.ngrok-free.app/api/fetchSermons";
+  const url = `${FILE_BASE}/api/fetchSermons`;
 
   useEffect(() => {
     fetch(url)
@@ -32,10 +33,10 @@ export default function Sermons() {
   }, []);
 
   // Function to redirect to sermon notes
-  const navigation = useNavigation()
-  const handlePress = (sermonId) => {
-    navigation.navigate("SermonNotes", {sermonId});
-    console.log("Going to sermon Notes")
+  const handlePress = (sermonId, userId) => {
+    console.log("Navigating with sermonId:", sermonId);
+    console.log("Navigating with userId:", userId);
+    navigation.navigate("SermonNotes", { sermonId, userId });
   }
 
   return (
@@ -95,7 +96,7 @@ export default function Sermons() {
               data.map((sermon) => (
                 <View style={styles.itemContainer} key={sermon.id}>
                   <TouchableOpacity onPress={() => handlePress(sermon.id)} >
-                    <Image 
+                    <Image
                       style={styles.image}
                       source={{
                         uri: `${FILE_BASE}/SermonThumbnails/${sermon.Thumbnail}`,
@@ -104,11 +105,11 @@ export default function Sermons() {
                     <Text>{sermon.Title}</Text>
                   </TouchableOpacity>
                 </View>
-                
+
               ))
             )}
           </View>
-                </ScrollView>
+        </ScrollView>
       </View>
     </ScrollView>
   );

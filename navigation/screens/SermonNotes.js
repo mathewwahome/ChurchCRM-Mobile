@@ -15,31 +15,50 @@ import axios from "axios";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function SermonNotes({ route }) {
-    const [note_topic, setTopic] = useState("");
-    const [content, setContent] = useState("");
     const navigation = useNavigation();
 
+    const [note_topic, setTopic] = useState("");
+    const [content, setContent] = useState("");
     const [data, setData] = useState([]);
-    const [sermonData, setSermonData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const FILE_BASE = "https://3829-197-232-61-194.ngrok-free.app";
 
+    const [loading, setLoading] = useState(true);
+    const [editableText, setEditableText] = useState(true);
+
+    const [sermonColor, setSermonColor] = useState("");
+    const [notesColor, setNotesColor] = useState("");
+    const FILE_BASE = "https://39af-197-232-61-198.ngrok-free.app";
 
     const { sermonId } = route.params;
 
-    const url = `https://3829-197-232-61-194.ngrok-free.app/api/fetch/sermonNotes/${sermonId}`;
+    const url = `${FILE_BASE}/api/fetch/sermonNotes/${sermonId}`;
 
-    const handleSermonNotes = () => {
-        // 
-    }
+    const handleSermonNotes = (activeColor) => {
+        // Toggling color for take notes and active sermon notes
+        if (activeColor) {
+            setSermonColor("#000000")
+            setNotesColor("#087E8B")
+            setEditableText(true)
+            setContent(note_topic)
+        }
+        else {
+            setSermonColor("#087E8B")
+            setNotesColor("#000000")
+            setEditableText(false)
+            // Displaying the sermon notes
+            setContent(data.text)   
+        }
+    };
 
     useEffect(() => {
+
+        handleSermonNotes(true)
+
         fetch(url)
             .then((response) => response.json())
             .then((json) => {
                 setData(json);
                 setLoading(false);
-                console.log("Fetching sermon data")
+                console.log("Fetching sermon data: ")
             })
             .catch((error) => {
                 console.error(`Error fetching data from ${url}:`, error);
@@ -49,8 +68,14 @@ export default function SermonNotes({ route }) {
 
     const saveNotes = async () => {
         try {
+            // Set the value for note_topic 
+            if (!note_topic) {
+                setTopic(data.Title)
+            }
+
             console.log("The content: ", note_topic, content)
             const user_id_fk = userId
+
             const response = await axios.post(
                 "https://3829-197-232-61-194.ngrok-free.app/api/newNotes",
                 {
@@ -94,26 +119,30 @@ export default function SermonNotes({ route }) {
                             }}
                         />
                     </View>
-                    <Text style={styles.notesDateText}>
-                        {new Date(data.created_at).toDateString()}
-                    </Text>
+
                 </View>
+                <View><Text></Text></View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <TouchableOpacity style={styles.takeNotesLabel}>
-                        <Text style={styles.takeNotes}>TAKE NOTES</Text>
+                    <TouchableOpacity style={styles.takeNotesLabel} onPress={() => { handleSermonNotes(true) }}>
+                        <Text style={{ ...styles.takeNotes , color:notesColor}} >TAKE NOTES</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.takeNotesLabel}>
-                        <Text style={styles.sermonNotes} onPress={handleSermonNotes}>SERMON NOTES</Text>
+                    <TouchableOpacity style={styles.takeNotesLabel} onPress={() => { handleSermonNotes(false) }}>
+                        <Text style={{ ...styles.sermonNotes, color:sermonColor }} >SERMON NOTES</Text>
                     </TouchableOpacity>
                 </View>
-                <TextInput
-                    style={styles.notesTextArea}
-                    multiline={true}
-                    value={content}
-                    onChangeText={setContent}
-                />
-
+                
+               <ScrollView>
+                    {editableText ? (  <TextInput
+                        style={styles.notesInput}
+                        multiline={true}
+                        value={content}
+                        onChangeText={setContent}
+                        editable={editableText}
+                    />) : 
+                        (<Text style={styles.sermonTextArea}>{data.text}</Text>)}
+                </ScrollView> 
+                
 
                 <Pressable style={styles.submitNotesButton} onPress={saveNotes}>
                     <Text style={styles.submitNotes}> Add Notes</Text>
