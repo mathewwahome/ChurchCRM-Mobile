@@ -13,7 +13,8 @@ import axios from "axios";
 import { View, Text } from "react-native";
 import EventsScreen from "./navigation/screens/EventsScreen";
 
-import AnnouncementView from "./navigation/screens/announcements/AnnouncementView";
+import AnnouncementView from "./navigation/screens/view/AnnouncementView";
+import VideoPlayer from "./navigation/screens/view/VideoPlayer";
 
 import SermonNotes from "./navigation/screens/SermonNotes";
 
