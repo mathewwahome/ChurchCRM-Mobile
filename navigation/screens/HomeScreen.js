@@ -14,8 +14,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 
 export default function HomeScreen({ navigation }) {
-  const BASE_URL = "https://8b4b-41-90-178-75.ngrok-free.app/api/";
-  const FILe_BASE = "https://8b4b-41-90-178-75.ngrok-free.app/";
+
+  const BASE_URL = "https://3829-197-232-61-194.ngrok-free.app/api/";
+  const FILe_BASE = "https://3829-197-232-61-194.ngrok-free.app";
+
   const [sermonsData, setSermonsData] = useState([]);
   const [sermonNotesData, setSermonNotesData] = useState([]);
 

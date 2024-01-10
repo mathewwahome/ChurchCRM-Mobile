@@ -117,6 +117,27 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 8,
 
+  },
+
+  // SermonNotes Page
+  takeNotesLabel: {
+    display: "flex",
+  },
+
+  takeNotes: {
+    alignSelf: "flex-start",
+    color: "#087E8B",
+    fontSize: 14,
+    fontWeight: "900",
+    paddingBottom: 10,
+  },
+  sermonNotes: {
+    alignSelf: "flex-end",
+    color: "#087E8B",
+    fontSize: 14,
+    fontWeight: "900",
+    paddingBottom: 10,
   }
+
 });
 export { styles };

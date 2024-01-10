@@ -12,7 +12,10 @@ import DocumentViewer from "./navigation/screens/DocumentViewer";
 import axios from "axios";
 import { View, Text } from "react-native";
 import EventsScreen from "./navigation/screens/EventsScreen";
+
 import AnnouncementView from "./navigation/screens/announcements/AnnouncementView";
+
+import SermonNotes from "./navigation/screens/SermonNotes";
 
 
 const Stack = createStackNavigator();
@@ -34,6 +37,8 @@ function App() {
         <Stack.Screen name="ProfileScreen" children={() => <ProfileScreen userId={userId} />} />
         <Stack.Screen name="SettingScreen" component={SettingScreen} />
         <Stack.Screen name="NewNotes" children={() => <NewNotes userId={userId} />} />
+        <Stack.Screen name="SermonNotes" component={SermonNotes} />
+
         <Stack.Screen name="DocumentViewer" component={DocumentViewer} />
         <Stack.Screen name="EventsScreen" component={EventsScreen} />
         <Stack.Screen name="AnnouncementView" component={AnnouncementView} />
