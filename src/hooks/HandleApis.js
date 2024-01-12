@@ -7,7 +7,7 @@ const config = {
   'Content-Type': 'application/json',
 };
 
-const handleLogin = async (email, password, setUserId, navigation) => {
+export const handleLogin = async (email, password, setUserId, navigation) => {
   try {
     const response = await axios.post(`${API_URL}`, {
       email,
@@ -21,5 +21,3 @@ const handleLogin = async (email, password, setUserId, navigation) => {
     console.error('Login failed:', error);
   }
 };
-
-export default handleLogin;

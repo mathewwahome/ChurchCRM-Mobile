@@ -12,9 +12,10 @@ import {
   View,
   Pressable,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
-import handleLogin from '../../hooks/HandleLogin';
+import handleLogin from '../../hooks/HandleApis';
+import Icon from '../../ui/components/icon';
+import { primary, accent, black } from '../../utilities/colors';
 
 export default function LoginScreen({setUserId}) {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +33,7 @@ export default function LoginScreen({setUserId}) {
   };
 
   return (
-    <View style={{padding: 20}}>
+    <View style={{padding: 60}}>
       <ScrollView>
         <View style={styles.img_view}>
           <Image
@@ -45,7 +46,7 @@ export default function LoginScreen({setUserId}) {
           <SafeAreaView style={styles.login_form}>
             <Text style={styles.login_text}>Enter Email & Password</Text>
             <View style={styles.inputContainer}>
-              <Icon name="phone" size={20} color="black" style={styles.icon} />
+              <Icon name="email" size={20} color="black" style={styles.icon} />
               <TextInput
                 style={styles.input}
                 placeholder="Email"
@@ -66,7 +67,7 @@ export default function LoginScreen({setUserId}) {
                 onPress={togglePasswordVisibility}
                 style={styles.iconContainer}>
                 <Icon
-                  name={showPassword ? 'visibility-off' : 'visibility'}
+                  name={email ? 'visibility-off' : 'visibility'}
                   size={20}
                   color="black"
                   style={styles.icon}
@@ -89,8 +90,9 @@ export default function LoginScreen({setUserId}) {
             </Pressable>
             <Text
               style={{
-                color: 'blue',
-                fontWeight: '900',
+                color: accent,
+                textDecorationLine: 'underline',
+                fontWeight: '500',
                 fontSize: 18,
                 alignSelf: 'center',
                 marginTop: 30,
@@ -112,21 +114,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   img: {
-    width: 150,
+    width: 120,
     height: 150,
     // resizeMode: "contain",
   },
 
   login_view: {
-    paddingTop: 80,
+    paddingTop: 40,
     paddingBottom: 80,
     width: '100%',
   },
   login_text: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: 'sans-serif',
-    fontWeight: '900',
-    color: 'blue',
+    fontWeight: '700',
+    color: black,
   },
   inputContainer: {
     flexDirection: 'row',
