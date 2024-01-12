@@ -148,4 +148,5 @@ Icon.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   color: PropTypes.string,
 };
+
 export default Icon;
