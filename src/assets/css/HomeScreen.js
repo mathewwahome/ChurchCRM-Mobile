@@ -19,13 +19,21 @@ const styles = StyleSheet.create({
   },
   TextStyle: {
     fontSize: 18,
-    fontWeight: '700',
+    fontWeight: '500',
+    textAlign: 'center',
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   headingText: {
     fontSize: 18,
     fontWeight: '900',
     marginTop: 30,
     color: 'green',
+  },
+  loadingText: {
+    fontSize: 18,
+    color: 'white',
+    textAlign: 'center',
   },
 });
 export {styles};
