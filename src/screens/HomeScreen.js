@@ -14,7 +14,6 @@ import {getVerseOfTheDay} from '../hooks/verseOfTheDay';
 import {
   URL,
   FILE_BASE,
-  generateUrl,
   sermonsUrl,
   sermonNotesUrl,
   announcementsUrl,
@@ -23,51 +22,51 @@ import {
 const Stack = createStackNavigator();
 
 export default function HomeScreen({navigation}) {
-  const [sermonsData, setSermonsData] = useState([]);
-  const [sermonNotesData, setSermonNotesData] = useState([]);
+  const [data, setData] = useState({
+    sermons: [],
+    sermonNotes: [],
+    announcements: [],
+    sermonsLoading: true,
+    sermonNotesLoading: true,
+    announcementsLoading: true,
+    loading: true,
+  });
 
-  const [AnnouncementsData, setAnnouncementsData] = useState([]);
-
-  const [sermonsLoading, setSermonsLoading] = useState(true);
-  const [sermonNotesLoading, setsermonNotesLoading] = useState(true);
-
-  const [AnnouncementsLoading, setAnnouncementsLoading] = useState(true);
-
-  const [verseData, setVerseData] = useState({citation: '', passage: ''});
-  const [loading, setLoading] = useState(true);
+  const [verseData, setVerseData] = useState({
+    verse: {citation: '', passage: ''},
+    loading: true,
+  });
 
   useEffect(() => {
-    const fetchVerseOfTheDay = async () => {
+    const fetchData = (URL, key, setLoading) => {
+      fetch(URL)
+        .then(response => response.json())
+        .then(json => {
+          setData(prevData => ({...prevData, [key]: json}));
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error(`Error fetching data from ${URL}:`, error);
+          setLoading(false);
+        });
+    };
+
+    const fetchAllData = async () => {
       try {
         const verse = await getVerseOfTheDay();
-        setVerseData(verse);
+        setVerseData(prevData => ({...prevData, verse}));
       } catch (error) {
         console.error('Error fetching verse:', error);
       } finally {
-        setLoading(false);
+        setVerseData(prevData => ({...prevData, loading: false}));
       }
+
+      fetchData(sermonsUrl, 'sermons', setData);
+      fetchData(sermonNotesUrl, 'sermonNotes', setData);
+      fetchData(announcementsUrl, 'announcements', setData);
     };
 
-    fetchVerseOfTheDay();
-  }, []);
-
-  const fetchData = (url, setData, setLoading) => {
-    fetch(url)
-      .then(response => response.json())
-      .then(json => {
-        setData(json);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error(`Error fetching data from ${url}:`, error);
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchData(sermonsUrl, setSermonsData, setSermonsLoading);
-    fetchData(sermonNotesUrl, setSermonNotesData, setsermonNotesLoading);
-    fetchData(announcementsUrl, setAnnouncementsData, setAnnouncementsLoading);
+    fetchAllData();
   }, []);
 
   return (
@@ -76,14 +75,27 @@ export default function HomeScreen({navigation}) {
         source={require('../assets/images/bg.jpg')}
         style={styles.backgroundImage}>
         <View style={styles.view}>
-          {loading ? (
+          {verseData.loading ? (
             <Text style={styles.loadingText}>Verse of the day loading...</Text>
           ) : (
             <>
-              <Text style={styles.TextStyle}>{verseData.passage}</Text>
-              <Text style={{fontSize: 18, fontWeight: '700', marginTop: 30}}>
-                {verseData.citation}
-              </Text>
+              {verseData.verse && verseData.verse.passage ? (
+                <>
+                  <Text style={styles.TextStyle}>
+                    {verseData.verse.passage}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: '700',
+                      marginTop: 30,
+                    }}>
+                    {verseData.verse.citation}
+                  </Text>
+                </>
+              ) : (
+                <Text style={styles.loadingText}>Verse not available</Text>
+              )}
             </>
           )}
         </View>
@@ -91,18 +103,17 @@ export default function HomeScreen({navigation}) {
 
       <View style={{padding: 10}}>
         <Text style={styles.headingText}>Announcements</Text>
-
         <ScrollView horizontal={true}>
-          {AnnouncementsLoading ? (
+          {data.announcementsLoading ? (
             <Text>Loading Announcements...</Text>
-          ) : (
-            AnnouncementsData.map(announcements => (
+          ) : data.announcements && data.announcements.length > 0 ? (
+            data.announcements.map(announcements => (
               <TouchableOpacity
                 key={announcements.id}
                 onPress={() =>
                   navigation.navigate('AnnouncementView', {
                     announcement: announcements,
-                    imageUri: `${FILe_BASE}Announcements/${announcements.poster}`,
+                    imageUri: `${FILE_BASE}Announcements/${announcements.poster}`,
                   })
                 }>
                 <View>
@@ -111,7 +122,7 @@ export default function HomeScreen({navigation}) {
                       <Image
                         style={styles.image}
                         source={{
-                          uri: `${FILe_BASE}Announcements/${announcements.poster}`,
+                          uri: `${FILE_BASE}Announcements/${announcements.poster}`,
                         }}
                       />
                       <Text>
@@ -131,14 +142,17 @@ export default function HomeScreen({navigation}) {
                 </View>
               </TouchableOpacity>
             ))
+          ) : (
+            <Text>No announcements available</Text>
           )}
         </ScrollView>
+
         <Text style={styles.headingText}>Sermons</Text>
         <ScrollView horizontal={true}>
-          {sermonsLoading ? (
+          {data.sermonsLoading ? (
             <Text>Loading sermons...</Text>
-          ) : (
-            sermonsData.map(sermon => (
+          ) : data.sermons && data.sermons.length > 0 ? (
+            data.sermons.map(sermon => (
               <TouchableOpacity
                 key={sermon.id}
                 onPress={() =>
@@ -150,7 +164,7 @@ export default function HomeScreen({navigation}) {
                       <Image
                         style={styles.image}
                         source={{
-                          uri: `${FILe_BASE}SermonThumbnails/${sermon.Thumbnail}`,
+                          uri: `${FILE_BASE}SermonThumbnails/${sermon.Thumbnail}`,
                         }}
                       />
                       <Text>
@@ -170,6 +184,8 @@ export default function HomeScreen({navigation}) {
                 </View>
               </TouchableOpacity>
             ))
+          ) : (
+            <Text>No Sermons available</Text>
           )}
         </ScrollView>
       </View>
@@ -180,10 +196,10 @@ export default function HomeScreen({navigation}) {
         }}>
         <Text style={styles.headingText}>Sermon Notes</Text>
         <ScrollView horizontal={true}>
-          {sermonNotesLoading ? (
+          {data.sermonNotesLoading ? (
             <Text>Loading sermon Notes...</Text>
-          ) : (
-            sermonNotesData.map(sermonnotes => (
+          ) : data.sermonNotes && data.sermonNotes.length > 0 ? (
+            data.sermonNotes.map(sermonnotes => (
               <View key={sermonnotes.id}>
                 <View style={{flexDirection: 'row', padding: 10}}>
                   <View style={{marginRight: 10}}>
@@ -207,6 +223,8 @@ export default function HomeScreen({navigation}) {
                 </View>
               </View>
             ))
+          ) : (
+            <Text>No Sermon Notes available</Text>
           )}
         </ScrollView>
       </View>
