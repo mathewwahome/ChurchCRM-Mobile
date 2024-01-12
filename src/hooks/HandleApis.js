@@ -25,7 +25,7 @@ export const handleLogin = async (email, password, setUserId, navigation) => {
 export const URL = 'https://39af-197-232-61-198.ngrok-free.app/api/';
 export const FILE_BASE = 'https://39af-197-232-61-198.ngrok-free.app';
 
-export const generateUrl = endpoint => {
+const generateUrl = endpoint => {
   return `${URL}${endpoint}`;
 };
 
