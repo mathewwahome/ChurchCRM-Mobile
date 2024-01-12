@@ -27,12 +27,19 @@ export default function HomeScreen({navigation}) {
 
   const [AnnouncementsLoading, setAnnouncementsLoading] = useState(true);
 
-  const [verseData, setVerseData] = useState({ citation: '', passage: '' });
+  const [verseData, setVerseData] = useState({citation: '', passage: ''});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchVerseOfTheDay = async () => {
-      const verse = await getVerseOfTheDay();
-      setVerseData(verse);
+      try {
+        const verse = await getVerseOfTheDay();
+        setVerseData(verse);
+      } catch (error) {
+        console.error('Error fetching verse:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchVerseOfTheDay();
@@ -77,10 +84,16 @@ export default function HomeScreen({navigation}) {
         source={require('../assets/images/bg.jpg')}
         style={styles.backgroundImage}>
         <View style={styles.view}>
-        <Text style={styles.TextStyle}>{verseData.passage}</Text>
-        <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 30 }}>
-          {verseData.citation}
-        </Text>
+          {loading ? (
+            <Text style={styles.loadingText}>Verse of the day loading...</Text>
+          ) : (
+            <>
+              <Text style={styles.TextStyle}>{verseData.passage}</Text>
+              <Text style={{fontSize: 18, fontWeight: '700', marginTop: 30}}>
+                {verseData.citation}
+              </Text>
+            </>
+          )}
         </View>
       </ImageBackground>
 
