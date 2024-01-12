@@ -10,6 +10,7 @@ import {
 import {styles} from '../assets/css/HomeScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {getVerseOfTheDay} from '../hooks/verseOfTheDay';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,17 @@ export default function HomeScreen({navigation}) {
   const [sermonNotesLoading, setsermonNotesLoading] = useState(true);
 
   const [AnnouncementsLoading, setAnnouncementsLoading] = useState(true);
+
+  const [verseData, setVerseData] = useState({ citation: '', passage: '' });
+
+  useEffect(() => {
+    const fetchVerseOfTheDay = async () => {
+      const verse = await getVerseOfTheDay();
+      setVerseData(verse);
+    };
+
+    fetchVerseOfTheDay();
+  }, []);
 
   const generateUrl = endpoint => {
     return `${BASE_URL}${endpoint}`;
@@ -65,21 +77,10 @@ export default function HomeScreen({navigation}) {
         source={require('../assets/images/bg.jpg')}
         style={styles.backgroundImage}>
         <View style={styles.view}>
-          <Text style={styles.TextStyle}>
-            For I Know the plans I have {'\n'}
-            for you, declares the{'\n'}
-            Lord, plans for welfare and{'\n'}
-            not for evil, to give you a{'\n'}
-            future and hope.
-          </Text>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: '700',
-              marginTop: 30,
-            }}>
-            Jeremiah 29:11
-          </Text>
+        <Text style={styles.TextStyle}>{verseData.passage}</Text>
+        <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 30 }}>
+          {verseData.citation}
+        </Text>
         </View>
       </ImageBackground>
 
