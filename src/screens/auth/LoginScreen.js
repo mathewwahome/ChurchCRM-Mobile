@@ -14,7 +14,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import handleLogin from '../../hooks/HandleApis';
 import Icon from '../../ui/components/icon';
-import {accent, black } from '../../utilities/colors';
+import {accent, black} from '../../utilities/colors';
 
 export default function LoginScreen({setUserId}) {
   const [showPassword, setShowPassword] = useState(false);
