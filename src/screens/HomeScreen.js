@@ -11,12 +11,18 @@ import {styles} from '../assets/css/HomeScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {getVerseOfTheDay} from '../hooks/verseOfTheDay';
+import {
+  URL,
+  FILE_BASE,
+  generateUrl,
+  sermonsUrl,
+  sermonNotesUrl,
+  announcementsUrl,
+} from '../hooks/HandleApis';
 
 const Stack = createStackNavigator();
 
 export default function HomeScreen({navigation}) {
-  const BASE_URL = 'https://39af-197-232-61-198.ngrok-free.app/api/';
-  const FILe_BASE = 'https://39af-197-232-61-198.ngrok-free.app';
   const [sermonsData, setSermonsData] = useState([]);
   const [sermonNotesData, setSermonNotesData] = useState([]);
 
@@ -45,14 +51,6 @@ export default function HomeScreen({navigation}) {
     fetchVerseOfTheDay();
   }, []);
 
-  const generateUrl = endpoint => {
-    return `${BASE_URL}${endpoint}`;
-  };
-
-  const sermonsUrl = generateUrl('fetchSermons');
-  const sermonNotesUrl = generateUrl('fetchSermonnotes');
-  const announcementsUrl = generateUrl('fetchAnnouncements');
-
   const fetchData = (url, setData, setLoading) => {
     fetch(url)
       .then(response => response.json())
@@ -68,13 +66,7 @@ export default function HomeScreen({navigation}) {
 
   useEffect(() => {
     fetchData(sermonsUrl, setSermonsData, setSermonsLoading);
-  }, []);
-
-  useEffect(() => {
     fetchData(sermonNotesUrl, setSermonNotesData, setsermonNotesLoading);
-  }, []);
-
-  useEffect(() => {
     fetchData(announcementsUrl, setAnnouncementsData, setAnnouncementsLoading);
   }, []);
 

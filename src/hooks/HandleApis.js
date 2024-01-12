@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-export const BASE_URL = 'https://39af-197-232-61-198.ngrok-free.app';
-export const API_URL = `${BASE_URL}/api/login`;
 const config = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
 };
 
 export const handleLogin = async (email, password, setUserId, navigation) => {
+  const BASE_URL = 'https://39af-197-232-61-198.ngrok-free.app';
+  const API_URL = `${BASE_URL}/api/login`;
   try {
     const response = await axios.post(`${API_URL}`, {
       email,
@@ -21,3 +21,14 @@ export const handleLogin = async (email, password, setUserId, navigation) => {
     console.error('Login failed:', error);
   }
 };
+
+export const URL = 'https://39af-197-232-61-198.ngrok-free.app/api/';
+export const FILE_BASE = 'https://39af-197-232-61-198.ngrok-free.app';
+
+export const generateUrl = endpoint => {
+  return `${URL}${endpoint}`;
+};
+
+export const sermonsUrl = generateUrl('fetchSermons');
+export const sermonNotesUrl = generateUrl('fetchSermonnotes');
+export const announcementsUrl = generateUrl('fetchAnnouncements');
