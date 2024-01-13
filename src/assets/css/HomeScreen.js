@@ -11,6 +11,11 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 10,
   },
+  verseImage: {
+    width: '100%',
+    height: 20,
+    borderRadius: 10,
+  },
   view: {
     flex: 1,
     alignItems: 'center',

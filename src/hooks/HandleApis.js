@@ -1,4 +1,5 @@
 import axios from 'axios';
+import React, {useEffect, useState} from 'react';
 
 const config = {
   Accept: 'application/json',
@@ -22,13 +23,51 @@ export const handleLogin = async (email, password, setUserId, navigation) => {
   }
 };
 
-export const URL = 'https://39af-197-232-61-198.ngrok-free.app/api/';
 export const FILE_BASE = 'https://39af-197-232-61-198.ngrok-free.app';
 
-const generateUrl = endpoint => {
-  return `${URL}${endpoint}`;
-};
+export const HandleDataLoading = () => {
+  const URL = 'https://39af-197-232-61-198.ngrok-free.app/api/';
 
-export const sermonsUrl = generateUrl('fetchSermons');
-export const sermonNotesUrl = generateUrl('fetchSermonnotes');
-export const announcementsUrl = generateUrl('fetchAnnouncements');
+  const generateUrl = endpoint => {
+    return `${URL}${endpoint}`;
+  };
+
+  const sermonsUrl = generateUrl('fetchSermons');
+  const sermonNotesUrl = generateUrl('fetchSermonnotes');
+  const announcementsUrl = generateUrl('fetchAnnouncements');
+
+  const [data, setData] = useState({
+    sermons: [],
+    sermonNotes: [],
+    announcements: [],
+    sermonsLoading: true,
+    sermonNotesLoading: true,
+    announcementsLoading: true,
+    loading: true,
+  });
+
+  useEffect(() => {
+    const fetchData = (URL, key, setLoading) => {
+      fetch(URL)
+        .then(response => response.json())
+        .then(json => {
+          setData(prevData => ({...prevData, [key]: json}));
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error(`Error fetching data from ${URL}:`, error);
+          setLoading(false);
+        });
+    };
+
+    const fetchAllData = async () => {
+      fetchData(sermonsUrl, 'sermons', setData);
+      fetchData(sermonNotesUrl, 'sermonNotes', setData);
+      fetchData(announcementsUrl, 'announcements', setData);
+    };
+
+    fetchAllData();
+  }, []);
+
+  return { data };
+};
