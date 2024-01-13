@@ -86,13 +86,22 @@ export default function SignupScreen() {
             </View>
 
             <TouchableOpacity
-              onPress={handleRegister}
+              onPress={() =>
+                handleRegister(
+                  userData.name,
+                  userData.email,
+                  userData.phone,
+                  userData.password,
+                  userData.confirm_password,
+                  navigation,
+                )
+              }
               title="Submit"
               style={styles.touchButton}>
               <Text style={{fontSize: 20, color: 'white'}}>Sign up</Text>
             </TouchableOpacity>
 
-            <View style={{flexDirection: 'row', alignSelf: 'center',}}>
+            <View style={{flexDirection: 'row', alignSelf: 'center'}}>
               <Text
                 style={{
                   color: 'blue',
@@ -103,7 +112,16 @@ export default function SignupScreen() {
                 Have an account?
               </Text>
               <Pressable onPress={handleLogin}>
-                <Text style={{fontSize: 20, marginTop: 28, textDecorationLine: 'underline', color: 'black'}}> Login</Text>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    marginTop: 28,
+                    textDecorationLine: 'underline',
+                    color: 'black',
+                  }}>
+                  {' '}
+                  Login
+                </Text>
               </Pressable>
             </View>
           </SafeAreaView>
