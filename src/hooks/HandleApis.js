@@ -30,6 +30,7 @@ export const handleRegister = async (
   phone,
   password,
   confirm_password,
+  navigation,
 ) => {
   try {
     const response = await axios.post(
@@ -49,10 +50,7 @@ export const handleRegister = async (
       console.error('Registration failed: No data in the response');
     }
   } catch (error) {
-    console.error(
-      'Registration failed:',
-      error.response ? error.response.data.errors : error.message,
-    );
+    console.error('Registration failed:', error);
   }
 };
 
