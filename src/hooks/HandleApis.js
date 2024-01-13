@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 const config = {
   Accept: 'application/json',
@@ -20,6 +21,38 @@ export const handleLogin = async (email, password, setUserId, navigation) => {
     navigation.navigate('MainContainer');
   } catch (error) {
     console.error('Login failed:', error);
+  }
+};
+
+export const handleRegister = async (
+  name,
+  email,
+  phone,
+  password,
+  confirm_password,
+) => {
+  try {
+    const response = await axios.post(
+      'https://2b2c-197-232-61-232.ngrok-free.app/api/register',
+      {
+        name,
+        email,
+        phone,
+        password,
+        confirm_password,
+      },
+    );
+    if (response && response.data) {
+      const token = response.data.token;
+      navigation.navigate('MainContainer');
+    } else {
+      console.error('Registration failed: No data in the response');
+    }
+  } catch (error) {
+    console.error(
+      'Registration failed:',
+      error.response ? error.response.data.errors : error.message,
+    );
   }
 };
 
@@ -69,5 +102,5 @@ export const HandleDataLoading = () => {
     fetchAllData();
   }, []);
 
-  return { data };
+  return {data};
 };
