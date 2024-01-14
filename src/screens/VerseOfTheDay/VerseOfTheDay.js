@@ -1,5 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, ImageBackground} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  Share,
+  Clipboard,
+} from 'react-native';
 import {styles} from '../../assets/css/HomeScreen';
 import {getVerseOfTheDayWithImage} from '../../hooks/verseOfTheDay';
 
@@ -46,6 +54,22 @@ export default function VerseOfTheDay({navigation}) {
     updateAtMidnight();
   }, []);
 
+  const shareContent = async () => {
+    try {
+      const message = `${verseData.verse.passage}\n${verseData.verse.citation}`;
+      const url = verseData.imageUrl;
+      await Share.share({message, url});
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  };
+
+  const copyToClipboard = () => {
+    const verseToCopy = `${verseData.verse.passage}\n${verseData.verse.citation}`;
+    Clipboard.setString(verseToCopy);
+    alert('Verse copied to clipboard!');
+  };
+
   return (
     <ImageBackground
       source={require('../../assets/images/bg.jpg')}
@@ -72,6 +96,12 @@ export default function VerseOfTheDay({navigation}) {
                     source={{uri: verseData.imageUrl}}
                   />
                 ) : null}
+                <TouchableOpacity
+                  onPress={shareContent}
+                  style={styles.shareButtonContainer}
+                >
+                  <Text style={styles.shareButton}>Share</Text>
+                </TouchableOpacity>
               </>
             ) : (
               <Text style={styles.loadingText}>

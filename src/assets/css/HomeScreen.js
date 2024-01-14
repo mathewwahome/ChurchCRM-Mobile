@@ -40,5 +40,17 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
   },
+  shareButtonContainer: {
+    backgroundColor: 'blue',
+    padding: 5,
+    borderRadius: 5,
+  },
+
+  shareButton: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'italic',
+    textAlign: 'center',
+  },
 });
 export {styles};

@@ -26,6 +26,7 @@ export async function getVerseOfTheDayWithImage() {
 
     const imageUrl = $('img').attr('src');
     imageArray.push(imageUrl);
+    console.log('Image URL:', imageUrl);
 
     return {
       citation: citationsArray[1],
