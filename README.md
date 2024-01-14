@@ -3,7 +3,14 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
-
+## Installing Project dependencies.
+## Step : Project Dependencies:
+   - Navigate to your project directory in the terminal.
+   - Install project dependencies by running:
+        ```bash
+        npm install
+        ```
+## Running the Project.
 ## Step 1: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
@@ -45,6 +52,18 @@ yarn ios
 If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+You can also run it from your Android device.
+1. Connect your Android device to your computer using a USB cable.
+2. Enable USB debugging from settings > Developers options.
+   If you can`t see Developers options.
+      <ul>
+         <li>On your Android device, go to the "Settings" app.</li>
+        <li>Scroll down and select "About phone" or "About device."</li>
+        <li>Find the "Build number" entry and tap it seven times to enable Developer options.</li>
+        <li>Go back to the main settings menu, and you should see "Developer options" now.</li>
+        <li>Open "Developer options" and enable "USB debugging."</li>
+      </ul>
+4. Follow the same steps (##  Step 1, ## step 2).
 
 ## Step 3: Modifying your App
 
@@ -54,6 +73,18 @@ Now that you have successfully run the app, let's modify it.
 2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
 
    For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+
+## Creating APKs
+## 1. Build Release APK:
+    - To create a release build APK, run:
+     ```bash
+     cd android && ./gradlew bundleRelease
+     ```
+
+   _Note: Adjust the path based on your project structure._
+## 2. Locate the APK:
+   - Find the generated APK in the `android/app/build/outputs/bundle/release/` directory.
+
 
 ## Congratulations! :tada:
 
