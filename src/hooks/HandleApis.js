@@ -6,12 +6,12 @@ const config = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
 };
-
+const BASE_URL = 'https://39af-197-232-61-198.ngrok-free.app';
+export const FILE_BASE = BASE_URL;
+export const API_URL = `${BASE_URL}/api/login`;
 export const handleLogin = async (email, password, setUserId, navigation) => {
-  const BASE_URL = 'https://39af-197-232-61-198.ngrok-free.app';
-  const API_URL = `${BASE_URL}/api/login`;
   try {
-    const response = await axios.post(`${API_URL}`, {
+    const response = await axios.post(API_URL, {
       email,
       password,
     });
@@ -33,16 +33,13 @@ export const handleRegister = async (
   navigation,
 ) => {
   try {
-    const response = await axios.post(
-      'https://2b2c-197-232-61-232.ngrok-free.app/api/register',
-      {
-        name,
-        email,
-        phone,
-        password,
-        confirm_password,
-      },
-    );
+    const response = await axios.post(`${BASE_URL}/api/register`, {
+      name,
+      email,
+      phone,
+      password,
+      confirm_password,
+    });
     if (response && response.data) {
       const token = response.data.token;
       navigation.navigate('MainContainer');
@@ -54,10 +51,9 @@ export const handleRegister = async (
   }
 };
 
-export const FILE_BASE = 'https://39af-197-232-61-198.ngrok-free.app';
 
 export const HandleDataLoading = () => {
-  const URL = 'https://39af-197-232-61-198.ngrok-free.app/api/';
+  const URL = `${BASE_URL}/api/`;
 
   const generateUrl = endpoint => {
     return `${URL}${endpoint}`;
@@ -82,7 +78,7 @@ export const HandleDataLoading = () => {
       fetch(URL)
         .then(response => response.json())
         .then(json => {
-          setData(prevData => ({...prevData, [key]: json}));
+          setData(prevData => ({ ...prevData, [key]: json }));
           setLoading(false);
         })
         .catch(error => {
@@ -100,5 +96,5 @@ export const HandleDataLoading = () => {
     fetchAllData();
   }, []);
 
-  return {data};
+  return { data };
 };
