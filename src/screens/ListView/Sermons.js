@@ -1,23 +1,41 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../../assets/css/HomeScreen';
 import {createStackNavigator} from '@react-navigation/stack';
-import {BASE_URL, HandleDataLoading} from '../../hooks/HandleApis';
+import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
 
 const Stack = createStackNavigator();
 
+export const fetchSermons = async () => {
+  return fetchDataByEndpoint('fetchSermons');
+};
+
 export default function Sermons({navigation}) {
-  const handleDataLoading = HandleDataLoading();
+  const [sermonsData, setSermonsData] = useState([]);
+  const [sermonsLoading, setSermonsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const sermon = await fetchSermons();
+        setSermonsData(sermon);
+        setSermonsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <View style={{padding: 10}}>
       <Text style={styles.headingText}>Sermons</Text>
       <ScrollView horizontal={true}>
-        {handleDataLoading.data.sermonsLoading ? (
+        {setSermonsData.sermonsLoading ? (
           <Text>Loading sermons...</Text>
-        ) : handleDataLoading.data.sermons &&
-          handleDataLoading.data.sermons.length > 0 ? (
-          handleDataLoading.data.sermons.map(sermon => (
+        ) : setSermonsData.sermons && setSermonsData.sermons.length > 0 ? (
+          setSermonsData.sermons.map(sermon => (
             <TouchableOpacity
               key={sermon.id}
               onPress={() =>
