@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../../assets/css/HomeScreen';
-import {createStackNavigator} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
 
 export const fetchAnnouncements = async () => {
   return fetchDataByEndpoint('fetchAnnouncements');
 };
 
-export default function Announcements({navigation}) {
+export default function Announcements() {
   const [announcementsData, setAnnouncementsData] = useState([]);
   const [announcementsLoading, setAnnouncementsLoading] = useState(true);
 
@@ -27,6 +27,8 @@ export default function Announcements({navigation}) {
 
     fetchData();
   }, []);
+
+  const navigation = useNavigation();
 
   return (
     <View style={{padding: 10}}>
