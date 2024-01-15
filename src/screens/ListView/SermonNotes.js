@@ -2,7 +2,7 @@ import React from 'react';
 import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../../assets/css/HomeScreen';
 import {createStackNavigator} from '@react-navigation/stack';
-import {FILE_BASE, HandleDataLoading} from '../../hooks/HandleApis';
+import {BASE_URL, HandleDataLoading} from '../../hooks/HandleApis';
 
 const Stack = createStackNavigator();
 

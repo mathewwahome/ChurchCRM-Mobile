@@ -19,7 +19,7 @@ export default function VerseOfTheDay({navigation}) {
   });
 
   useEffect(() => {
-    const fetchAllData = async () => {
+    const fetchAllVerse = async () => {
       try {
         const {passage, citation, imageUrl} = await getVerseOfTheDayWithImage();
         setVerseData({
@@ -33,7 +33,7 @@ export default function VerseOfTheDay({navigation}) {
       }
     };
 
-    fetchAllData();
+    fetchAllVerse();
 
     const updateAtMidnight = () => {
       const now = new Date();
@@ -43,10 +43,10 @@ export default function VerseOfTheDay({navigation}) {
       const timeUntilMidnight = midnight - now;
 
       setTimeout(() => {
-        fetchAllData();
+        fetchAllVerse();
 
         setInterval(() => {
-          fetchAllData();
+          fetchAllVerse();
         }, 24 * 60 * 60 * 1000);
       }, timeUntilMidnight);
     };

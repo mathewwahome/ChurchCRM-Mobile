@@ -1,29 +1,48 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../../assets/css/HomeScreen';
 import {createStackNavigator} from '@react-navigation/stack';
-import {FILE_BASE, HandleDataLoading} from '../../hooks/HandleApis';
+import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
 
 const Stack = createStackNavigator();
 
+export const fetchAnnouncements = async () => {
+  return fetchDataByEndpoint('fetchAnnouncements');
+};
+
 export default function Announcements({navigation}) {
-  const handleDataLoading = HandleDataLoading();
+  const [announcementsData, setAnnouncementsData] = useState([]);
+  const [announcementsLoading, setAnnouncementsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const announcements = await fetchAnnouncements();
+        setAnnouncementsData(announcements);
+        setAnnouncementsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <View style={{padding: 10}}>
       <Text style={styles.headingText}>Announcements</Text>
+
       <ScrollView horizontal={true}>
-        {handleDataLoading.data.announcementsLoading ? (
+        {announcementsLoading ? (
           <Text>Loading Announcements...</Text>
-        ) : handleDataLoading.data.announcements &&
-          handleDataLoading.data.announcements.length > 0 ? (
-          handleDataLoading.data.announcements.map(announcements => (
+        ) : announcementsData && announcementsData.length > 0 ? (
+          announcementsData.map(announcements => (
             <TouchableOpacity
               key={announcements.id}
               onPress={() =>
                 navigation.navigate('AnnouncementView', {
                   announcement: announcements,
-                  imageUri: `${FILE_BASE}Announcements/${announcements.poster}`,
+                  imageUri: `${BASE_URL}/Announcements/${announcements.poster}`,
                 })
               }>
               <View>
@@ -32,7 +51,7 @@ export default function Announcements({navigation}) {
                     <Image
                       style={styles.image}
                       source={{
-                        uri: `${FILE_BASE}Announcements/${announcements.poster}`,
+                        uri: `${BASE_URL}/Announcements/${announcements.poster}`,
                       }}
                     />
                     <Text>
@@ -53,7 +72,7 @@ export default function Announcements({navigation}) {
             </TouchableOpacity>
           ))
         ) : (
-          <Text>No announcements available</Text>
+          <Text>Announcements Not available!</Text>
         )}
       </ScrollView>
     </View>

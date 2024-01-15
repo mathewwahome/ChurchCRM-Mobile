@@ -39,8 +39,8 @@ export default function HomeScreen({navigation}) {
       }>
       <VerseOfTheDay data={data.verseOfTheDay} />
       <Announcements data={data.announcements} />
-      <Sermons data={data.sermons} />
-      <SermonsNotes data={data.sermonNotes} />
+      {/* <Sermons data={data.sermons} />
+      <SermonsNotes data={data.sermonNotes} /> */}
     </ScrollView>
   );
 }
