@@ -6,12 +6,13 @@ const config = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
 };
-const BASE_URL = 'https://39af-197-232-61-198.ngrok-free.app';
+
+export const BASE_URL = 'http://karencommunitychurch.org:8089';
 export const FILE_BASE = BASE_URL;
-export const API_URL = `${BASE_URL}/api/login`;
+
 export const handleLogin = async (email, password, setUserId, navigation) => {
   try {
-    const response = await axios.post(API_URL, {
+    const response = await axios.post(`${BASE_URL}/api/login`, {
       email,
       password,
     });
@@ -21,6 +22,7 @@ export const handleLogin = async (email, password, setUserId, navigation) => {
     navigation.navigate('MainContainer');
   } catch (error) {
     console.error('Login failed:', error);
+    throw error;
   }
 };
 
@@ -29,7 +31,6 @@ export const handleRegister = async (
   email,
   phone,
   password,
-  confirm_password,
   navigation,
 ) => {
   try {
@@ -38,7 +39,6 @@ export const handleRegister = async (
       email,
       phone,
       password,
-      confirm_password,
     });
     if (response && response.data) {
       const token = response.data.token;
@@ -47,54 +47,24 @@ export const handleRegister = async (
       console.error('Registration failed: No data in the response');
     }
   } catch (error) {
-    console.error('Registration failed:', error);
+    console.error('Registration failed:', error.message || error);
   }
 };
 
+const URL = `${BASE_URL}/api/`;
 
-export const HandleDataLoading = () => {
-  const URL = `${BASE_URL}/api/`;
+const fetchData = async url => {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error fetching data from ${url}:`, error);
+    throw error;
+  }
+};
 
-  const generateUrl = endpoint => {
-    return `${URL}${endpoint}`;
-  };
-
-  const sermonsUrl = generateUrl('fetchSermons');
-  const sermonNotesUrl = generateUrl('fetchSermonnotes');
-  const announcementsUrl = generateUrl('fetchAnnouncements');
-
-  const [data, setData] = useState({
-    sermons: [],
-    sermonNotes: [],
-    announcements: [],
-    sermonsLoading: true,
-    sermonNotesLoading: true,
-    announcementsLoading: true,
-    loading: true,
-  });
-
-  useEffect(() => {
-    const fetchData = (URL, key, setLoading) => {
-      fetch(URL)
-        .then(response => response.json())
-        .then(json => {
-          setData(prevData => ({ ...prevData, [key]: json }));
-          setLoading(false);
-        })
-        .catch(error => {
-          console.error(`Error fetching data from ${URL}:`, error);
-          setLoading(false);
-        });
-    };
-
-    const fetchAllData = async () => {
-      fetchData(sermonsUrl, 'sermons', setData);
-      fetchData(sermonNotesUrl, 'sermonNotes', setData);
-      fetchData(announcementsUrl, 'announcements', setData);
-    };
-
-    fetchAllData();
-  }, []);
-
-  return { data };
+export const fetchDataByEndpoint = async endpoint => {
+  const url = `${URL}${endpoint}`;
+  return fetchData(url);
 };

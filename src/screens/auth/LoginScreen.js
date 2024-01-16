@@ -14,12 +14,17 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { handleLogin } from '../../hooks/HandleApis';
 import Icon from '../../ui/components/icon';
-import { accent, black } from '../../utilities/colors';
+import {accent, black} from '../../utilities/colors';
+import AppSnackbar from '../../hooks/SnackBar';
 
 export default function LoginScreen({ setUserId }) {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const appSnackbarRef = useRef();
+
+  const [userData, setUserData] = useState({
+    email: '',
+    password: '',
+  });
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -27,8 +32,29 @@ export default function LoginScreen({ setUserId }) {
 
   const navigation = useNavigation();
 
-  const onPressLogin = () => {
-    handleLogin(email, password, setUserId, navigation);
+  const onPressLogin = async () => {
+    try {
+      await handleLogin(
+        userData.email,
+        userData.password,
+        setUserId,
+        navigation,
+      );
+      appSnackbarRef.current.showSnackbar('Logged in successfully', 'success');
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        appSnackbarRef.current.showSnackbar(
+          'Wrong email or password',
+          'warning',
+        );
+      } else {
+        appSnackbarRef.current.showSnackbar(
+          'An unexpected error occurred. Please try again.',
+          'error',
+        );
+        console.error('Login failed:', error);
+      }
+    }
   };
 
   return (
@@ -45,32 +71,36 @@ export default function LoginScreen({ setUserId }) {
           <SafeAreaView style={styles.login_form}>
             <Text style={styles.login_text}>Enter Email & Password</Text>
             <View style={styles.inputContainer}>
-              <Icon name="email" size={20} color="black" style={styles.icon} />
+              {/* <Icon name="email" size={20} color="black" style={styles.icon} /> */}
               <TextInput
                 style={styles.input}
                 placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
+                value={userData.email}
+                onChangeText={text =>
+                  setUserData(data => ({...data, email: text}))
+                }
               />
             </View>
             <View style={styles.inputContainer}>
-              <Icon name="lock" size={20} color="black" style={styles.icon} />
+              {/* <Icon name="lock" size={20} color="black" style={styles.icon} /> */}
               <TextInput
                 style={styles.input}
                 placeholder="Password"
                 secureTextEntry={!showPassword}
-                value={password}
-                onChangeText={setPassword}
+                value={userData.password}
+                onChangeText={text =>
+                  setUserData(data => ({...data, password: text}))
+                }
               />
               <TouchableOpacity
                 onPress={togglePasswordVisibility}
                 style={styles.iconContainer}>
-                <Icon
+                {/* <Icon
                   name={email ? 'visibility-off' : 'visibility'}
                   size={20}
                   color="black"
                   style={styles.icon}
-                />
+                /> */}
               </TouchableOpacity>
             </View>
             <Pressable
@@ -100,6 +130,7 @@ export default function LoginScreen({ setUserId }) {
             </Text>
           </SafeAreaView>
         </View>
+        <AppSnackbar ref={appSnackbarRef} />
       </ScrollView>
     </View>
   );

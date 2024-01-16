@@ -24,7 +24,6 @@ export default function SignupScreen() {
     email: '',
     phone: '',
     password: '',
-    confirm_password: '',
   });
 
   const handleLogin = () => {
@@ -92,7 +91,6 @@ export default function SignupScreen() {
                   userData.email,
                   userData.phone,
                   userData.password,
-                  userData.confirm_password,
                   navigation,
                 )
               }
