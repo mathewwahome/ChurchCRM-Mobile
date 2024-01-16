@@ -16,6 +16,7 @@ import { handleLogin } from '../../hooks/HandleApis';
 import Icon from '../../ui/components/icon';
 import {accent, black} from '../../utilities/colors';
 import AppSnackbar from '../../hooks/SnackBar';
+import { useRef } from 'react';
 
 export default function LoginScreen({ setUserId }) {
   const [showPassword, setShowPassword] = useState(false);

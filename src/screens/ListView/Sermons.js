@@ -1,24 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../../assets/css/HomeScreen';
-import {createStackNavigator} from '@react-navigation/stack';
 import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
 
 export const fetchSermons = async () => {
   return fetchDataByEndpoint('fetchSermons');
 };
 
-export default function Sermons({navigation}) {
+export default function Sermons() {
   const [sermonsData, setSermonsData] = useState([]);
   const [sermonsLoading, setSermonsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const sermon = await fetchSermons();
-        setSermonsData(sermon);
+        const sermons = await fetchSermons();
+        setSermonsData(sermons);
         setSermonsLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -32,10 +31,10 @@ export default function Sermons({navigation}) {
     <View style={{padding: 10}}>
       <Text style={styles.headingText}>Sermons</Text>
       <ScrollView horizontal={true}>
-        {setSermonsData.sermonsLoading ? (
+        {sermonsLoading ? (
           <Text>Loading sermons...</Text>
-        ) : setSermonsData.sermons && setSermonsData.sermons.length > 0 ? (
-          setSermonsData.sermons.map(sermon => (
+        ) : sermonsData && sermonsData.length > 0 ? (
+          sermonsData.map(sermon => (
             <TouchableOpacity
               key={sermon.id}
               onPress={() =>
@@ -47,7 +46,7 @@ export default function Sermons({navigation}) {
                     <Image
                       style={styles.image}
                       source={{
-                        uri: `${BASE_URL}SermonThumbnails/${sermon.Thumbnail}`,
+                        uri: `${BASE_URL}/SermonThumbnails/${sermon.Thumbnail}`,
                       }}
                     />
                     <Text>
