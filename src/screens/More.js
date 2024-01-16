@@ -4,6 +4,7 @@ import axios from 'axios';
 import {ScrollView, View, Text, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../assets/css/MoreScreen';
+import {BASE_URL} from '../hooks/HandleApis';
 
 const menuItems = [
   {iconName: 'book', text: 'Saved Sermons', screenName: 'SavedSermonsScreen'},
@@ -30,7 +31,7 @@ export default function More({userId}) {
   useEffect(() => {
     if (userId) {
       axios
-        .get(`https://b73c-197-232-61-219.ngrok-free.app/api/profile/${userId}`)
+        .get(`${BASE_URL}/api/profile/${userId}`)
         .then(response => {
           setData(response.data);
         })

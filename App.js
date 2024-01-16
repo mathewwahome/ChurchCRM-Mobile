@@ -16,6 +16,8 @@ import {View, Text} from 'react-native';
 import EventsScreen from './src/screens/EventsScreen';
 
 import AnnouncementView from './src/screens/view/AnnouncementView';
+import EventView from './src/screens/view/EventView';
+
 import VideoPlayer from './src/screens/view/VideoPlayer';
 
 import SermonNotes from './src/screens/SermonNotes';
@@ -58,6 +60,7 @@ function App() {
           <Stack.Screen name="DocumentViewer" component={DocumentViewer} />
           <Stack.Screen name="EventsScreen" component={EventsScreen} />
           <Stack.Screen name="AnnouncementView" component={AnnouncementView} />
+          <Stack.Screen name="EventView" component={EventView} />
           <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
         </Stack.Navigator>
       </NavigationContainer>
