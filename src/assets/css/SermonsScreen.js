@@ -1,12 +1,12 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    resizeMode: "cover",
+    resizeMode: 'cover',
   },
   rowContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     padding: 10,
   },
   itemContainer: {
@@ -14,9 +14,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    width: "100%",
+    width: '100%',
     height: 200,
     borderRadius: 10,
   },
+  text: {
+    color: 'black',
+    fontSize: 18,
+    fontWeight: '900',
+  },
 });
-export { styles };
+export {styles};
