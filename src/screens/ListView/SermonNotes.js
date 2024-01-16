@@ -36,11 +36,11 @@ export default function SermonsNotes({navigation}) {
       }}>
       <Text style={styles.headingText}>Sermon Notes</Text>
       <ScrollView horizontal={true}>
-        {setSermonsNotesData.sermonNotesLoading ? (
+        {sermonsNotesLoading ? (
           <Text>Loading sermon Notes...</Text>
-        ) : setSermonsNotesData.sermonNotes &&
-          setSermonsNotesData.sermonNotes.length > 0 ? (
-          setSermonsNotesData.sermonNotes.map(sermonnotes => (
+        ) : sermonsNotesData &&
+          sermonsNotesData.length > 0 ? (
+          sermonsNotesData.map(sermonnotes => (
             <View key={sermonnotes.id}>
               <View style={{flexDirection: 'row', padding: 10}}>
                 <View style={{marginRight: 10}}>

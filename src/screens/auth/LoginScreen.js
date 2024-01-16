@@ -1,5 +1,4 @@
-import React, {useState, useRef} from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   TextInput,
@@ -12,14 +11,14 @@ import {
   View,
   Pressable,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {Snackbar} from 'react-native-paper';
-import {handleLogin} from '../../hooks/HandleApis';
+import { useNavigation } from '@react-navigation/native';
+import { handleLogin } from '../../hooks/HandleApis';
 import Icon from '../../ui/components/icon';
 import {accent, black} from '../../utilities/colors';
 import AppSnackbar from '../../hooks/SnackBar';
+import { useRef } from 'react';
 
-export default function LoginScreen({setUserId}) {
+export default function LoginScreen({ setUserId }) {
   const [showPassword, setShowPassword] = useState(false);
   const appSnackbarRef = useRef();
 
@@ -60,7 +59,7 @@ export default function LoginScreen({setUserId}) {
   };
 
   return (
-    <View style={{padding: 60}}>
+    <View style={{ padding: 60 }}>
       <ScrollView>
         <View style={styles.img_view}>
           <Image
@@ -117,7 +116,7 @@ export default function LoginScreen({setUserId}) {
                 marginTop: 30,
                 borderRadius: 30,
               }}>
-              <Text style={{fontSize: 20, color: 'white'}}>Login</Text>
+              <Text style={{ fontSize: 20, color: 'white' }}>Login</Text>
             </Pressable>
             <Text
               style={{
