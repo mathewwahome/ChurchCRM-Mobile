@@ -2,14 +2,15 @@ import React, {useEffect, useState} from 'react';
 import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../../assets/css/HomeScreen';
 import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
+import {useNavigation} from '@react-navigation/native';
 
-// const Stack = createStackNavigator();
 
 export const fetchSermons = async () => {
   return fetchDataByEndpoint('fetchSermons');
 };
 
 export default function Sermons() {
+  const navigation = useNavigation();
   const [sermonsData, setSermonsData] = useState([]);
   const [sermonsLoading, setSermonsLoading] = useState(true);
 
