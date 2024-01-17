@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {StatusBar} from 'expo-status-bar';
+import * as React from "react";
 import {
   StyleSheet,
   Image,
@@ -9,116 +8,41 @@ import {
   ScrollView,
   View,
   Pressable,
-} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { styles } from "./assets/css/AuthScreens";
+import { dailyVerse } from "./hooks/HandleApis";
+import { useState, useEffect } from "react";
+import Logo from "./utilities/Logo";
 
 export default function LandingScreen() {
   const navigation = useNavigation();
   const handleSignUp = () => {
-    navigation.navigate('SignupScreen');
+    navigation.navigate("SignupScreen");
   };
   const handleLogin = () => {
-    navigation.navigate('LoginScreen');
+    navigation.navigate("LoginScreen");
   };
   const screens = () => {
     navigation.navigate('MainContainer');
   };
 
-  const buttonStyle = {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: '#2390EF',
-    borderRadius: 20,
-    width: 300,
-    height: 40,
-    elevation: 5,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  };
-  const styles = StyleSheet.create({
-    img_view: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    img: {
-      width: 150,
-      height: 150,
-      resizeMode: 'contain',
-    },
-    verse_view: {
-      paddingTop: 80,
-      paddingBottom: 80,
-      width: '80%',
-      alignItems: 'center',
-    },
-    verse_text: {
-      fontSize: 20,
-      fontFamily: 'sans-serif',
-      marginBottom: 20,
-    },
-    verse: {
-      fontFamily: 'sans-serif',
-      fontSize: 20,
-      fontStyle: 'italic',
-      fontWeight: '900',
-    },
-    auth_btn: {
-      alignItems: 'center',
-    },
-    login_btn: {
-      paddingVertical: 10,
-      borderRadius: 20,
-      width: '80%',
-      height: 'auto',
-      elevation: 5,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 25,
-      borderWidth: 3,
-      borderColor: 'white',
-      backgroundColor: '#48A6F9',
-    },
-
-    signin_btn: {
-      paddingVertical: 10,
-      borderRadius: 20,
-      width: '80%',
-      height: 'auto',
-      elevation: 5,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 25,
-      borderWidth: 3,
-      borderColor: 'white',
-      backgroundColor: 'lightblue',
-    },
-
-    forgot_password: {
-      fontSize: 18,
-      marginTop: 30,
-      fontWeight: '900',
-    },
-  });
-
   return (
-    <View style={{paddingTop: 200}}>
+    <View style={styles.landing_screen_container}>
       <ScrollView>
         <View style={styles.img_view}>
-          <Image
-            style={styles.img}
-            source={require('./assets/images/kcc-logo.png')}
-          />
+          <Logo styles={styles.img}/>
         </View>
         <View style={styles.auth_btn}>
-          <Pressable onPress={handleLogin} style={styles.login_btn}>
-            <Text style={{fontSize: 20, color: 'white'}}>Login</Text>
-          </Pressable>
+          <TouchableOpacity onPress={handleLogin} style={styles.authentication_buttons}>
+            <Text style={styles.auth_btn_text}>Login</Text>
+          </TouchableOpacity>
 
-          <Pressable onPress={handleSignUp} style={styles.signin_btn}>
-            <Text style={{fontSize: 20, color: 'white'}}>Sign up</Text>
-          </Pressable>
+          <TouchableOpacity onPress={handleSignUp} style={styles.signin}>
+            <Text style={{ ...styles.auth_btn_text, color: "#0A7E8B" }}>Sign up</Text>
+          </TouchableOpacity>
+
           <Pressable onPress={screens}>
             <Text style={styles.forgot_password}>Forgot password?</Text>
           </Pressable>
