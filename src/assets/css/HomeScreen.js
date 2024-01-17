@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   image: {
-    width: '100%',
+    width: 150,
     height: 100,
     borderRadius: 10,
   },
@@ -51,6 +51,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'italic',
     textAlign: 'center',
+  },
+  text: {
+    color: 'black',
+    fontSize: 18,
+    fontWeight: '900',
+  },
+  //the announcement view page
+  container: {
+    flex: 1,
+    padding: 20,
   },
 });
 export {styles};

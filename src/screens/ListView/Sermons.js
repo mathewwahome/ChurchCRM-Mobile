@@ -59,8 +59,12 @@ export default function Sermons() {
                         },
                       )}
                     </Text>
-                    <Text>{sermon.Thumbnail}</Text>
-                    <Text>{sermon.Message}</Text>
+                    <Text style={styles.text}>
+                      {sermon.Title.slice(0, 15)}...
+                    </Text>
+                    <Text style={styles.text}>
+                      {sermon.Sermon_Description.slice(0, 15)}...
+                    </Text>
                   </View>
                 </View>
               </View>

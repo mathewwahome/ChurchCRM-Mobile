@@ -4,8 +4,6 @@ import {styles} from '../../assets/css/HomeScreen';
 import {useNavigation} from '@react-navigation/native';
 import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
 
-// const Stack = createStackNavigator();
-
 export const fetchAnnouncements = async () => {
   return fetchDataByEndpoint('fetchAnnouncements');
 };
@@ -66,8 +64,12 @@ export default function Announcements() {
                         },
                       )}
                     </Text>
-                    <Text>{announcements.Topic}</Text>
-                    <Text>{announcements.Message}</Text>
+                    <Text style={styles.text}>
+                      {announcements.Topic.slice(0, 15)}...
+                    </Text>
+                    <Text style={styles.text}>
+                      {announcements.Message.slice(0, 15)}...
+                    </Text>
                   </View>
                 </View>
               </View>
