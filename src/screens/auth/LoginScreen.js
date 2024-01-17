@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
   Image,
   Text,
   Button,
@@ -13,11 +12,12 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { handleLogin } from '../../hooks/HandleApis';
-import Icon from '../../ui/components/icon';
-import {accent, black} from '../../utilities/colors';
+import Icon  from '../../ui/components/icon';
+import { accent, black } from '../../utilities/colors';
 import AppSnackbar from '../../hooks/SnackBar';
 import { useRef } from 'react';
-
+import { styles } from '../../assets/css/AuthScreens';
+import Logo from '../../utilities/Logo';
 export default function LoginScreen({ setUserId }) {
   const [showPassword, setShowPassword] = useState(false);
   const appSnackbarRef = useRef();
@@ -59,38 +59,36 @@ export default function LoginScreen({ setUserId }) {
   };
 
   return (
-    <View style={{ padding: 60 }}>
+    <View style={{ padding: 20 }}>
       <ScrollView>
-        <View style={styles.img_view}>
-          <Image
-            style={styles.img}
-            source={require('../../assets/images/kcc-logo.png')}
-          />
+        <View style={styles.signup_img}>
+          <Logo styles={styles.signup_img}/>
         </View>
 
         <View style={styles.login_view}>
           <SafeAreaView style={styles.login_form}>
             <Text style={styles.login_text}>Enter Email & Password</Text>
-            <View style={styles.inputContainer}>
-              {/* <Icon name="email" size={20} color="black" style={styles.icon} /> */}
+            <View>
               <TextInput
-                style={styles.input}
+                style={styles.login_input}
                 placeholder="Email"
+                placeholderTextColor={"#b7b7b7"}
                 value={userData.email}
                 onChangeText={text =>
-                  setUserData(data => ({...data, email: text}))
+                  setUserData(data => ({ ...data, email: text }))
                 }
               />
             </View>
-            <View style={styles.inputContainer}>
+            <View>
               {/* <Icon name="lock" size={20} color="black" style={styles.icon} /> */}
               <TextInput
-                style={styles.input}
+                style={styles.login_input}
                 placeholder="Password"
+                placeholderTextColor={"#b7b7b7"}
                 secureTextEntry={!showPassword}
                 value={userData.password}
                 onChangeText={text =>
-                  setUserData(data => ({...data, password: text}))
+                  setUserData(data => ({ ...data, password: text }))
                 }
               />
               <TouchableOpacity
@@ -106,27 +104,10 @@ export default function LoginScreen({ setUserId }) {
             </View>
             <Pressable
               onPress={onPressLogin}
-              style={{
-                paddingVertical: 10,
-                width: '100%',
-                height: 'auto',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'lightblue',
-                marginTop: 30,
-                borderRadius: 30,
-              }}>
-              <Text style={{ fontSize: 20, color: 'white' }}>Login</Text>
+              style={styles.authentication_buttons}>
+              <Text style={styles.auth_btn_text}>Login</Text>
             </Pressable>
-            <Text
-              style={{
-                color: accent,
-                textDecorationLine: 'underline',
-                fontWeight: '500',
-                fontSize: 18,
-                alignSelf: 'center',
-                marginTop: 30,
-              }}>
+            <Text style={styles.forgot_password}>
               Forgot password?
             </Text>
           </SafeAreaView>
@@ -137,51 +118,3 @@ export default function LoginScreen({ setUserId }) {
   );
 }
 
-const styles = StyleSheet.create({
-  img_view: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  img: {
-    width: 120,
-    height: 150,
-    // resizeMode: "contain",
-  },
-
-  login_view: {
-    paddingTop: 40,
-    paddingBottom: 80,
-    width: '100%',
-  },
-  login_text: {
-    fontSize: 18,
-    fontFamily: 'sans-serif',
-    fontWeight: '700',
-    color: black,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'white',
-    backgroundColor: 'gray',
-    borderRadius: 5,
-    padding: 10,
-    marginTop: 20,
-  },
-  input: {
-    flex: 1,
-    marginLeft: 10,
-  },
-  iconContainer: {
-    position: 'absolute',
-    right: 10,
-  },
-  icon: {
-    width: 20,
-    height: 20,
-    // resizeMode: "contain",
-  },
-});
