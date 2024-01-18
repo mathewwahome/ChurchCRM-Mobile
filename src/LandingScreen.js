@@ -1,49 +1,47 @@
-import * as React from "react";
+import * as React from 'react';
 import {
-  StyleSheet,
-  Image,
   Text,
-  Button,
-  ImageBackground,
   ScrollView,
   View,
   Pressable,
   TouchableOpacity,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { styles } from "./assets/css/AuthScreens";
-import { dailyVerse } from "./hooks/HandleApis";
-import { useState, useEffect } from "react";
-import Logo from "./utilities/Logo";
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {styles} from './assets/css/AuthScreens';
+import Logo from './utilities/Logo';
+import useForgotPassword from './hooks/HandleForgotPassword';
 
 export default function LandingScreen() {
+  const {handleForgotPassword} = useForgotPassword();
+
   const navigation = useNavigation();
   const handleSignUp = () => {
-    navigation.navigate("SignupScreen");
+    navigation.navigate('SignupScreen');
   };
   const handleLogin = () => {
-    navigation.navigate("LoginScreen");
-  };
-  const screens = () => {
-    navigation.navigate('MainContainer');
+    navigation.navigate('LoginScreen');
   };
 
   return (
     <View style={styles.landing_screen_container}>
       <ScrollView>
         <View style={styles.img_view}>
-          <Logo styles={styles.img}/>
+          <Logo styles={styles.img} />
         </View>
         <View style={styles.auth_btn}>
-          <TouchableOpacity onPress={handleLogin} style={styles.authentication_buttons}>
+          <TouchableOpacity
+            onPress={handleLogin}
+            style={styles.authentication_buttons}>
             <Text style={styles.auth_btn_text}>Login</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={handleSignUp} style={styles.signin}>
-            <Text style={{ ...styles.auth_btn_text, color: "#0A7E8B" }}>Sign up</Text>
+            <Text style={{...styles.auth_btn_text, color: '#0A7E8B'}}>
+              Sign up
+            </Text>
           </TouchableOpacity>
 
-          <Pressable onPress={screens}>
+          <Pressable onPress={handleForgotPassword}>
             <Text style={styles.forgot_password}>Forgot password?</Text>
           </Pressable>
         </View>

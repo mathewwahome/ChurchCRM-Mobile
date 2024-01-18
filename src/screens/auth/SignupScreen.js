@@ -1,26 +1,22 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import {
   SafeAreaView,
   TextInput,
   Pressable,
-  Button,
   TouchableOpacity,
-  StyleSheet,
-  Image,
   Text,
   ScrollView,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { styles } from '../../assets/css/AuthScreens';
-import { useNavigation } from '@react-navigation/native';
-import { handleRegister } from '../../hooks/HandleApis';
+import {styles} from '../../assets/css/AuthScreens';
+import {useNavigation} from '@react-navigation/native';
+// import { handleRegister } from '../../hooks/HandleApis';
+import {BASE_URL} from '../../hooks/HandleApis';
 import Logo from '../../utilities/Logo';
 
 export default function SignupScreen() {
   const navigation = useNavigation();
-
   const [userData, setUserData] = useState({
     name: '',
     email: '',
@@ -33,7 +29,7 @@ export default function SignupScreen() {
   };
 
   return (
-    <View style={{ padding: 20 }}>
+    <View style={{padding: 20}}>
       <ScrollView>
         <View style={styles.signup_img}>
           <Logo styles={styles.signup_img} />
@@ -47,22 +43,21 @@ export default function SignupScreen() {
             <TextInput
               style={styles.login_input}
               placeholder="Name"
-              placeholderTextColor={"#b7b7b7"}
+              placeholderTextColor={'#b7b7b7'}
               value={userData.name}
               onChangeText={text =>
-                setUserData(data => ({ ...data, name: text }))
+                setUserData(data => ({...data, name: text}))
               }
             />
-
 
             {/* <Icon name="email" size={20} color="black" style={styles.icon} /> */}
             <TextInput
               style={styles.login_input}
               placeholder="Email"
-              placeholderTextColor={"#b7b7b7"}
+              placeholderTextColor={'#b7b7b7'}
               value={userData.email}
               onChangeText={text =>
-                setUserData(data => ({ ...data, email: text }))
+                setUserData(data => ({...data, email: text}))
               }
             />
 
@@ -70,10 +65,10 @@ export default function SignupScreen() {
             <TextInput
               style={styles.login_input}
               placeholder="Phone"
-              placeholderTextColor={"#b7b7b7"}
+              placeholderTextColor={'#b7b7b7'}
               value={userData.phone}
               onChangeText={text =>
-                setUserData(data => ({ ...data, phone: text }))
+                setUserData(data => ({...data, phone: text}))
               }
             />
 
@@ -81,11 +76,11 @@ export default function SignupScreen() {
             <TextInput
               style={styles.login_input}
               placeholder="Password"
-              placeholderTextColor={"#b7b7b7"}
+              placeholderTextColor={'#b7b7b7'}
               secureTextEntry
               value={userData.password}
               onChangeText={text =>
-                setUserData(data => ({ ...data, password: text }))
+                setUserData(data => ({...data, password: text}))
               }
             />
 
@@ -101,20 +96,15 @@ export default function SignupScreen() {
               }
               title="Submit"
               style={styles.signin}>
-              <Text style={{ ...styles.auth_btn_text, color: "#0A7E8B" }}>Sign up</Text>
+              <Text style={{...styles.auth_btn_text, color: '#0A7E8B'}}>
+                Sign up
+              </Text>
             </TouchableOpacity>
 
             <View style={styles.account_container}>
-              <Text
-                style={styles.account}>
-                Have an account?
-              </Text>
+              <Text style={styles.account}>Have an account?</Text>
               <Pressable onPress={handleLogin}>
-                <Text
-                  style={styles.login_link}>
-                  {' '}
-                  Log in
-                </Text>
+                <Text style={styles.login_link}> Log in</Text>
               </Pressable>
             </View>
           </SafeAreaView>
@@ -124,3 +114,32 @@ export default function SignupScreen() {
   );
 }
 
+const config = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+};
+
+export const handleRegister = async (
+  name,
+  email,
+  phone,
+  password,
+  navigation,
+) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/api/register`, {
+      name,
+      email,
+      phone,
+      password,
+    });
+    if (response && response.data) {
+      const token = response.data.token;
+      navigation.navigate('LoginScreen');
+    } else {
+      console.error('Registration failed: No data in the response');
+    }
+  } catch (error) {
+    console.error('Registration failed:', error.message || error);
+  }
+};
