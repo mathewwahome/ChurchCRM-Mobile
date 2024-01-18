@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import {srcContainer} from '@react-navigation/native';
+import React, {useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -7,12 +6,13 @@ import MainContainer from './src/MainContainer';
 import LandingScreen from './src/LandingScreen';
 import LoginScreen from './src/screens/auth/LoginScreen';
 import SignupScreen from './src/screens/auth/SignupScreen';
+import ForgotPassword from './src/screens/auth/ForgotPassword';
+
 import ProfileScreen from './src/screens/auth/ProfileScreen';
 import SettingScreen from './src/screens/auth/SettingScreen';
 import NewNotes from './src/screens/notes/NewNotes';
 import DocumentViewer from './src/screens/DocumentViewer';
-import axios from 'axios';
-import {View, Text} from 'react-native';
+
 import EventsScreen from './src/screens/EventsScreen';
 
 import AnnouncementView from './src/screens/view/AnnouncementView';
@@ -41,6 +41,7 @@ function App() {
             children={() => <LoginScreen setUserId={setUserId} />}
           />
           <Stack.Screen name="SignupScreen" component={SignupScreen} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen
             name="MainContainer"
             children={() => <MainContainer userId={userId} />}

@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import axios from 'axios';
 import {
   SafeAreaView,
   TextInput,
@@ -10,15 +9,17 @@ import {
   Pressable,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-// import {handleLogin} from '../../hooks/HandleApis';
-import Icon from '../../ui/components/icon';
-import {accent, black} from '../../utilities/colors';
+import useAuth from '../../hooks/HandleAuth';
 import AppSnackbar from '../../hooks/SnackBar';
 import {useRef} from 'react';
 import {styles} from '../../assets/css/AuthScreens';
-import {BASE_URL} from '../../hooks/HandleApis';
 import Logo from '../../utilities/Logo';
+
+import useForgotPassword from '../../hooks/HandleForgotPassword';
+
 export default function LoginScreen({setUserId}) {
+  const {handleLogin} = useAuth();
+
   const [showPassword, setShowPassword] = useState(false);
   const appSnackbarRef = useRef();
   const navigation = useNavigation();
@@ -56,6 +57,8 @@ export default function LoginScreen({setUserId}) {
       }
     }
   };
+
+  const {handleForgotPassword} = useForgotPassword();
 
   return (
     <View style={{padding: 20}}>
@@ -118,7 +121,9 @@ export default function LoginScreen({setUserId}) {
               }}>
               <Text style={{fontSize: 20, color: 'white'}}>Login</Text>
             </Pressable>
-            <Text style={styles.forgot_password}>Forgot password?</Text>
+            <Pressable onPress={handleForgotPassword}>
+              <Text style={styles.forgot_password}>Forgot password?</Text>
+            </Pressable>
           </SafeAreaView>
         </View>
         <AppSnackbar ref={appSnackbarRef} />
@@ -126,34 +131,3 @@ export default function LoginScreen({setUserId}) {
     </View>
   );
 }
-
-const config = {
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-};
-
-
-const handleLogin = async (email, password, navigation) => {
-  try {
-    const response = await axios.post(
-      `${BASE_URL}/api/login`,
-      {email, password},
-      config,
-    );
-
-    console.log('API Response:', response);
-
-    if (response && response.data) {
-      // Handle successful login
-      const token = response.data.token;
-      const loggedId = response.data.userId;
-      // setUserId(loggedId);
-      navigation.navigate('MainContainer');
-    } else {
-      console.error('Login failed: No data in the response');
-    }
-  } catch (error) {
-    console.error('Login failed:', error);
-    throw error;
-  }
-};
