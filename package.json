@@ -23,7 +23,7 @@
     "expo-status-bar": "^1.7.1",
     "moment": "^2.30.1",
     "puppeteer": "^21.7.0",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-native": "0.73.1",
     "react-native-gesture-handler": "^2.14.0",
     "react-native-paper": "^5.12.0",
@@ -36,6 +36,8 @@
     "react-native-size-matters": "^0.4.2",
     "react-native-snackbar": "^2.6.2",
     "react-native-vector-icons": "^10.0.3",
+    "react-native-webview": "^13.6.4",
+    "react-native-youtube-iframe": "^2.3.0",
     "react-redux": "^9.0.4",
     "redux": "^5.0.1"
   },
