@@ -1,7 +1,5 @@
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
-import { BASE_URL } from './HandleApis';
+import {BASE_URL} from './HandleApis';
 
 const config = {
   Accept: 'application/json',
