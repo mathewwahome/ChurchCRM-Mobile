@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   TextInput,
@@ -8,17 +8,17 @@ import {
   View,
   Pressable,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import useAuth from '../../hooks/HandleAuth';
 import AppSnackbar from '../../hooks/SnackBar';
-import {useRef} from 'react';
-import {styles} from '../../assets/css/AuthScreens';
+import { useRef } from 'react';
+import { styles } from '../../assets/css/AuthScreens';
 import Logo from '../../utilities/Logo';
 
 import useForgotPassword from '../../hooks/HandleForgotPassword';
 
-export default function LoginScreen({setUserId}) {
-  const {handleLogin} = useAuth();
+export default function LoginScreen({ setUserId }) {
+  const { handleLogin, getLoggedId } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const appSnackbarRef = useRef();
@@ -33,14 +33,15 @@ export default function LoginScreen({setUserId}) {
     setShowPassword(!showPassword);
   };
 
-  const onPressLogin = async () => {
+  const myLoginFunc = async () => {
     try {
       await handleLogin(
         userData.email,
         userData.password,
-        setUserId,
-        navigation,
       );
+      const ID = getLoggedId();
+      console.log("User ID: ", ID)
+      setUserId(ID)
       appSnackbarRef.current.showSnackbar('Logged in successfully', 'success');
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -58,10 +59,10 @@ export default function LoginScreen({setUserId}) {
     }
   };
 
-  const {handleForgotPassword} = useForgotPassword();
+  const { handleForgotPassword } = useForgotPassword();
 
   return (
-    <View style={{padding: 20}}>
+    <View style={{ padding: 20 }}>
       <ScrollView>
         <View style={styles.signup_img}>
           <Logo styles={styles.signup_img} />
@@ -77,7 +78,7 @@ export default function LoginScreen({setUserId}) {
                 placeholderTextColor={'#b7b7b7'}
                 value={userData.email}
                 onChangeText={text =>
-                  setUserData(data => ({...data, email: text}))
+                  setUserData(data => ({ ...data, email: text }))
                 }
               />
             </View>
@@ -90,7 +91,7 @@ export default function LoginScreen({setUserId}) {
                 secureTextEntry={!showPassword}
                 value={userData.password}
                 onChangeText={text =>
-                  setUserData(data => ({...data, password: text}))
+                  setUserData(data => ({ ...data, password: text }))
                 }
               />
               <TouchableOpacity
@@ -104,26 +105,15 @@ export default function LoginScreen({setUserId}) {
                 /> */}
               </TouchableOpacity>
             </View>
-            <Pressable
-              // onPress={onPressLogin}
-              onPress={() =>
-                handleLogin(userData.email, userData.password, navigation)
-              }
-              style={{
-                paddingVertical: 10,
-                width: '100%',
-                height: 'auto',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'lightblue',
-                marginTop: 30,
-                borderRadius: 30,
-              }}>
-              <Text style={{fontSize: 20, color: 'white'}}>Login</Text>
-            </Pressable>
-            <Pressable onPress={handleForgotPassword}>
+            <TouchableOpacity
+              style={styles.authentication_buttons}
+              onPress={myLoginFunc}
+            >
+              <Text style={styles.auth_btn_text}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleForgotPassword}>
               <Text style={styles.forgot_password}>Forgot password?</Text>
-            </Pressable>
+            </TouchableOpacity>
           </SafeAreaView>
         </View>
         <AppSnackbar ref={appSnackbarRef} />
