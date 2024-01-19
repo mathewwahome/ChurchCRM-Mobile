@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import {BASE_URL} from './HandleApis';
+
 const useAuth = () => {
   const config = {
     Accept: 'application/json',
@@ -19,10 +20,11 @@ const useAuth = () => {
 
       // console.log('API Response:', response);
 
-      if (response.status == 200) {
-        // Handle successful login
-        const token = response.data.token;
-        loggedId = response.data.userId;
+      if (response.status === 200) {
+        const token = response.data.access_token;
+        loggedId = response.data.user_id;
+
+        // console.log('User ID:', loggedId);
       } else {
         console.error('Login failed: No data in the response');
       }

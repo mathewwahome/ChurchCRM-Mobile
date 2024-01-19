@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
 import {
   SafeAreaView,
-  TextInput,
   TouchableOpacity,
   Text,
   ScrollView,
   View,
-  Pressable,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import useAuth from '../../hooks/HandleAuth';
@@ -38,7 +36,7 @@ export default function LoginScreen({setUserId}) {
     try {
       await handleLogin(userData.email, userData.password);
       const ID = getLoggedId();
-      console.log('User ID: ', ID);
+      // console.log('User ID: ', ID);
       setUserId(ID);
       appSnackbarRef.current.showSnackbar('Logged in successfully', 'success');
     } catch (error) {
