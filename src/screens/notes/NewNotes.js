@@ -1,18 +1,11 @@
 import React, {useState} from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  TextInput,
-  StyleSheet,
-  Pressable,
-} from 'react-native';
+import {View, ScrollView, Text, TextInput, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../../assets/css/styles';
 import axios from 'axios';
+import {BASE_URL} from '../../hooks/HandleApis';
 
-export default function NewNotes({userId}) {
+export default function NewNotes() {
   const [note_topic, setTopic] = useState('');
   const [content, setContent] = useState('');
   const navigation = useNavigation();
@@ -20,19 +13,24 @@ export default function NewNotes({userId}) {
   const saveNotes = async () => {
     try {
       console.log('The content: ', note_topic, content);
+      const userId = 1;
       const user_id_fk = userId;
-      const response = await axios.post(
-        'https://2b2c-197-232-61-232.ngrok-free.app/api/newNotes',
-        {
-          user_id_fk,
-          note_topic,
-          content,
-        },
-      );
+      const response = await axios.post(`${BASE_URL}/api/newNotes`, {
+        user_id_fk,
+        note_topic,
+        content,
+      });
       console.log('Notes data: ', response.data);
       navigation.navigate('Notes');
     } catch (error) {
       console.error('Notes Save failed:', error);
+      if (error.response) {
+        console.error('Server responded with:', error.response.data);
+      } else if (error.request) {
+        console.error('No response received');
+      } else {
+        console.error('Error:', error.message);
+      }
     }
   };
   return (

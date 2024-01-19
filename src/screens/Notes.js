@@ -1,50 +1,38 @@
 import * as React from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  Image,
-  TouchableOpacity,
-  ImageBackground,
-  StyleSheet,
-} from 'react-native';
+import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../assets/css/styles';
 import {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import {BASE_URL} from '../hooks/HandleApis';
 
 export default function Notes({userId}) {
   const navigation = useNavigation();
 
   const NewNoteScreen = () => {
     console.log('handleMain executed');
-
     navigation.navigate('NewNotes');
   };
 
-  const editNoteScreen = () => {
-    console.log('handleMain executed');
-
-    navigation.navigate('EditNotes');
+  const editNoteScreen = noteId => {
+    console.log('go to edit screen');
+    navigation.navigate('EditNotes', {noteId});
   };
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   useEffect(() => {
-    if (userId) {
+    const fetchData = async () => {
       try {
-        const fetchData = async () => {
-          const response = await axios.get(
-            `https://39af-197-232-61-198.ngrok-free.app/api/showNotes/${userId}`,
-          );
-          setData(response.data);
-        };
-        fetchData();
+        const response = await axios.get(`${BASE_URL}/api/showNotes`);
+        setData(response.data.data);
       } catch (error) {
         console.error('Displaying notes failed:', error);
       }
-    }
-  }, [userId]);
+    };
+    fetchData();
+  }, []);
+
   return (
     <View>
       <TouchableOpacity onPress={NewNoteScreen} style={styles.touchableOpacity}>
@@ -57,18 +45,23 @@ export default function Notes({userId}) {
         <View style={{padding: 10}}>
           <ScrollView horizontal={false}>
             <View style={styles.rowContainer}>
-              {data.length > 0 ? (
-                data.map(note => (
-                  <View style={styles.notesContainer} key={note.id}>
+              {Object.keys(data).length > 0 ? (
+                Object.keys(data).map(noteId => (
+                  <TouchableOpacity
+                    key={noteId}
+                    onPress={() => editNoteScreen(noteId)}
+                    style={styles.notesContainer}>
                     <Image
                       source={require('../assets/images/one.jpg')}
                       style={styles.notesImage}
                     />
                     <Text style={styles.notesDateText}>
-                      {new Date(note.created_at).toDateString()}
+                      {data[noteId].content}
                     </Text>
-                    <Text style={styles.notesTopic}>{note.note_topic}</Text>
-                  </View>
+                    <Text style={styles.notesTopic}>
+                      {data[noteId].note_topic}
+                    </Text>
+                  </TouchableOpacity>
                 ))
               ) : (
                 <Text style={styles.loadingText}>Loading ...</Text>

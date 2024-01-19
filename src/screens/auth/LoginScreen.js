@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   TextInput,
@@ -8,17 +8,18 @@ import {
   View,
   Pressable,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import useAuth from '../../hooks/HandleAuth';
 import AppSnackbar from '../../hooks/SnackBar';
-import { useRef } from 'react';
-import { styles } from '../../assets/css/AuthScreens';
+import {useRef} from 'react';
+import {styles} from '../../assets/css/AuthScreens';
 import Logo from '../../utilities/Logo';
 
 import useForgotPassword from '../../hooks/HandleForgotPassword';
+import CustomTextInput from '../../hooks/CustomTestInput';
 
-export default function LoginScreen({ setUserId }) {
-  const { handleLogin, getLoggedId } = useAuth();
+export default function LoginScreen({setUserId}) {
+  const {handleLogin, getLoggedId} = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const appSnackbarRef = useRef();
@@ -35,13 +36,10 @@ export default function LoginScreen({ setUserId }) {
 
   const myLoginFunc = async () => {
     try {
-      await handleLogin(
-        userData.email,
-        userData.password,
-      );
+      await handleLogin(userData.email, userData.password);
       const ID = getLoggedId();
-      console.log("User ID: ", ID)
-      setUserId(ID)
+      console.log('User ID: ', ID);
+      setUserId(ID);
       appSnackbarRef.current.showSnackbar('Logged in successfully', 'success');
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -59,10 +57,10 @@ export default function LoginScreen({ setUserId }) {
     }
   };
 
-  const { handleForgotPassword } = useForgotPassword();
+  const {handleForgotPassword} = useForgotPassword();
 
   return (
-    <View style={{ padding: 20 }}>
+    <View style={{padding: 20}}>
       <ScrollView>
         <View style={styles.signup_img}>
           <Logo styles={styles.signup_img} />
@@ -72,43 +70,36 @@ export default function LoginScreen({ setUserId }) {
           <SafeAreaView style={styles.login_form}>
             <Text style={styles.login_text}>Enter Email & Password</Text>
             <View>
-              <TextInput
-                style={styles.login_input}
+              <CustomTextInput
+                iconName="person"
                 placeholder="Email"
                 placeholderTextColor={'#b7b7b7'}
                 value={userData.email}
                 onChangeText={text =>
-                  setUserData(data => ({ ...data, email: text }))
+                  setUserData(data => ({...data, email: text}))
                 }
               />
-            </View>
-            <View>
-              {/* <Icon name="lock" size={20} color="black" style={styles.icon} /> */}
-              <TextInput
-                style={styles.login_input}
+              <CustomTextInput
                 placeholder="Password"
                 placeholderTextColor={'#b7b7b7'}
                 secureTextEntry={!showPassword}
                 value={userData.password}
                 onChangeText={text =>
-                  setUserData(data => ({ ...data, password: text }))
+                  setUserData(data => ({...data, password: text}))
                 }
               />
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={togglePasswordVisibility}
                 style={styles.iconContainer}>
-                {/* <Icon
-                  name={email ? 'visibility-off' : 'visibility'}
+                <Icon
+                  name={password ? 'visibility-off' : 'visibility'}
                   size={20}
                   color="black"
                   style={styles.icon}
-                /> */}
-              </TouchableOpacity>
+                />
+              </TouchableOpacity> */}
             </View>
-            <TouchableOpacity
-              style={styles.authentication_buttons}
-              onPress={myLoginFunc}
-            >
+            <TouchableOpacity style={styles.signin_btn} onPress={myLoginFunc}>
               <Text style={styles.auth_btn_text}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleForgotPassword}>

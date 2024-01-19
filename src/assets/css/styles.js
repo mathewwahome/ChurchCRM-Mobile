@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     backgroundColor: 'white',
+    color: 'black',
   },
   notesLabel: {
     fontSize: 16,
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     backgroundColor: 'white',
+    color: 'black',
   },
   submitNotes: {
     color: 'white',

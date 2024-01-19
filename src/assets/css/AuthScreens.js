@@ -1,9 +1,28 @@
 import {StyleSheet} from 'react-native';
-
+import colors from './Color';
 const styles = StyleSheet.create({
   // Landing Page styles
   landing_screen_container: {
     paddingVertical: 60,
+  },
+  signin_btn: {
+    paddingVertical: 20,
+    backgroundColor: colors.btn_color,
+    borderRadius: 20,
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 10,
+    marginTop: 10,
+    alignSelf: 'center',
+  },
+  signup_btn: {
+    paddingVertical: 12,
+    marginTop: 10,
+    backgroundColor: colors.btn_color,
+    borderRadius: 20,
+    width: '100%',
+    alignSelf: 'center',
+    marginBottom: 10,
   },
   img_view: {
     flex: 1,
@@ -61,12 +80,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   forgot_password: {
-    fontSize: 16,
+    fontSize: 20,
     marginTop: 10,
     fontWeight: '600',
-    color: '#0b0b0b',
+    color: colors.text_white,
     textAlign: 'center',
-    textDecorationLine: 'underline',
   },
   signin: {
     paddingVertical: 8,
@@ -97,19 +115,15 @@ const styles = StyleSheet.create({
   login_input: {
     height: 50,
     width: '100%',
-    backgroundColor: '#0000000B',
-    paddingLeft: 10,
+    backgroundColor: 'transparent',
+    marginLeft: 0,
     color: '#000',
     borderRadius: 5,
     borderWidth: 0,
-    borderColor: 'transparent',
     marginBottom: 10,
     marginTop: 10,
   },
-  iconContainer: {
-    position: 'absolute',
-    right: 10,
-  },
+
   icon: {
     width: 20,
     height: 20,
@@ -126,7 +140,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   account: {
-    color: '#4C4C4C',
+    color: colors.text_white,
     fontWeight: '800',
     fontSize: 18,
   },
@@ -142,6 +156,44 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: 'contain',
     alignSelf: 'center',
+  },
+
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 50,
+    width: '100%',
+    backgroundColor: colors.input_color,
+    paddingLeft: 10,
+    color: colors.input_text_color,
+    borderRadius: 5,
+    borderWidth: 0,
+    borderColor: colors.input_bg,
+    marginBottom: 10,
+    marginTop: 10,
+  },
+  input: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  iconContainer: {
+    position: 'absolute',
+    right: 10,
+  },
+
+  pickerStyles: {
+    width: '100%',
+    color: 'black',
+  },
+  touchButton: {
+    paddingVertical: 10,
+    width: '100%',
+    height: 'auto',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#163c94',
+    marginTop: 30,
+    borderRadius: 30,
   },
 });
 export {styles};

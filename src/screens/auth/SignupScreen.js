@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
-  TextInput,
   Pressable,
   TouchableOpacity,
   Text,
   ScrollView,
   View,
 } from 'react-native';
-import { styles } from '../../assets/css/AuthScreens';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import handleRegister from '../../hooks/HandleSignup';
-import { BASE_URL } from '../../hooks/HandleApis';
 import Logo from '../../utilities/Logo';
+import CustomTextInput from '../../hooks/CustomTestInput';
+import {styles} from '../../assets/css/AuthScreens';
 
-export default function SignupScreen({ setUserId }) {
+import Icon from 'react-native-vector-icons/Ionicons';
+export default function SignupScreen({setUserId}) {
   const navigation = useNavigation();
   const [userData, setUserData] = useState({
     name: '',
     email: '',
     phone: '',
     password: '',
+    confirmpassword: '',
   });
 
   const handleLogin = () => {
@@ -34,14 +34,16 @@ export default function SignupScreen({ setUserId }) {
       userData.email,
       userData.phone,
       userData.password,
-      loggedUser
+      userData.confirmpassword,
+
+      // loggedUser,
     );
   };
 
-  setUserId(loggedUser)
+  // setUserId(loggedUser);
 
   return (
-    <View style={{ padding: 20 }}>
+    <View style={{padding: 20}}>
       <ScrollView>
         <View style={styles.signup_img}>
           <Logo styles={styles.signup_img} />
@@ -50,57 +52,58 @@ export default function SignupScreen({ setUserId }) {
         <View style={styles.login_view}>
           <SafeAreaView style={styles.login_form}>
             <Text style={styles.login_text}>Sign up</Text>
+            <View>
+              <CustomTextInput
+                iconName="person"
+                placeholder="Name"
+                value={userData.name}
+                onChangeText={text =>
+                  setUserData(data => ({...data, name: text}))
+                }
+              />
 
-            {/* <Icon name="person" size={20} color="black" style={styles.icon} /> */}
-            <TextInput
-              style={styles.login_input}
-              placeholder="Name"
-              placeholderTextColor={'#b7b7b7'}
-              value={userData.name}
-              onChangeText={text =>
-                setUserData(data => ({ ...data, name: text }))
-              }
-            />
+              <CustomTextInput
+                iconName="email"
+                placeholder="Email"
+                value={userData.email}
+                onChangeText={text =>
+                  setUserData(data => ({...data, email: text}))
+                }
+              />
 
-            {/* <Icon name="email" size={20} color="black" style={styles.icon} /> */}
-            <TextInput
-              style={styles.login_input}
-              placeholder="Email"
-              placeholderTextColor={'#b7b7b7'}
-              value={userData.email}
-              onChangeText={text =>
-                setUserData(data => ({ ...data, email: text }))
-              }
-            />
+              <CustomTextInput
+                iconName="phone"
+                placeholder="Phone"
+                value={userData.phone}
+                onChangeText={text =>
+                  setUserData(data => ({...data, phone: text}))
+                }
+              />
 
-            {/* <Icon name="phone" size={20} color="black" style={styles.icon} /> */}
-            <TextInput
-              style={styles.login_input}
-              placeholder="Phone"
-              placeholderTextColor={'#b7b7b7'}
-              value={userData.phone}
-              onChangeText={text =>
-                setUserData(data => ({ ...data, phone: text }))
-              }
-            />
-
-            {/* <Icon name="lock" size={20} color="black" style={styles.icon} /> */}
-            <TextInput
-              style={styles.login_input}
-              placeholder="Password"
-              placeholderTextColor={'#b7b7b7'}
-              secureTextEntry
-              value={userData.password}
-              onChangeText={text =>
-                setUserData(data => ({ ...data, password: text }))
-              }
-            />
-
+              <CustomTextInput
+                iconName="lock"
+                placeholder="Password"
+                secureTextEntry
+                value={userData.password}
+                onChangeText={text =>
+                  setUserData(data => ({...data, password: text}))
+                }
+              />
+              <CustomTextInput
+                iconName="lock"
+                placeholder="Forgot Password"
+                secureTextEntry
+                value={userData.confirmpassword}
+                onChangeText={text =>
+                  setUserData(data => ({...data, confirmpassword: text}))
+                }
+              />
+            </View>
             <TouchableOpacity
               onPress={registerUser}
               title="Submit"
-              style={styles.signin}>
-              <Text style={{ ...styles.auth_btn_text, color: '#0A7E8B' }}>
+              style={styles.signup_btn}>
+              <Text style={{...styles.auth_btn_text, color: '#ffffff'}}>
                 Sign up
               </Text>
             </TouchableOpacity>
@@ -117,6 +120,3 @@ export default function SignupScreen({ setUserId }) {
     </View>
   );
 }
-
-
-
