@@ -1,7 +1,3 @@
-import axios from 'axios';
-import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
-
 const config = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
