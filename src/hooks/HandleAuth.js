@@ -1,20 +1,19 @@
 import axios from 'axios';
 
-import { BASE_URL } from './HandleApis';
+import {BASE_URL} from './HandleApis';
 const useAuth = () => {
-
   const config = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
 
-  let loggedId = null
+  let loggedId = null;
 
   const handleLogin = async (email, password) => {
     try {
       const response = await axios.post(
         `${BASE_URL}/api/login`,
-        { email, password },
+        {email, password},
         config,
       );
 
