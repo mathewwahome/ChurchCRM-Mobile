@@ -71,9 +71,12 @@ export default function VerseOfTheDay({navigation}) {
   };
 
   return (
+    <View style={styles.verse_background}>
     <ImageBackground
-      source={require('../../assets/images/bg.jpg')}
-      style={styles.backgroundImage}>
+      source={require('../../assets/images/verse_bg.jpg')}
+      style={styles.backgroundImage}
+      blurRadius={10}
+      >
       <View style={styles.view}>
         {verseData.loading ? (
           <Text style={styles.loadingText}>Verse of the day loading...</Text>
@@ -83,11 +86,7 @@ export default function VerseOfTheDay({navigation}) {
               <>
                 <Text style={styles.TextStyle}>{verseData.verse.passage}</Text>
                 <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: '700',
-                    marginTop: 30,
-                  }}>
+                  style={styles.verse}>
                   {verseData.verse.citation}
                 </Text>
                 {verseData.imageUrl ? (
@@ -112,5 +111,6 @@ export default function VerseOfTheDay({navigation}) {
         )}
       </View>
     </ImageBackground>
+    </View>
   );
 }

@@ -5,7 +5,7 @@ import {styles} from '../../assets/css/styles';
 import axios from 'axios';
 import {BASE_URL} from '../../hooks/HandleApis';
 
-export default function NewNotes() {
+export default function NewNotes({userId}) {
   const [note_topic, setTopic] = useState('');
   const [content, setContent] = useState('');
   const navigation = useNavigation();
@@ -13,7 +13,6 @@ export default function NewNotes() {
   const saveNotes = async () => {
     try {
       console.log('The content: ', note_topic, content);
-      const userId = 1;
       const user_id_fk = userId;
       const response = await axios.post(`${BASE_URL}/api/newNotes`, {
         user_id_fk,
