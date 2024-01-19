@@ -4,6 +4,11 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
     fontSize: 18,
+    fontWeight: '500',
+  },
+  title: {
+    color: 'black',
+    fontSize: 18,
     fontWeight: '900',
   },
   container: {
