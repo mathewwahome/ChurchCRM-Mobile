@@ -10,6 +10,8 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 18,
     fontWeight: '900',
+    marginBottom: 20,
+    marginTop: 10,
   },
   container: {
     flex: 1,

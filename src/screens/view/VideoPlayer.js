@@ -21,9 +21,7 @@ const VideoPlayer = ({route}) => {
         </Text>
         <View style={{borderBottomWidth: 1, borderBottomColor: 'black'}} />
 
-        <Text style={{...styles.title, marginBottom: 20, marginTop: 10}}>
-          {sermon.Title}
-        </Text>
+        <Text style={styles.title}>{sermon.Title}</Text>
 
         <Text style={styles.text}>{sermon.Sermon_Description}</Text>
       </View>
