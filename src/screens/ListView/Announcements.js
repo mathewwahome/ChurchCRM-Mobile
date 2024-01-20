@@ -34,7 +34,7 @@ export default function Announcements() {
 
       <ScrollView horizontal={true}>
         {announcementsLoading ? (
-          <Text>Loading Announcements...</Text>
+          <Text style={styles.loadingText}>Loading Announcements...</Text>
         ) : announcementsData && announcementsData.length > 0 ? (
           announcementsData.map(announcements => (
             <TouchableOpacity
@@ -46,7 +46,7 @@ export default function Announcements() {
                 })
               }>
               <View>
-                <View style={{flexDirection: 'row', padding: 10}}>
+                <View style={{flexDirection: 'row', paddingTop: 5}}>
                   <View style={{marginRight: 10}}>
                     <Image
                       style={styles.image}
@@ -54,7 +54,7 @@ export default function Announcements() {
                         uri: `${BASE_URL}/Announcements/${announcements.poster}`,
                       }}
                     />
-                    <Text>
+                    <Text style={styles.dataDate}>
                       {new Date(announcements.created_at).toLocaleDateString(
                         undefined,
                         {
@@ -64,12 +64,15 @@ export default function Announcements() {
                         },
                       )}
                     </Text>
-                    <Text style={styles.text}>
-                      {announcements.Topic.slice(0, 15)}...
-                    </Text>
-                    <Text style={styles.text}>
+                    <View style={styles.dataText}>
+                      <Text style={styles.text}>
+                        {announcements.Topic.slice(0, 25)}
+                      </Text>
+                    </View>
+                    
+                    {/* <Text style={styles.text}>
                       {announcements.Message.slice(0, 15)}...
-                    </Text>
+                    </Text> */}
                   </View>
                 </View>
               </View>

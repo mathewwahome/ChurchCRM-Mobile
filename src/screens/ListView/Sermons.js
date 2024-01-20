@@ -29,11 +29,11 @@ export default function Sermons() {
   }, []);
 
   return (
-    <View style={{padding: 10}}>
+    <View style={{padding: 10, paddingBottom: 20}}>
       <Text style={styles.headingText}>Sermons</Text>
       <ScrollView horizontal={true}>
         {sermonsLoading ? (
-          <Text>Loading sermons...</Text>
+          <Text style={styles.loadingText}>Loading sermons...</Text>
         ) : sermonsData && sermonsData.length > 0 ? (
           sermonsData.map(sermon => (
             <TouchableOpacity
@@ -42,7 +42,7 @@ export default function Sermons() {
                 navigation.navigate('VideoPlayer', {sermon: sermon})
               }>
               <View>
-                <View style={{flexDirection: 'row', padding: 10}}>
+                <View style={{ flexDirection: 'row', paddingTop: 5 }}>
                   <View style={{marginRight: 10}}>
                     <Image
                       style={styles.image}
@@ -50,7 +50,7 @@ export default function Sermons() {
                         uri: `${BASE_URL}/SermonThumbnails/${sermon.Thumbnail}`,
                       }}
                     />
-                    <Text>
+                    <Text style={styles.dataDate}>
                       {new Date(sermon.created_at).toLocaleDateString(
                         undefined,
                         {
@@ -60,19 +60,22 @@ export default function Sermons() {
                         },
                       )}
                     </Text>
-                    <Text style={styles.text}>
-                      {sermon.Title.slice(0, 15)}...
-                    </Text>
-                    <Text style={styles.text}>
+                    <View style={styles.dataText}>
+                      <Text style={styles.text}>
+                        {sermon.Title.slice(0, 31)}
+                      </Text>
+                    </View>
+                    
+                    {/* <Text style={styles.text}>
                       {sermon.Sermon_Description.slice(0, 15)}...
-                    </Text>
+                    </Text> */}
                   </View>
                 </View>
               </View>
             </TouchableOpacity>
           ))
         ) : (
-          <Text>No Sermons available</Text>
+          <Text style={styles.loadingText}>No Sermons available</Text>
         )}
       </ScrollView>
     </View>

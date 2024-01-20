@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     paddingVertical: 60,
   },
   signin_btn: {
-    paddingVertical: 20,
+    paddingVertical: 10,
     backgroundColor: colors.btn_color,
     borderRadius: 20,
     width: '100%',

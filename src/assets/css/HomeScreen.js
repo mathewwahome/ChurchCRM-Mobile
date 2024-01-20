@@ -4,7 +4,16 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover',
+    width: null,
+    height: null
+  },
+  verse_background: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba( 0, 0, 0, 0.8 )',
+    borderBottomWidth: 3,
+    borderBottomColor: '#E53436',
   },
   image: {
     width: 150,
@@ -23,44 +32,84 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   TextStyle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '500',
     textAlign: 'center',
     paddingLeft: 20,
     paddingRight: 20,
+    color: '#201E1F'
   },
-  headingText: {
+  verse: {
     fontSize: 18,
     fontWeight: '900',
-    marginTop: 30,
-    color: 'green',
+    marginTop: 20,
+    color: '#201E1F',
+  },
+  headingText: {
+    fontSize: 16,
+    fontWeight: '900',
+    marginTop: 10,
+    color: '#0A7E8B',
   },
   loadingText: {
-    fontSize: 18,
-    color: 'white',
+    fontSize: 16,
+    color: '#0A7E8B',
     textAlign: 'center',
   },
   shareButtonContainer: {
-    backgroundColor: 'blue',
-    padding: 5,
+    backgroundColor: '#087E8B',
+    padding: 8,
+    paddingHorizontal: 10,
     borderRadius: 5,
   },
 
   shareButton: {
-    color: 'white',
+    color: '#ffffff',
     fontSize: 16,
-    fontWeight: 'italic',
+    fontWeight: '800',
     textAlign: 'center',
   },
   text: {
-    color: 'black',
-    fontSize: 18,
-    fontWeight: '900',
+    color: '#000000',
+    fontSize: 15,
+    fontWeight: '800',
   },
-  //the announcement view page
+  dataText: {
+    height: 'auto',
+    width: 150,
+  },
+  //the announcement view section
   container: {
     flex: 1,
     padding: 20,
   },
+  dataDate: {
+    color: '#A29E90',
+    fontSize: 13,
+    fontWeight: '700',
+    paddingTop: 7,
+  },
+
+  // Sermon notes view section
+  sermonNotesHeading: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '800'
+  },
+  sermonNoteContainer: {
+    padding: 10,
+    backgroundColor: '#087E8B',
+  },
+  sermonDate: {
+    color: '#369DAE',
+    fontSize: 13,
+    fontWeight: '700',
+    paddingTop: 7,
+  },
+  sermonText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '700',
+  }
 });
 export {styles};

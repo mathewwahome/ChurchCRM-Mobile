@@ -24,7 +24,7 @@ export default function Notes({userId}) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/api/showNotes`);
+        const response = await axios.get(`${BASE_URL}/api/showNotes/${userId}`);
         setData(response.data.data);
       } catch (error) {
         console.error('Displaying notes failed:', error);
@@ -45,21 +45,21 @@ export default function Notes({userId}) {
         <View style={{padding: 10}}>
           <ScrollView horizontal={false}>
             <View style={styles.rowContainer}>
-              {Object.keys(data).length > 0 ? (
-                Object.keys(data).map(noteId => (
+              {data.length > 0 ? (
+                data.map(notes => (
                   <TouchableOpacity
-                    key={noteId}
-                    onPress={() => editNoteScreen(noteId)}
+                    key={notes.id}
+                    onPress={() => editNoteScreen(notes.id)}
                     style={styles.notesContainer}>
                     <Image
                       source={require('../assets/images/one.jpg')}
                       style={styles.notesImage}
                     />
                     <Text style={styles.notesDateText}>
-                      {data[noteId].content}
+                      {notes.content}
                     </Text>
                     <Text style={styles.notesTopic}>
-                      {data[noteId].note_topic}
+                      {notes.note_topic}
                     </Text>
                   </TouchableOpacity>
                 ))

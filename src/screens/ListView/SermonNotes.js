@@ -7,7 +7,7 @@ import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
 const Stack = createStackNavigator();
 
 export const fetchSermonsNotes = async () => {
-  return fetchDataByEndpoint('fetchSermons');
+  return fetchDataByEndpoint('fetchSermonnotes');
 };
 
 export default function SermonsNotes({navigation}) {
@@ -30,14 +30,11 @@ export default function SermonsNotes({navigation}) {
 
   return (
     <View
-      style={{
-        padding: 10,
-        backgroundColor: '#48A6F9',
-      }}>
-      <Text style={styles.headingText}>Sermon Notes</Text>
+      style={styles.sermonNoteContainer}>
+      <Text style={styles.sermonNotesHeading}>Sermon Notes</Text>
       <ScrollView horizontal={true}>
         {sermonsNotesLoading ? (
-          <Text>Loading sermon Notes...</Text>
+          <Text style={styles.loadingText}>Loading sermon Notes...</Text>
         ) : sermonsNotesData &&
           sermonsNotesData.length > 0 ? (
           sermonsNotesData.map(sermonnotes => (
@@ -46,9 +43,11 @@ export default function SermonsNotes({navigation}) {
                 <View style={{marginRight: 10}}>
                   <Image
                     style={styles.image}
-                    source={require('../../assets/images/one.jpg')}
+                    source={{
+                      uri: `${BASE_URL}/Notes_Thumbnails/${sermonnotes.notesimage}`,
+                    }}
                   />
-                  <Text>
+                  <Text style={styles.sermonDate}>
                     {new Date(sermonnotes.created_at).toLocaleDateString(
                       undefined,
                       {
@@ -58,8 +57,7 @@ export default function SermonsNotes({navigation}) {
                       },
                     )}
                   </Text>
-                  <Text>{sermonnotes.Topic}</Text>
-                  <Text>{sermonnotes.notesupload}</Text>
+                  <Text style={styles.sermonText}>{sermonnotes.sermondescription}</Text>
                 </View>
               </View>
             </View>

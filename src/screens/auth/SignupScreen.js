@@ -21,7 +21,7 @@ export default function SignupScreen({setUserId}) {
     email: '',
     phone: '',
     password: '',
-    confirmpassword: '',
+    // confirmpassword: '',
   });
 
   const handleLogin = () => {
@@ -29,15 +29,18 @@ export default function SignupScreen({setUserId}) {
   };
 
   const registerUser = () => {
-    handleRegister(
-      userData.name,
-      userData.email,
-      userData.phone,
-      userData.password,
-      userData.confirmpassword,
+    if (userData.password == userData.confirmpassword) {
+      handleRegister(
+        userData.name,
+        userData.email,
+        userData.phone,
+        userData.password,
+        // userData.confirmpassword,
 
-      // loggedUser,
-    );
+        // loggedUser,
+      );
+    }
+    
   };
 
   // setUserId(loggedUser);
@@ -91,7 +94,7 @@ export default function SignupScreen({setUserId}) {
               />
               <CustomTextInput
                 iconName="lock"
-                placeholder="Forgot Password"
+                placeholder="Confirm Password"
                 secureTextEntry
                 value={userData.confirmpassword}
                 onChangeText={text =>
