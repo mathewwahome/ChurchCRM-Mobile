@@ -40,10 +40,6 @@ export default function LandingScreen() {
               Sign up
             </Text>
           </TouchableOpacity>
-
-          <Pressable onPress={handleForgotPassword}>
-            <Text style={styles.forgot_password}>Forgot password?</Text>
-          </Pressable>
         </View>
       </ScrollView>
     </View>

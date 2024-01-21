@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   // Landing Page styles
   landing_screen_container: {
     paddingVertical: 60,
+    marginTop: 50,
   },
   signin_btn: {
     paddingVertical: 10,
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     fontWeight: '600',
-    color: colors.text_white,
+    color: colors.black,
     textAlign: 'center',
   },
   signin: {
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   account: {
-    color: colors.text_white,
+    color: colors.black,
     fontWeight: '800',
     fontSize: 18,
   },
@@ -150,10 +151,13 @@ const styles = StyleSheet.create({
     paddingTop: 1,
     fontSize: 17,
     paddingLeft: 1,
+    textDecorationLine: 'underline',
   },
   signup_img: {
     width: 150,
     height: 150,
+    marginTop: 20,
+    paddingBottom: 20,
     resizeMode: 'contain',
     alignSelf: 'center',
   },
@@ -194,6 +198,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#163c94',
     marginTop: 30,
     borderRadius: 30,
+  },
+  eyeIconContainer: {
+    padding: 10,
   },
 });
 export {styles};

@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {TextInput} from 'react-native-paper'; 
 import useAuth from '../../hooks/HandleAuth';
 import AppSnackbar from '../../hooks/SnackBar';
 import {useRef} from 'react';
@@ -36,9 +37,11 @@ export default function LoginScreen({setUserId}) {
     try {
       await handleLogin(userData.email, userData.password);
       const ID = getLoggedId();
-      // console.log('User ID: ', ID);
       setUserId(ID);
       appSnackbarRef.current.showSnackbar('Logged in successfully', 'success');
+      setTimeout(() => {
+        navigation.navigate('HomeScreen');
+      }, 2000);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         appSnackbarRef.current.showSnackbar(
@@ -69,7 +72,7 @@ export default function LoginScreen({setUserId}) {
             <Text style={styles.login_text}>Enter Email & Password</Text>
             <View>
               <CustomTextInput
-                iconName="person"
+                iconName="mail"
                 placeholder="Email"
                 placeholderTextColor={'#b7b7b7'}
                 value={userData.email}
@@ -78,6 +81,7 @@ export default function LoginScreen({setUserId}) {
                 }
               />
               <CustomTextInput
+                iconName="lock"
                 placeholder="Password"
                 placeholderTextColor={'#b7b7b7'}
                 secureTextEntry={!showPassword}
@@ -85,17 +89,14 @@ export default function LoginScreen({setUserId}) {
                 onChangeText={text =>
                   setUserData(data => ({...data, password: text}))
                 }
+                right={
+                  <TextInput.Icon
+                    name={showPassword ? 'eye' : 'eye-off'}
+                    onPress={togglePasswordVisibility}
+                    color="black"
+                  />
+                }
               />
-              {/* <TouchableOpacity
-                onPress={togglePasswordVisibility}
-                style={styles.iconContainer}>
-                <Icon
-                  name={password ? 'visibility-off' : 'visibility'}
-                  size={20}
-                  color="black"
-                  style={styles.icon}
-                />
-              </TouchableOpacity> */}
             </View>
             <TouchableOpacity style={styles.signin_btn} onPress={myLoginFunc}>
               <Text style={styles.auth_btn_text}>Login</Text>

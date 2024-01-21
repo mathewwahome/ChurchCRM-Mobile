@@ -72,45 +72,40 @@ export default function VerseOfTheDay({navigation}) {
 
   return (
     <View style={styles.verse_background}>
-    <ImageBackground
-      source={require('../../assets/images/verse_bg.jpg')}
-      style={styles.backgroundImage}
-      blurRadius={10}
-      >
-      <View style={styles.view}>
-        {verseData.loading ? (
-          <Text style={styles.loadingText}>Verse of the day loading...</Text>
-        ) : (
-          <>
-            {verseData.verse && verseData.verse.passage ? (
-              <>
-                <Text style={styles.TextStyle}>{verseData.verse.passage}</Text>
-                <Text
-                  style={styles.verse}>
-                  {verseData.verse.citation}
+      <ImageBackground
+        source={require('../../assets/images/verse_bg.jpg')}
+        style={styles.backgroundImage}
+        blurRadius={10}>
+        <View style={styles.view}>
+          {verseData.loading ? (
+            <Text style={styles.loadingText}>Verse of the day loading...</Text>
+          ) : (
+            <>
+              {verseData.verse && verseData.verse.passage ? (
+                <>
+                  <Text style={styles.passage}>{verseData.verse.passage}</Text>
+                  <Text style={styles.verse}>{verseData.verse.citation}</Text>
+                  {verseData.imageUrl ? (
+                    <Image
+                      style={styles.verseImage}
+                      source={{uri: verseData.imageUrl}}
+                    />
+                  ) : null}
+                  <TouchableOpacity
+                    onPress={shareContent}
+                    style={styles.shareButtonContainer}>
+                    <Text style={styles.shareButton}>Share</Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <Text style={styles.loadingText}>
+                  Verse of the day not available
                 </Text>
-                {verseData.imageUrl ? (
-                  <Image
-                    style={styles.verseImage}
-                    source={{uri: verseData.imageUrl}}
-                  />
-                ) : null}
-                <TouchableOpacity
-                  onPress={shareContent}
-                  style={styles.shareButtonContainer}
-                >
-                  <Text style={styles.shareButton}>Share</Text>
-                </TouchableOpacity>
-              </>
-            ) : (
-              <Text style={styles.loadingText}>
-                Verse of the day not available
-              </Text>
-            )}
-          </>
-        )}
-      </View>
-    </ImageBackground>
+              )}
+            </>
+          )}
+        </View>
+      </ImageBackground>
     </View>
   );
 }

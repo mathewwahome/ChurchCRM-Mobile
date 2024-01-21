@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {TouchableOpacity} from 'react-native';
 import {View, TextInput} from 'react-native';
 import {styles} from '../assets/css/AuthScreens';
 import Icon from '../ui/components/icon';
@@ -9,6 +10,11 @@ const CustomTextInput = ({
   onChangeText,
   secureTextEntry,
 }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <View style={styles.inputContainer}>
       <Icon name={iconName} size={20} color="black" style={styles.icon} />
@@ -20,6 +26,17 @@ const CustomTextInput = ({
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
       />
+      {secureTextEntry && (
+        <TouchableOpacity
+          style={styles.eyeIconContainer}
+          onPress={togglePasswordVisibility}>
+          <Icon
+            name={showPassword ? 'eye' : 'eye-slash'}
+            size={20}
+            color="#555555"
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

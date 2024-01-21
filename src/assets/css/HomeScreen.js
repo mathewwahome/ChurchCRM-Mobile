@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: null,
-    height: null
+    height: null,
   },
   verse_background: {
     flex: 1,
@@ -37,13 +37,21 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingLeft: 20,
     paddingRight: 20,
-    color: '#201E1F'
+    color: '#201E1F',
+  },
+  passage: {
+    fontSize: 16,
+    fontWeight: '500',
+    textAlign: 'center',
+    paddingLeft: 20,
+    paddingRight: 20,
+    color: 'white',
   },
   verse: {
     fontSize: 18,
     fontWeight: '900',
     marginTop: 20,
-    color: '#201E1F',
+    color: 'white',
   },
   headingText: {
     fontSize: 16,

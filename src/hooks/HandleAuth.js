@@ -18,13 +18,9 @@ const useAuth = () => {
         config,
       );
 
-      // console.log('API Response:', response);
-
       if (response.status === 200) {
         const token = response.data.access_token;
         loggedId = response.data.user_id;
-
-        // console.log('User ID:', loggedId);
       } else {
         console.error('Login failed: No data in the response');
       }

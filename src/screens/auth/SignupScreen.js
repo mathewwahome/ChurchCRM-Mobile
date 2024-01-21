@@ -8,13 +8,15 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {useRef} from 'react';
 import handleRegister from '../../hooks/HandleSignup';
 import Logo from '../../utilities/Logo';
 import CustomTextInput from '../../hooks/CustomTestInput';
 import {styles} from '../../assets/css/AuthScreens';
+import AppSnackbar from '../../hooks/SnackBar';
 
-import Icon from 'react-native-vector-icons/Ionicons';
 export default function SignupScreen({setUserId}) {
+  const appSnackbarRef = useRef();
   const navigation = useNavigation();
   const [userData, setUserData] = useState({
     name: '',
@@ -28,22 +30,46 @@ export default function SignupScreen({setUserId}) {
     navigation.navigate('LoginScreen');
   };
 
-  const registerUser = () => {
-    if (userData.password == userData.confirmpassword) {
-      handleRegister(
-        userData.name,
-        userData.email,
-        userData.phone,
-        userData.password,
-        // userData.confirmpassword,
-
-        // loggedUser,
+  const registerUser = async () => {
+    if (userData.password === userData.confirmpassword) {
+      try {
+        await handleRegister(
+          userData.name,
+          userData.email,
+          userData.phone,
+          userData.password,
+        );
+        appSnackbarRef.current.showSnackbar(
+          'Registration successful',
+          'success',
+        );
+        setTimeout(() => {
+          navigation.navigate('LoginScreen');
+        }, 2000);
+      } catch (error) {
+        if (error.response && error.response.status === 422) {
+          appSnackbarRef.current.showSnackbar(
+            'User with the same name or email already exits, proceed to login',
+            'warning',
+          );
+        } else {
+          appSnackbarRef.current.showSnackbar(
+            'Registration failed. Please try again.',
+            'error',
+          );
+          console.error('Registration failed:', error);
+        }
+      }
+    } else {
+      appSnackbarRef.current.showSnackbar(
+        'Password and Confirm Password do not match',
+        'warning',
       );
+      console.error('Password and Confirm Password do not match');
     }
-    
   };
 
-  // setUserId(loggedUser);
+  /// setUserId(loggedUser);
 
   return (
     <View style={{padding: 20}}>
@@ -57,7 +83,7 @@ export default function SignupScreen({setUserId}) {
             <Text style={styles.login_text}>Sign up</Text>
             <View>
               <CustomTextInput
-                iconName="person"
+                iconName="user"
                 placeholder="Name"
                 value={userData.name}
                 onChangeText={text =>
@@ -66,7 +92,7 @@ export default function SignupScreen({setUserId}) {
               />
 
               <CustomTextInput
-                iconName="email"
+                iconName="mail"
                 placeholder="Email"
                 value={userData.email}
                 onChangeText={text =>
@@ -119,6 +145,7 @@ export default function SignupScreen({setUserId}) {
             </View>
           </SafeAreaView>
         </View>
+        <AppSnackbar ref={appSnackbarRef} />
       </ScrollView>
     </View>
   );
