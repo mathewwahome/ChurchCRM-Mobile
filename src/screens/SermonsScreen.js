@@ -40,7 +40,11 @@ export default function Sermons({userId}) {
                   navigation.navigate('VideoPlayer', {sermon: sermon})
                 }>
                 <View style={{flexDirection: 'column', padding: 10}}>
-                  <View style={{marginRight: 10}}>
+                  <View
+                    style={{
+                      backgroundColor: '#0A7E8B',
+                      borderRadius: 10,
+                    }}>
                     <Image
                       style={styles.image}
                       source={{
@@ -59,9 +63,6 @@ export default function Sermons({userId}) {
                     </Text>
                     <Text style={styles.title}>
                       {sermon.Title.slice(0, 40)}...
-                    </Text>
-                    <Text style={styles.text}>
-                      {sermon.Sermon_Description.slice(0, 80)}...
                     </Text>
                   </View>
                 </View>
