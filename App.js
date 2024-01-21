@@ -69,7 +69,8 @@ function App() {
               />
               <Stack.Screen
                 name="ProfileScreen"
-                children={() => <ProfileScreen userId={userId} />}
+                component={ProfileScreen}
+                initialParams={{userId, setUserId}}
                 options={{title: 'Profile'}}
               />
               <Stack.Screen
