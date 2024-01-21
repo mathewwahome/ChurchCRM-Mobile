@@ -7,7 +7,7 @@ import {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {BASE_URL} from '../hooks/HandleApis';
 
-export default function Notes({userId}) {
+export default function Notes({ userId, reloadNotes, setReloadNotes }) {
   const navigation = useNavigation();
 
   const NewNoteScreen = () => {
@@ -22,16 +22,24 @@ export default function Notes({userId}) {
 
   const [data, setData] = useState({});
   useEffect(() => {
+    const handleReload = () => {
+      if (reloadNotes) {
+        fetchData()
+      }
+    }
+
     const fetchData = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/api/showNotes/${userId}`);
-        setData(response.data.data);
-      } catch (error) {
+        setData(response.data);
+        setReloadNotes(false)
+      } 
+        catch (error) {
         console.error('Displaying notes failed:', error);
       }
     };
     fetchData();
-  }, []);
+  }, [reloadNotes]);
 
   return (
     <View>
