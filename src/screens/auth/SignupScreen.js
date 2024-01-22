@@ -38,6 +38,7 @@ export default function SignupScreen({setUserId}) {
           userData.email,
           userData.phone,
           userData.password,
+          userData.confirmpassword,
         );
         appSnackbarRef.current.showSnackbar(
           'Registration successful',
@@ -72,7 +73,7 @@ export default function SignupScreen({setUserId}) {
   /// setUserId(loggedUser);
 
   return (
-    <View style={{padding: 20}}>
+    <View style={padding: 20}>
       <ScrollView>
         <View style={styles.signup_img}>
           <Logo styles={styles.signup_img} />
