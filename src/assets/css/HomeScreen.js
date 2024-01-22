@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   sermonNotesHeading: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: '800'
+    fontWeight: '800',
   },
   sermonNoteContainer: {
     padding: 10,
@@ -118,6 +118,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 15,
     fontWeight: '700',
-  }
+  },
 });
 export {styles};
