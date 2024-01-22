@@ -65,10 +65,6 @@ export default function Sermons() {
                         {sermon.Title.slice(0, 31)}
                       </Text>
                     </View>
-                    
-                    {/* <Text style={styles.text}>
-                      {sermon.Sermon_Description.slice(0, 15)}...
-                    </Text> */}
                   </View>
                 </View>
               </View>

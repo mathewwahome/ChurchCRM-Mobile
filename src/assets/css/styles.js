@@ -37,15 +37,14 @@ const styles = StyleSheet.create({
     flexDirection: 'col',
     padding: 10,
     resizeMode: 'cover',
+    paddingBottom: 20,
   },
   notesContainer: {
     marginBottom: 20,
-  },
-  notesImage: {
-    width: '100%',
-    height: 200,
+    height: 100,
     borderRadius: 10,
   },
+  
   notesDateText: {
     position: 'absolute',
     bottom: 35,
