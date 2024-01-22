@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   text: {
     color: 'black',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '500',
   },
   title: {
@@ -22,6 +22,23 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'cover',
     marginBottom: 10,
+  },
+  dataDate: {
+    color: '#A29E90',
+    fontSize: 13,
+    fontWeight: '700',
+    paddingTop: 7,
+  },
+  dataTopic: {
+    color: '#000000',
+    fontSize: 20,
+    fontWeight: '800',
+    paddingTop: 7,
+    paddingBottom: 7,
+  },
+  dataParagraph: {
+    fontSize: 12,
+    fontWeight: '600',
   },
 });
 export {styles};
