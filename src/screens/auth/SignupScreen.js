@@ -23,7 +23,7 @@ export default function SignupScreen({setUserId}) {
     email: '',
     phone: '',
     password: '',
-    // confirmpassword: '',
+    confirmpassword: '',
   });
 
   const handleLogin = () => {

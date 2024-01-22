@@ -1,37 +1,35 @@
-import React, {useState} from 'react';
-import {View, ScrollView, Text, TextInput, Pressable} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {styles} from '../../assets/css/styles';
+import React, { useState } from 'react';
+import { View, ScrollView, Text, TextInput, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { styles } from '../../assets/css/styles';
 import axios from 'axios';
-import {BASE_URL} from '../../hooks/HandleApis';
+import { BASE_URL } from '../../hooks/HandleApis';
 
-export default function NewNotes({userId}) {
+export default function NewNotes({ userId, setReloadNotes }) {
   const [note_topic, setTopic] = useState('');
   const [content, setContent] = useState('');
   const navigation = useNavigation();
 
   const saveNotes = async () => {
+    console.log("User id ", userId)
     try {
-      console.log('The content: ', note_topic, content);
       const user_id_fk = userId;
+      console.log('The content: ', note_topic, content, user_id_fk);
       const response = await axios.post(`${BASE_URL}/api/newNotes`, {
         user_id_fk,
         note_topic,
         content,
       });
       console.log('Notes data: ', response.data);
-      navigation.navigate('Notes');
+      if (response.status === 200) {
+        navigation.navigate("Notes");
+        setReloadNotes(true)
+      }
     } catch (error) {
       console.error('Notes Save failed:', error);
-      if (error.response) {
-        console.error('Server responded with:', error.response.data);
-      } else if (error.request) {
-        console.error('No response received');
-      } else {
-        console.error('Error:', error.message);
-      }
     }
-  };
+  }
+
   return (
     <ScrollView>
       <View style={styles.newNotesContainer}>

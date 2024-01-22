@@ -14,7 +14,7 @@ const more = 'More';
 
 const Tab = createBottomTabNavigator();
 
-export default function MainContainer( {userId}) {
+export default function MainContainer({ userId, reloadNotes, setReloadNotes }) {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -51,8 +51,8 @@ export default function MainContainer( {userId}) {
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarVisible: false }} />
       <Tab.Screen name="Sermons" children={() => <SermonsScreen userId={userId} />} />
-      <Tab.Screen name="Notes" children={() => <Notes userId={userId} />} />
-      <Tab.Screen name="More" children={() => <More userId={userId}/>} />
+      <Tab.Screen name="Notes" children={() => <Notes userId={userId} reloadNotes={reloadNotes} setReloadNotes={setReloadNotes} />} />
+      <Tab.Screen name="More" children={() => <More userId={userId} />} />
     </Tab.Navigator>
   );
 }
