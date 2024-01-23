@@ -8,7 +8,13 @@ const config = {
   },
 };
 
-const handleRegister = async (name, email, phone, password, confirmpassword) => {
+const handleRegister = async (
+  name,
+  email,
+  phone,
+  password,
+  confirmpassword,
+) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/api/register`,
@@ -17,7 +23,7 @@ const handleRegister = async (name, email, phone, password, confirmpassword) => 
         email,
         phone,
         password,
-        confirmpassword
+        confirmpassword,
       },
       config,
     );
