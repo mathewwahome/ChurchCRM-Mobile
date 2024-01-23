@@ -38,6 +38,7 @@ export default function SignupScreen({setUserId}) {
           userData.email,
           userData.phone,
           userData.password,
+          userData.confirmpassword,
         );
         appSnackbarRef.current.showSnackbar(
           'Registration successful',

@@ -6,16 +6,24 @@ import axios from 'axios';
 import {BASE_URL} from '../../hooks/HandleApis';
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
-
   const forgotPassword = async () => {
     try {
       const response = await axios.post(`${BASE_URL}/api/forgot-password`, {
         email: email,
       });
-      if (response.data && response.data.message) {
-        console.log(response.data.message);
+
+      if (response.data && response.data.message === 'passwords.throttled') {
+        Alert.alert(
+          'Error',
+          'Too many password reset requests. Please wait a moment and try again.',
+        );
+      } else if (response.data && response.data.message === 'passwords.sent') {
+        Alert.alert('Success', 'Password reset link sent successfully');
       } else {
-        console.error('Unexpected response format');
+        Alert.alert(
+          'Error',
+          'Failed to initiate password reset. Please try again.',
+        );
       }
     } catch (error) {
       console.error(error.message);
