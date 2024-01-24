@@ -73,7 +73,7 @@ export default function SignupScreen() {
   /// setUserId(loggedUser);
 
   return (
-    <View>
+    <View style={{ padding: 10 }}>
       <ScrollView>
         <View style={styles.signup_img}>
           <Logo styles={styles.signup_img} />
