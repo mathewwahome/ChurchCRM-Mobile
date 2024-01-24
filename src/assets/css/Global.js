@@ -15,7 +15,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
   },
   image: {
     width: '100%',
@@ -40,5 +42,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
+  downloadNotesButton: {
+    width: '90%',
+    alignSelf: 'center',
+    marginVertical: 20,
+    borderRadius: 10,
+    backgroundColor: '#087E8B', 
+    paddingVertical: 10
+  },
+  downloadNotesText: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#ffffff'
+  }
 });
 export {styles};

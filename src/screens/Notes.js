@@ -7,6 +7,7 @@ import {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {BASE_URL} from '../hooks/HandleApis';
 
+
 export default function Notes({ userId, reloadNotes, setReloadNotes }) {
   const navigation = useNavigation();
 
@@ -41,6 +42,8 @@ export default function Notes({ userId, reloadNotes, setReloadNotes }) {
     fetchData();
   }, [reloadNotes]);
 
+
+
   return (
     <View>
       <TouchableOpacity onPress={NewNoteScreen} style={styles.touchableOpacity}>
@@ -58,11 +61,11 @@ export default function Notes({ userId, reloadNotes, setReloadNotes }) {
                   <TouchableOpacity
                     key={notes.id}
                     onPress={() => editNoteScreen(notes.id)}
-                    style={styles.notesContainer}>
-                    <Image
-                      source={require('../assets/images/one.jpg')}
-                      style={styles.notesImage}
-                    />
+                    style={[styles.notesContainer, {
+                      backgroundColor: '#FCB460'
+                    }]}
+                    >
+                    
                     <Text style={styles.notesDateText}>
                       {notes.content}
                     </Text>

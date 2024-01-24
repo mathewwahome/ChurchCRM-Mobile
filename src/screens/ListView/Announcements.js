@@ -69,17 +69,13 @@ export default function Announcements() {
                         {announcements.Topic.slice(0, 25)}
                       </Text>
                     </View>
-                    
-                    {/* <Text style={styles.text}>
-                      {announcements.Message.slice(0, 15)}...
-                    </Text> */}
                   </View>
                 </View>
               </View>
             </TouchableOpacity>
           ))
         ) : (
-          <Text>Announcements Not available!</Text>
+          <Text style={styles.loadingText}>Announcements Not available!</Text>
         )}
       </ScrollView>
     </View>
