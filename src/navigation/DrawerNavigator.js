@@ -50,21 +50,17 @@ const DrawerNavigator = ({userId}) => {
     if (userId !== undefined) {
       console.log('user id caontainer:', userId);
 
-      // Example: Fetch user data based on userId
       fetchUserData(userId);
     }
   }, [userId]);
 
   const fetchUserData = async userId => {
     try {
-      // Perform a fetch or API call to get user data based on userId
       const response = await fetch(`${BASE_URL}/api/profile/${userId}`);
       const userData = await response.json();
 
-      // Update state with user data
       setUserData(userData);
 
-      // You can perform other actions with userData here
       console.log('User Data:', userData);
     } catch (error) {
       console.error('Error fetching user data:', error);
