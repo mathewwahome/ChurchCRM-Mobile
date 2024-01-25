@@ -1,6 +1,12 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
+  },
   text: {
     color: 'black',
     fontSize: 16,
@@ -13,12 +19,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 10,
   },
-  container: {
-    flex: 1,
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: 10,
-  },
+
   image: {
     width: '100%',
     height: 200,
@@ -47,14 +48,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: 20,
     borderRadius: 10,
-    backgroundColor: '#087E8B', 
-    paddingVertical: 10
+    backgroundColor: '#087E8B',
+    paddingVertical: 10,
   },
   downloadNotesText: {
     textAlign: 'center',
     fontSize: 16,
     fontWeight: '800',
-    color: '#ffffff'
-  }
+    color: '#ffffff',
+  },
 });
 export {styles};
