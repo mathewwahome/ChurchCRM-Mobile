@@ -7,8 +7,7 @@ import {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {BASE_URL} from '../hooks/HandleApis';
 
-
-export default function Notes({ userId, reloadNotes, setReloadNotes }) {
+export default function Notes({userId, reloadNotes, setReloadNotes}) {
   const navigation = useNavigation();
 
   const NewNoteScreen = () => {
@@ -25,24 +24,21 @@ export default function Notes({ userId, reloadNotes, setReloadNotes }) {
   useEffect(() => {
     const handleReload = () => {
       if (reloadNotes) {
-        fetchData()
+        fetchData();
       }
-    }
+    };
 
     const fetchData = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/api/showNotes/${userId}`);
         setData(response.data);
-        setReloadNotes(false)
-      } 
-        catch (error) {
+        setReloadNotes(false);
+      } catch (error) {
         console.error('Displaying notes failed:', error);
       }
     };
     fetchData();
   }, [reloadNotes]);
-
-
 
   return (
     <View>
@@ -61,17 +57,14 @@ export default function Notes({ userId, reloadNotes, setReloadNotes }) {
                   <TouchableOpacity
                     key={notes.id}
                     onPress={() => editNoteScreen(notes.id)}
-                    style={[styles.notesContainer, {
-                      backgroundColor: '#FCB460'
-                    }]}
-                    >
-                    
-                    <Text style={styles.notesDateText}>
-                      {notes.content}
-                    </Text>
-                    <Text style={styles.notesTopic}>
-                      {notes.note_topic}
-                    </Text>
+                    style={[
+                      styles.notesContainer,
+                      {
+                        backgroundColor: '#FCB460',
+                      },
+                    ]}>
+                    <Text style={styles.notesDateText}>{notes.content}</Text>
+                    <Text style={styles.notesTopic}>{notes.note_topic}</Text>
                   </TouchableOpacity>
                 ))
               ) : (

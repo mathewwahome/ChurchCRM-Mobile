@@ -6,20 +6,19 @@ import {View, Text, Image, ScrollView, StyleSheet} from 'react-native';
 const EventView = ({route}) => {
   const {event, imageUri} = route.params;
 
-
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.Container}>
       <Image style={styles.image} source={{uri: imageUri}} />
 
-      <Text style={styles.text}>
+      <Text style={styles.dataDate}>
         {new Date(event.Event_Date).toLocaleDateString(undefined, {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
         })}
       </Text>
-      <Text style={styles.text}>{event.Event_Title}</Text>
-      <Text style={styles.text}>{event.Event_Description}</Text>
+      <Text style={styles.dataTopic}>{event.Event_Title}</Text>
+      <Text style={styles.dataParagraph}>{event.Event_Description}</Text>
     </ScrollView>
   );
 };

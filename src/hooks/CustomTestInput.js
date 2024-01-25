@@ -24,7 +24,7 @@ const CustomTextInput = ({
         placeholderTextColor={'#b7b7b7'}
         value={value}
         onChangeText={onChangeText}
-        secureTextEntry={secureTextEntry}
+        secureTextEntry={secureTextEntry && !showPassword}
       />
       {secureTextEntry && (
         <TouchableOpacity

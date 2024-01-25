@@ -1,15 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {View, ScrollView, Text, Image} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/core';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-import {BASE_URL, fetchDataByEndpoint} from '../hooks/HandleApis';
-import {styles} from '../assets/css/Global';
+import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
+import {styles} from '../../assets/css/Global';
+
+const Stack = createStackNavigator();
 
 export const fetchSermons = async () => {
   return fetchDataByEndpoint('fetchSermons');
 };
-export default function Sermons({userId}) {
+
+const Sermons = () => {
   const navigation = useNavigation();
   const [sermonsData, setSermonsData] = useState([]);
   const [sermonsLoading, setSermonsLoading] = useState(true);
@@ -77,4 +81,17 @@ export default function Sermons({userId}) {
       </View>
     </ScrollView>
   );
-}
+};
+
+const SermonsStackNavigator = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Book" component={Sermons} />
+    </Stack.Navigator>
+  );
+};
+
+export default SermonsStackNavigator;
