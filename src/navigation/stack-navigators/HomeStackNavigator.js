@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {View, ScrollView, Text, RefreshControl} from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, RefreshControl} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import VerseOfTheDay from './VerseOfTheDay/VerseOfTheDay';
-import Announcements from './ListView/Announcements';
-import Sermons from './ListView/Sermons';
-import SermonsNotes from './ListView/SermonNotes';
+
+import VerseOfTheDay from '../../screens/VerseOfTheDay/VerseOfTheDay';
+import Announcements from '../../screens/ListView/Announcements';
+import Sermons from '../../screens/ListView/Sermons';
+import SermonsNotes from '../../screens/ListView/SermonNotes';
 
 const Stack = createStackNavigator();
 
-export default function HomeScreen({navigation}) {
+const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState({
     verseOfTheDay: {},
@@ -43,4 +44,17 @@ export default function HomeScreen({navigation}) {
       <SermonsNotes data={data.sermonNotes} />
     </ScrollView>
   );
-}
+};
+
+const HomeStackNavigator = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Home" component={Home} />
+    </Stack.Navigator>
+  );
+};
+
+export default HomeStackNavigator;

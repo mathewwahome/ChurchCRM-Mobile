@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@glowstudent/youversion": "^1.2.7",
+    "@glowstudent/youversion": "^1.0.0",
     "@react-native-clipboard/clipboard": "^1.13.2",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/datetimepicker": "^7.6.2",

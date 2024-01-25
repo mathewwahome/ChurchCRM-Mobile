@@ -32,18 +32,6 @@ export default function EventsScreen() {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
       <View>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingVertical: 20,
-            backgroundColor: '#03686e',
-          }}>
-          <Text style={styles.heading}>Events</Text>
-        </View>
-
-        {/* The body */}
         <View>
           <Events data={data.Events} />
         </View>
