@@ -137,6 +137,7 @@ const DrawerNavigator = ({userId}) => {
       <Drawer.Screen
         name="More"
         component={More}
+        initialParams={{userId: userId}}
         options={{
           title: 'More',
           labelStyle: styles.drawerLabelWhite,

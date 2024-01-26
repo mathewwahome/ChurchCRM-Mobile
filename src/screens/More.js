@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import axios from 'axios';
 import {ScrollView, View, Text, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../assets/css/MoreScreen';
@@ -26,22 +25,30 @@ const menuItems = [
   {iconName: 'person', text: 'Profile Screen', screenName: 'ProfileScreen'},
 ];
 
-export default function More({userId}) {
+export default function More({route}) {
+  const navigation = useNavigation();
+
   const [data, setData] = useState([]);
+  const {userId, setUserId} = route.params;
+
   useEffect(() => {
     if (userId) {
-      axios
-        .get(`${BASE_URL}/api/profile/${userId}`)
+      fetch(`${BASE_URL}/api/profile/${userId}`)
         .then(response => {
-          setData(response.data);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setData(data);
+          console.log('User Data:', data);
         })
         .catch(error => {
-          console.log('Error exists: ', error);
+          console.error('Error fetching user data:', error);
         });
     }
   }, [userId]);
-
-  const navigation = useNavigation();
 
   const navigateToScreen = screenName => {
     navigation.navigate(screenName);
