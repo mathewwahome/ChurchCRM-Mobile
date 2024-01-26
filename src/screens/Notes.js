@@ -7,7 +7,7 @@ import {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {BASE_URL} from '../hooks/HandleApis';
 
-export default function Notes({userId}) {
+export default function Notes({userId, reloadNotes, setReloadNotes}) {
   const navigation = useNavigation();
 
   const NewNoteScreen = () => {
@@ -22,16 +22,23 @@ export default function Notes({userId}) {
 
   const [data, setData] = useState({});
   useEffect(() => {
+    const handleReload = () => {
+      if (reloadNotes) {
+        fetchData();
+      }
+    };
+
     const fetchData = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/api/showNotes/${userId}`);
-        setData(response.data.data);
+        setData(response.data);
+        setReloadNotes(false);
       } catch (error) {
         console.error('Displaying notes failed:', error);
       }
     };
     fetchData();
-  }, []);
+  }, [reloadNotes]);
 
   return (
     <View>
@@ -50,17 +57,14 @@ export default function Notes({userId}) {
                   <TouchableOpacity
                     key={notes.id}
                     onPress={() => editNoteScreen(notes.id)}
-                    style={styles.notesContainer}>
-                    <Image
-                      source={require('../assets/images/one.jpg')}
-                      style={styles.notesImage}
-                    />
-                    <Text style={styles.notesDateText}>
-                      {notes.content}
-                    </Text>
-                    <Text style={styles.notesTopic}>
-                      {notes.note_topic}
-                    </Text>
+                    style={[
+                      styles.notesContainer,
+                      {
+                        backgroundColor: '#FCB460',
+                      },
+                    ]}>
+                    <Text style={styles.notesDateText}>{notes.content}</Text>
+                    <Text style={styles.notesTopic}>{notes.note_topic}</Text>
                   </TouchableOpacity>
                 ))
               ) : (

@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {TextInput} from 'react-native-paper'; 
+import {TextInput} from 'react-native-paper';
 import useAuth from '../../hooks/HandleAuth';
 import AppSnackbar from '../../hooks/SnackBar';
 import {useRef} from 'react';
@@ -40,7 +40,7 @@ export default function LoginScreen({setUserId}) {
       setUserId(ID);
       appSnackbarRef.current.showSnackbar('Logged in successfully', 'success');
       setTimeout(() => {
-        navigation.navigate('HomeScreen');
+        navigation.navigate('MainContainer');
       }, 2000);
     } catch (error) {
       if (error.response && error.response.status === 401) {

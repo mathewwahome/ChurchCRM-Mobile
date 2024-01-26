@@ -57,13 +57,13 @@ export default function SermonsNotes({navigation}) {
                       },
                     )}
                   </Text>
-                  <Text style={styles.sermonText}>{sermonnotes.sermondescription}</Text>
+                  <Text style={styles.sermonText}>{sermonnotes.sermondescription.slice(0, 25)}</Text>
                 </View>
               </View>
             </View>
           ))
         ) : (
-          <Text>No Sermon Notes available</Text>
+          <Text style={styles.loadingText}>No Sermon Notes available</Text>
         )}
       </ScrollView>
     </View>

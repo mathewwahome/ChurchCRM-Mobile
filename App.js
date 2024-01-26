@@ -1,33 +1,29 @@
 import React, {useState} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+
 import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+
 import MainContainer from './src/MainContainer';
 import LandingScreen from './src/LandingScreen';
 import LoginScreen from './src/screens/auth/LoginScreen';
 import SignupScreen from './src/screens/auth/SignupScreen';
 import ForgotPassword from './src/screens/auth/ForgotPassword';
-
 import ProfileScreen from './src/screens/auth/ProfileScreen';
 import SettingScreen from './src/screens/auth/SettingScreen';
 import NewNotes from './src/screens/notes/NewNotes';
 import DocumentViewer from './src/screens/DocumentViewer';
-
 import EventsScreen from './src/screens/EventsScreen';
-
 import AnnouncementView from './src/screens/view/AnnouncementView';
 import EventView from './src/screens/view/EventView';
-
 import VideoPlayer from './src/screens/view/VideoPlayer';
-
 import SermonNotes from './src/screens/SermonNotes';
 import SplashScreen from './src/SplashScreen';
-
-const Stack = createStackNavigator();
-
+import Notes from './src/screens/Notes';
 function App() {
   const [userId, setUserId] = useState(null);
-
+  const [reloadNotes, setReloadNotes] = useState(false);
+  const Stack = createStackNavigator();
   return (
     <SafeAreaProvider>
       <NavigationContainer>
@@ -64,12 +60,25 @@ function App() {
             <>
               <Stack.Screen
                 name="MainContainer"
-                children={() => <MainContainer userId={userId} />}
+                children={() => (
+                  <MainContainer
+                    userId={userId}
+                    reloadNotes={reloadNotes}
+                    setReloadNotes={setReloadNotes}
+                  />
+                )}
                 options={{headerShown: false}}
               />
               <Stack.Screen
                 name="ProfileScreen"
-                children={() => <ProfileScreen userId={userId} />}
+                // component={ProfileScreen}
+                children={() => (
+                  <ProfileScreen
+                    userId={userId}
+                    reloadNotes={reloadNotes}
+                    setReloadNotes={setReloadNotes}
+                  />
+                )}
                 options={{title: 'Profile'}}
               />
               <Stack.Screen
@@ -79,7 +88,9 @@ function App() {
               />
               <Stack.Screen
                 name="NewNotes"
-                children={() => <NewNotes userId={userId} />}
+                children={() => (
+                  <NewNotes userId={userId} setReloadNotes={setReloadNotes} />
+                )}
                 options={{title: 'New Note'}}
               />
               <Stack.Screen
@@ -111,6 +122,12 @@ function App() {
               <Stack.Screen
                 name="VideoPlayer"
                 component={VideoPlayer}
+                options={{title: 'Video'}}
+              />
+              <Stack.Screen
+                name="NotesScreen"
+                component={Notes}
+                initialParams={{userId: userId}}
                 options={{title: 'Video'}}
               />
             </>

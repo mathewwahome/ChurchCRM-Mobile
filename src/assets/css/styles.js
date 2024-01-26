@@ -37,15 +37,14 @@ const styles = StyleSheet.create({
     flexDirection: 'col',
     padding: 10,
     resizeMode: 'cover',
+    paddingBottom: 20,
   },
   notesContainer: {
     marginBottom: 20,
-  },
-  notesImage: {
-    width: '100%',
-    height: 200,
+    height: 100,
     borderRadius: 10,
   },
+  
   notesDateText: {
     position: 'absolute',
     bottom: 35,
@@ -65,6 +64,9 @@ const styles = StyleSheet.create({
     flexDirection: 'col',
     alignItems: 'start',
     padding: 10,
+    borderTopWidth: 3,
+    borderTopColor: '#E53436',
+    
   },
   notesTopic: {
     position: 'absolute',
@@ -76,8 +78,8 @@ const styles = StyleSheet.create({
   },
   notesInput: {
     flex: 1,
-    height: 150,
-    borderWidth: 1,
+    height: 40,
+    borderWidth: 2,
     borderColor: '#707070',
     borderRadius: 5,
     padding: 5,
@@ -92,12 +94,12 @@ const styles = StyleSheet.create({
     color: '#414141',
   },
   notesTextArea: {
-    height: 100,
+    height: 200,
     flex: 1,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: '#707070',
-    borderRadius: 5,
-    padding: 5,
+    borderRadius: 8,
+    padding: 1,
     backgroundColor: 'white',
     color: 'black',
   },
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
   submitNotesButton: {
     marginTop: 20,
     backgroundColor: '#087E8B',
-    width: 100,
+    width: 130,
     alignItems: 'center',
     alignSelf: 'flex-end',
     paddingVertical: 10,

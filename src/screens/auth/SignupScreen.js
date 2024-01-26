@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   Pressable,
@@ -7,15 +7,15 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {useRef} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useRef } from 'react';
 import handleRegister from '../../hooks/HandleSignup';
 import Logo from '../../utilities/Logo';
 import CustomTextInput from '../../hooks/CustomTestInput';
-import {styles} from '../../assets/css/AuthScreens';
+import { styles } from '../../assets/css/AuthScreens';
 import AppSnackbar from '../../hooks/SnackBar';
 
-export default function SignupScreen({setUserId}) {
+export default function SignupScreen() {
   const appSnackbarRef = useRef();
   const navigation = useNavigation();
   const [userData, setUserData] = useState({
@@ -23,7 +23,7 @@ export default function SignupScreen({setUserId}) {
     email: '',
     phone: '',
     password: '',
-    // confirmpassword: '',
+    confirmpassword: '',
   });
 
   const handleLogin = () => {
@@ -38,6 +38,7 @@ export default function SignupScreen({setUserId}) {
           userData.email,
           userData.phone,
           userData.password,
+          userData.confirmpassword,
         );
         appSnackbarRef.current.showSnackbar(
           'Registration successful',
@@ -72,7 +73,7 @@ export default function SignupScreen({setUserId}) {
   /// setUserId(loggedUser);
 
   return (
-    <View style={{padding: 20}}>
+    <View style={{ padding: 10 }}>
       <ScrollView>
         <View style={styles.signup_img}>
           <Logo styles={styles.signup_img} />
@@ -87,7 +88,7 @@ export default function SignupScreen({setUserId}) {
                 placeholder="Name"
                 value={userData.name}
                 onChangeText={text =>
-                  setUserData(data => ({...data, name: text}))
+                  setUserData(data => ({ ...data, name: text }))
                 }
               />
 
@@ -96,7 +97,7 @@ export default function SignupScreen({setUserId}) {
                 placeholder="Email"
                 value={userData.email}
                 onChangeText={text =>
-                  setUserData(data => ({...data, email: text}))
+                  setUserData(data => ({ ...data, email: text }))
                 }
               />
 
@@ -105,7 +106,7 @@ export default function SignupScreen({setUserId}) {
                 placeholder="Phone"
                 value={userData.phone}
                 onChangeText={text =>
-                  setUserData(data => ({...data, phone: text}))
+                  setUserData(data => ({ ...data, phone: text }))
                 }
               />
 
@@ -115,7 +116,7 @@ export default function SignupScreen({setUserId}) {
                 secureTextEntry
                 value={userData.password}
                 onChangeText={text =>
-                  setUserData(data => ({...data, password: text}))
+                  setUserData(data => ({ ...data, password: text }))
                 }
               />
               <CustomTextInput
@@ -124,7 +125,7 @@ export default function SignupScreen({setUserId}) {
                 secureTextEntry
                 value={userData.confirmpassword}
                 onChangeText={text =>
-                  setUserData(data => ({...data, confirmpassword: text}))
+                  setUserData(data => ({ ...data, confirmpassword: text }))
                 }
               />
             </View>
@@ -132,7 +133,7 @@ export default function SignupScreen({setUserId}) {
               onPress={registerUser}
               title="Submit"
               style={styles.signup_btn}>
-              <Text style={{...styles.auth_btn_text, color: '#ffffff'}}>
+              <Text style={{ ...styles.auth_btn_text, color: '#ffffff' }}>
                 Sign up
               </Text>
             </TouchableOpacity>
@@ -147,6 +148,6 @@ export default function SignupScreen({setUserId}) {
         </View>
         <AppSnackbar ref={appSnackbarRef} />
       </ScrollView>
-    </View>
+    </View >
   );
 }
