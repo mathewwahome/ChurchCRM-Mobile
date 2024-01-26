@@ -5,7 +5,7 @@ const config = {
 
 export const BASE_URL = 'https://bf7f-41-139-245-235.ngrok-free.app';
 
-const URL = `${BASE_URL}/api/`;
+export const URL = `${BASE_URL}/api/`;
 
 const fetchData = async url => {
   try {
