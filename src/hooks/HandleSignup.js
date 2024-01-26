@@ -37,7 +37,7 @@ const handleRegister = async (
     }
   } catch (error) {
     console.error('Registration failed:', error.message || error);
-    throw error; // Propagate the error to the calling function if needed
+    throw error;
   }
 };
 

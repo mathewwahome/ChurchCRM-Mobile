@@ -1,7 +1,6 @@
 import axios from 'axios';
 import NetInfo from '@react-native-community/netinfo';
-
-export const BASE_URL = 'https://karencommunitychurch.org:4433';
+import {BASE_URL} from './HandleApis';
 export const API_URL = `${BASE_URL}/api/`;
 const config = {
   Accept: 'application/json',

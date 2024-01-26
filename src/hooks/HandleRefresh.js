@@ -1,6 +1,3 @@
-import React, {useState} from 'react';
-import {View, ScrollView, Text, RefreshControl} from 'react-native';
-
 export const refreshData = async () => {
   try {
     return new Promise(resolve => {
