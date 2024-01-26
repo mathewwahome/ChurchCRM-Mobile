@@ -5,6 +5,13 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     padding: 20,
   },
+  MoreContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 30,
+    backgroundColor: '#03686e',
+  },
   username: {
     fontSize: 18,
     fontWeight: '900',

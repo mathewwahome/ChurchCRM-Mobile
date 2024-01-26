@@ -6,6 +6,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {ImageConstant} from '../../hooks/ImageConstants';
 
 import {BASE_URL} from '../../hooks/HandleApis';
+
+import GlobalCss from '../../assets/css/GlobalCss';
 export default function ProfileScreen({route, navigation}) {
   const [data, setData] = useState([]);
   const {userId, setUserId} = route.params;
@@ -35,7 +37,7 @@ export default function ProfileScreen({route, navigation}) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={GlobalCss.container}>
       <View style={styles.header}>
         <View style={styles.itemContainer}>
           {(() => {

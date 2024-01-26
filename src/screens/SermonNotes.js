@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../assets/css/styles';
 import axios from 'axios';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import GlobalCss from '../assets/css/GlobalCss';
 
 export default function SermonNotes({route}) {
   const navigation = useNavigation();
@@ -90,7 +91,7 @@ export default function SermonNotes({route}) {
   };
   return (
     <ScrollView>
-      <View style={{padding: 10}}>
+      <View style={GlobalCss.container}>
         <ScrollView horizontal={false}>
           <View style={styles.rowContainer}>
             <View style={styles.notesContainer}>

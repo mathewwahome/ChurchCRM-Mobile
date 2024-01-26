@@ -3,7 +3,7 @@ import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../../assets/css/HomeScreen';
 import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
 import {useNavigation} from '@react-navigation/native';
-
+import GlobalCss from '../../assets/css/GlobalCss';
 
 export const fetchSermons = async () => {
   return fetchDataByEndpoint('fetchSermons');
@@ -29,7 +29,7 @@ export default function Sermons() {
   }, []);
 
   return (
-    <View style={{padding: 10, paddingBottom: 20}}>
+    <View style={GlobalCss.container}>
       <Text style={styles.headingText}>Sermons</Text>
       <ScrollView horizontal={true}>
         {sermonsLoading ? (
@@ -42,7 +42,7 @@ export default function Sermons() {
                 navigation.navigate('VideoPlayer', {sermon: sermon})
               }>
               <View>
-                <View style={{ flexDirection: 'row', paddingTop: 5 }}>
+                <View style={{flexDirection: 'row', paddingTop: 5}}>
                   <View style={{marginRight: 10}}>
                     <Image
                       style={styles.image}

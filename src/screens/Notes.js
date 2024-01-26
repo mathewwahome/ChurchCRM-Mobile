@@ -6,7 +6,7 @@ import {styles} from '../assets/css/styles';
 import {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {BASE_URL} from '../hooks/HandleApis';
-
+import GlobalCss from '../assets/css/GlobalCss';
 export default function Notes({userId, reloadNotes, setReloadNotes}) {
   const navigation = useNavigation();
 
@@ -38,7 +38,7 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
       }
     };
     fetchData();
-  }, [reloadNotes]);
+  }, [reloadNotes, setReloadNotes, userId]);
 
   return (
     <View>
@@ -49,7 +49,7 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
       </TouchableOpacity>
 
       <ScrollView>
-        <View style={{padding: 10}}>
+        <View style={GlobalCss.container}>
           <ScrollView horizontal={false}>
             <View style={styles.rowContainer}>
               {data.length > 0 ? (

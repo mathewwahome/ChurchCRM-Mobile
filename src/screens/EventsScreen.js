@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
 import {ScrollView, View, RefreshControl} from 'react-native';
 
 import Events from './ListView/Events';
 
 export default function EventsScreen() {
-  const navigation = useNavigation();
 
   const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState({
