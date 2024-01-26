@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -14,8 +14,30 @@ import {BASE_URL} from '../hooks/HandleApis';
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent = props => {
+  const handleSignOut = () => {
+    console.log('Signing out...');
+    // setUserId(null);
+    // navigation.navigate('LoginScreen');
+  };
   return (
     <DrawerContentScrollView {...props}>
+      <View style={styles.header}>
+        <View style={styles.itemContainer}>
+          <Image
+            source={require('../assets/images/one.jpg')}
+            style={styles.image_logo}
+          />
+        </View>
+        <Text style={styles.NameText}>
+          Name
+          <Icon name="person" style={styles.icon} />
+        </Text>
+        <Text style={styles.EmailText}>
+          Admin@gmail.com
+          <Icon name="person" style={styles.icon} />
+        </Text>
+      </View>
+
       {Object.entries(props.descriptors).map(([key, descriptor], index) => {
         const focused = index === props.state.index;
         return (
@@ -39,6 +61,11 @@ const CustomDrawerContent = props => {
           />
         );
       })}
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
+          <Text style={styles.signOutButtonText}>Sign Out</Text>
+        </TouchableOpacity>
+      </View>
     </DrawerContentScrollView>
   );
 };
@@ -110,6 +137,7 @@ const DrawerNavigator = ({userId}) => {
       <Drawer.Screen
         name="More"
         component={More}
+        initialParams={{userId: userId}}
         options={{
           title: 'More',
           labelStyle: styles.drawerLabelWhite,
@@ -150,6 +178,68 @@ const styles = StyleSheet.create({
   },
   drawerItemFocused: {
     backgroundColor: '#087E8B',
+  },
+
+  header: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 30,
+    backgroundColor: '#087E8B',
+  },
+  NameText: {
+    fontSize: 18,
+    fontWeight: '900',
+    paddingStart: 20,
+    color: 'white',
+    padding: 10,
+  },
+  EmailText: {
+    fontSize: 18,
+    fontWeight: '900',
+    paddingStart: 20,
+    color: 'white',
+    padding: 10,
+  },
+  content: {
+    flex: 4,
+  },
+  containerSection: {
+    // flex: 1,
+    flexDirection: 'row',
+    padding: 20,
+    justifyContent: 'space-between',
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  icon: {
+    color: '#000000',
+  },
+  image_logo: {
+    borderWidth: 10,
+    width: 80,
+    height: 80,
+    borderRadius: 100,
+  },
+  footer: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  signOutButton: {
+    backgroundColor: '#087E8B',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  signOutButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  text: {
+    color: '#000000',
   },
 });
 
