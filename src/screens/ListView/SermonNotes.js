@@ -29,14 +29,12 @@ export default function SermonsNotes({navigation}) {
   }, []);
 
   return (
-    <View
-      style={styles.sermonNoteContainer}>
+    <View style={styles.sermonNoteContainer}>
       <Text style={styles.sermonNotesHeading}>Sermon Notes</Text>
       <ScrollView horizontal={true}>
         {sermonsNotesLoading ? (
           <Text style={styles.loadingText}>Loading sermon Notes...</Text>
-        ) : sermonsNotesData &&
-          sermonsNotesData.length > 0 ? (
+        ) : sermonsNotesData && sermonsNotesData.length > 0 ? (
           sermonsNotesData.map(sermonnotes => (
             <View key={sermonnotes.id}>
               <View style={{flexDirection: 'row', padding: 10}}>
@@ -57,7 +55,9 @@ export default function SermonsNotes({navigation}) {
                       },
                     )}
                   </Text>
-                  <Text style={styles.sermonText}>{sermonnotes.sermondescription.slice(0, 25)}</Text>
+                  <Text style={styles.sermonText}>
+                    {sermonnotes.sermondescription.slice(0, 25)}
+                  </Text>
                 </View>
               </View>
             </View>

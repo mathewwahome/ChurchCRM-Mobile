@@ -1,7 +1,7 @@
 import React from 'react';
 import {styles} from '../../assets/css/EventsScreen';
 
-import {View, Text, Image, ScrollView, StyleSheet} from 'react-native';
+import {Text, Image, ScrollView} from 'react-native';
 
 const EventView = ({route}) => {
   const {event, imageUri} = route.params;

@@ -17,6 +17,7 @@ import Logo from '../../utilities/Logo';
 import useForgotPassword from '../../hooks/HandleForgotPassword';
 import CustomTextInput from '../../hooks/CustomTestInput';
 
+import GlobalCss from '../../assets/css/GlobalCss';
 export default function LoginScreen({setUserId}) {
   const {handleLogin, getLoggedId} = useAuth();
 
@@ -61,7 +62,7 @@ export default function LoginScreen({setUserId}) {
   const {handleForgotPassword} = useForgotPassword();
 
   return (
-    <View style={{padding: 20}}>
+    <View style={GlobalCss.container}>
       <ScrollView>
         <View style={styles.signup_img}>
           <Logo styles={styles.signup_img} />
@@ -74,7 +75,6 @@ export default function LoginScreen({setUserId}) {
               <CustomTextInput
                 iconName="mail"
                 placeholder="Email"
-                placeholderTextColor={'#b7b7b7'}
                 value={userData.email}
                 onChangeText={text =>
                   setUserData(data => ({...data, email: text}))
@@ -83,7 +83,6 @@ export default function LoginScreen({setUserId}) {
               <CustomTextInput
                 iconName="lock"
                 placeholder="Password"
-                placeholderTextColor={'#b7b7b7'}
                 secureTextEntry={!showPassword}
                 value={userData.password}
                 onChangeText={text =>

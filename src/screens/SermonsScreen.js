@@ -5,6 +5,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {BASE_URL, fetchDataByEndpoint} from '../hooks/HandleApis';
 import {styles} from '../assets/css/Global';
+import GlobalCss from '../assets/css/GlobalCss';
 
 export const fetchSermons = async () => {
   return fetchDataByEndpoint('fetchSermons');
@@ -30,7 +31,7 @@ export default function Sermons({userId}) {
 
   return (
     <ScrollView>
-      <View style={{padding: 10}}>
+      <View style={GlobalCss.container}>
         <ScrollView>
           {sermonsLoading ? (
             <Text>Loading sermons...</Text>

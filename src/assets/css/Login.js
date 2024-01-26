@@ -47,5 +47,16 @@ const styles = StyleSheet.create({
     height: 20,
     // resizeMode: "contain",
   },
+
+  ForgotPasswordBtn: {
+    paddingVertical: 10,
+    width: '100%',
+    height: 'auto',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'black',
+    marginTop: 30,
+    borderRadius: 30,
+  },
 });
 export {styles};

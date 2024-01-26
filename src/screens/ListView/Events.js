@@ -3,7 +3,7 @@ import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../../assets/css/EventsScreen';
 import {useNavigation} from '@react-navigation/native';
 import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
-
+import GlobalCss from '../../assets/css/GlobalCss';
 export const fetchEvents = async () => {
   return fetchDataByEndpoint('fetchEvents');
 };
@@ -47,7 +47,7 @@ export default function Events() {
         })
       }
       style={styles.eventItem}>
-      <View style={{padding: 10}}>
+      <View style={GlobalCss.container}>
         <Image
           style={styles.image}
           source={{

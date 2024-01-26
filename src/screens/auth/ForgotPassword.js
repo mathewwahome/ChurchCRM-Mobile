@@ -1,10 +1,15 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Pressable, Alert} from 'react-native';
+import {View, Text, TextInput, Pressable, ScrollView} from 'react-native';
 import {styles} from '../../assets/css/Login';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import GlobalCss from '../../assets/css/GlobalCss';
 import axios from 'axios';
 import {BASE_URL} from '../../hooks/HandleApis';
+import {useRef} from 'react';
+import Icon from '../../ui/components/icon';
+import AppSnackbar from '../../hooks/SnackBar';
+
 const ForgotPassword = () => {
+  const appSnackbarRef = useRef();
   const [email, setEmail] = useState('');
   const forgotPassword = async () => {
     try {
@@ -13,56 +18,52 @@ const ForgotPassword = () => {
       });
 
       if (response.data && response.data.message === 'passwords.throttled') {
-        Alert.alert(
-          'Error',
+        appSnackbarRef.current.showSnackbar(
           'Too many password reset requests. Please wait a moment and try again.',
+          'warning',
         );
       } else if (response.data && response.data.message === 'passwords.sent') {
-        Alert.alert('Success', 'Password reset link sent successfully');
+        appSnackbarRef.current.showSnackbar(
+          'Password reset link sent successfully',
+          'success',
+        );
       } else {
-        Alert.alert(
-          'Error',
+        appSnackbarRef.current.showSnackbar(
           'Failed to initiate password reset. Please try again.',
+          'error',
         );
       }
     } catch (error) {
       console.error(error.message);
-      Alert.alert(
-        'Error',
+
+      appSnackbarRef.current.showSnackbar(
         'Failed to initiate password reset. Please try again.',
+        'error',
       );
     }
   };
 
   return (
-    <View style={{padding: 20}}>
-      <Text style={styles.login_text}>
-        Enter your email to reset your password
-      </Text>
+    <View style={GlobalCss.container}>
+      <ScrollView>
+        <Text style={styles.login_text}>
+          Enter your email to reset your password
+        </Text>
 
-      <View style={styles.inputContainer}>
-        <Icon name="email" size={20} color="black" style={styles.icon} />
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          value={email}
-          onChangeText={text => setEmail(text)}
-        />
-      </View>
-      <Pressable
-        onPress={forgotPassword}
-        style={{
-          paddingVertical: 10,
-          width: '100%',
-          height: 'auto',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'black',
-          marginTop: 30,
-          borderRadius: 30,
-        }}>
-        <Text style={{fontSize: 20, color: 'white'}}>Forgot password?</Text>
-      </Pressable>
+        <View style={styles.inputContainer}>
+          <Icon name="email" size={20} color="black" style={styles.icon} />
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            value={email}
+            onChangeText={text => setEmail(text)}
+          />
+        </View>
+        <Pressable onPress={forgotPassword} style={styles.ForgotPasswordBtn}>
+          <Text style={GlobalCss.ForgotPasswordTxt}>Forgot password?</Text>
+        </Pressable>
+        <AppSnackbar ref={appSnackbarRef} />
+      </ScrollView>
     </View>
   );
 };

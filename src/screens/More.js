@@ -42,13 +42,14 @@ export default function More({route}) {
         })
         .then(data => {
           setData(data);
-          console.log('User Data:', data);
+          setUserId(setUserId);
+          // console.log('User Data:', data);
         })
         .catch(error => {
           console.error('Error fetching user data:', error);
         });
     }
-  }, [userId]);
+  }, [setUserId, userId]);
 
   const navigateToScreen = screenName => {
     navigation.navigate(screenName);
@@ -70,14 +71,7 @@ export default function More({route}) {
   return (
     <ScrollView>
       <View>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingVertical: 30,
-            backgroundColor: '#03686e',
-          }}>
+        <View style={styles.MoreContainer}>
           <View style={styles.itemContainer}>
             <Image
               source={require('../assets/images/one.jpg')}

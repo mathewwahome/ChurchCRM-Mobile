@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 
-const Container = (props) => {
+const Container = props => {
   return (
     <View
       style={[

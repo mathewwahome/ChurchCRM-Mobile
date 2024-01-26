@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-  Text,
-  ScrollView,
-  View,
-  Pressable,
-  TouchableOpacity,
-} from 'react-native';
+import {Text, ScrollView, View, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from './assets/css/AuthScreens';
 import Logo from './utilities/Logo';

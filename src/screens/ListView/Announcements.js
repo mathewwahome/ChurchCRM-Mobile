@@ -3,6 +3,7 @@ import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../../assets/css/HomeScreen';
 import {useNavigation} from '@react-navigation/native';
 import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
+import GlobalCss from '../../assets/css/GlobalCss';
 
 export const fetchAnnouncements = async () => {
   return fetchDataByEndpoint('fetchAnnouncements');
@@ -29,7 +30,7 @@ export default function Announcements() {
   const navigation = useNavigation();
 
   return (
-    <View style={{padding: 10}}>
+    <View style={GlobalCss.container}>
       <Text style={styles.headingText}>Announcements</Text>
 
       <ScrollView horizontal={true}>
