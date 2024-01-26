@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react';
 import {View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
 // import Icon from '../../ui/components/icon';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {ImageConstant} from '../../hooks/ImageConstants';
 
 import {BASE_URL} from '../../hooks/HandleApis';
 export default function ProfileScreen({route, navigation}) {
@@ -37,10 +38,24 @@ export default function ProfileScreen({route, navigation}) {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.itemContainer}>
-          <Image
-            source={require('../../assets/images/one.jpg')}
-            style={styles.image_logo}
-          />
+          {(() => {
+            if (data.profile_photo_path) {
+              const img = data.profile_photo_path;
+              return (
+                <Image
+                  source={ImageConstant.ProfileImage}
+                  style={styles.image_logo}
+                />
+              );
+            } else {
+              return (
+                <Image
+                  source={ImageConstant.DefaultProfile}
+                  style={styles.image_logo}
+                />
+              );
+            }
+          })()}
         </View>
         <Text style={styles.headerText}>
           {data.name} <Icon name="person" style={styles.icon} />

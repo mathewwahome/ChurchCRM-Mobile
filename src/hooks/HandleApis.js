@@ -3,7 +3,7 @@ const config = {
   'Content-Type': 'application/json',
 };
 
-export const BASE_URL = 'https://karencommunitychurch.org:4433';
+export const BASE_URL = 'https://bf7f-41-139-245-235.ngrok-free.app';
 
 const URL = `${BASE_URL}/api/`;
 
