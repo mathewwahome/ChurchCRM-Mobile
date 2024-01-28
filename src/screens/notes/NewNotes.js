@@ -22,8 +22,8 @@ export default function NewNotes({userId, setReloadNotes}) {
       });
       console.log('Notes data: ', response.data);
       if (response.status === 200) {
-        navigation.navigate('Notes');
         setReloadNotes(true);
+        navigation.navigate('Notes');
       }
     } catch (error) {
       console.error('Notes Save failed:', error);

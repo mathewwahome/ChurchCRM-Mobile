@@ -14,11 +14,32 @@ import {BASE_URL} from '../hooks/HandleApis';
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent = props => {
+  const {userId} = props;
+  console.log(userId);
+  const[data, setData] = useState([]);
   const handleSignOut = () => {
     console.log('Signing out...');
     // setUserId(null);
     // navigation.navigate('LoginScreen');
   };
+  useEffect(() => {
+    if (userId) {
+      fetch(`${BASE_URL}/api/profile/${userId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setData(data);
+          console.log('User Data:', data);
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+        });
+    }
+  }, [userId]);
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.header}>
@@ -29,7 +50,7 @@ const CustomDrawerContent = props => {
           />
         </View>
         <Text style={styles.NameText}>
-          Name
+          {data.name}
           <Icon name="person" style={styles.icon} />
         </Text>
         <Text style={styles.EmailText}>
@@ -70,12 +91,12 @@ const CustomDrawerContent = props => {
   );
 };
 
-const DrawerNavigator = ({userId}) => {
+const DrawerNavigator = ({userId, reloadNotes, setReloadNotes}) => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     if (userId !== undefined) {
-      console.log('user id caontainer:', userId);
+      console.log('user id container:', userId);
 
       fetchUserData(userId);
     }
@@ -109,10 +130,16 @@ const DrawerNavigator = ({userId}) => {
           </TouchableOpacity>
         ),
       })}
-      drawerContent={props => <CustomDrawerContent {...props} />}>
+      drawerContent={props => <CustomDrawerContent userId={userId} />}>
       <Drawer.Screen
         name="HomeTabs"
-        component={BottomTabNavigator}
+        children={() => (
+          <BottomTabNavigator
+            userId={userId}
+            reloadNotes={reloadNotes}
+            setReloadNotes={setReloadNotes}
+          />
+        )}
         options={{
           title: 'Home',
           headerRight: () => (

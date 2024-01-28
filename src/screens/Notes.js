@@ -9,16 +9,16 @@ import {BASE_URL} from '../hooks/HandleApis';
 import GlobalCss from '../assets/css/GlobalCss';
 export default function Notes({userId, reloadNotes, setReloadNotes}) {
   const navigation = useNavigation();
-
+  console.log(userId);
   const NewNoteScreen = () => {
     console.log('handleMain executed');
     navigation.navigate('NewNotes');
   };
 
-  const editNoteScreen = noteId => {
-    console.log('go to edit screen');
-    navigation.navigate('EditNotes', {noteId});
-  };
+  // const editNoteScreen = noteId => {
+  //   console.log('go to edit screen');
+  //   navigation.navigate('EditNotes', {noteId});
+  // };
 
   const [data, setData] = useState({});
   useEffect(() => {
@@ -27,6 +27,7 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
         fetchData();
       }
     };
+
 
     const fetchData = async () => {
       try {
@@ -38,7 +39,7 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
       }
     };
     fetchData();
-  }, [reloadNotes, setReloadNotes, userId]);
+  }, [reloadNotes]);
 
   return (
     <View>

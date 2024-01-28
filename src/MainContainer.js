@@ -8,7 +8,7 @@ const MainContainer = ({userId, reloadNotes, setReloadNotes}) => {
     }
   }, [userId]);
 
-  return <DrawerNavigator userId={userId} />;
+  return <DrawerNavigator userId={userId} reloadNotes={reloadNotes} setReloadNotes={setReloadNotes}/>;
 };
 
 export default MainContainer;

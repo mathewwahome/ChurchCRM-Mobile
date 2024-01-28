@@ -21,6 +21,7 @@ import SermonNotes from './src/screens/SermonNotes';
 import SplashScreen from './src/SplashScreen';
 import Notes from './src/screens/Notes';
 import SermonsStackNavigator from './src/navigation/stack-navigators/SermonsStackNavigator';
+import VerseOfTheDay from './src/screens/VerseOfTheDay/VerseOfTheDay';
 function App() {
   const [userId, setUserId] = useState(null);
   const [reloadNotes, setReloadNotes] = useState(false);
@@ -125,12 +126,6 @@ function App() {
                 options={{title: 'Video'}}
               />
               <Stack.Screen
-                name="NotesScreen"
-                component={Notes}
-                initialParams={{userId: userId}}
-                options={{title: 'Notes'}}
-              />
-              <Stack.Screen
                 name="SavedSermonsScreen"
                 component={SermonsStackNavigator}
                 options={{title: 'Sermons'}}
@@ -138,13 +133,7 @@ function App() {
               {/* VerseOfDayScreen */}
               <Stack.Screen
                 name="VerseOfDayScreen"
-                children={() => (
-                  <MainContainer
-                    userId={userId}
-                    reloadNotes={reloadNotes}
-                    setReloadNotes={setReloadNotes}
-                  />
-                )}
+                component={VerseOfTheDay}
                 options={{headerShown: false}}
               />
             </>
