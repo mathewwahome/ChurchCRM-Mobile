@@ -16,8 +16,7 @@ import DrawerNavigatorcss from '../assets/css/DrawerNavigatorcss';
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent = props => {
-  const {userData} = props;
-  const [userId, setUserId] = useState(null);
+  const {userData, setUserId} = props;
 
   const handleSignOut = () => {
     console.log('Signing out...');
@@ -40,7 +39,7 @@ const CustomDrawerContent = props => {
               <Icon name="person" style={DrawerNavigatorcss.icon} />
             </Text>
             <Text style={DrawerNavigatorcss.EmailText}>
-              {userData.email} 
+              {userData.email}
               <Icon name="person" style={DrawerNavigatorcss.icon} />
             </Text>
           </>
@@ -83,9 +82,8 @@ const CustomDrawerContent = props => {
   );
 };
 
-const DrawerNavigator = ({userId}) => {
+const DrawerNavigator = ({userId, setUserId}) => {
   const [userData, setUserData] = useState(null);
-
   useEffect(() => {
     if (userId !== undefined) {
       console.log('user id caontainer:', userId);
@@ -123,7 +121,11 @@ const DrawerNavigator = ({userId}) => {
         ),
       })}
       drawerContent={props => (
-        <CustomDrawerContent {...props} userData={userData} />
+        <CustomDrawerContent
+          {...props}
+          userData={userData}
+          setUserId={setUserId}
+        />
       )}>
       <Drawer.Screen
         name="HomeTabs"

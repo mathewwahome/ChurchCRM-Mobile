@@ -4,12 +4,10 @@ import {
   ScrollView,
   Text,
   TextInput,
-  StyleSheet,
   Pressable,
   Image,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../assets/css/styles';
 import axios from 'axios';
 import {TouchableOpacity} from 'react-native-gesture-handler';

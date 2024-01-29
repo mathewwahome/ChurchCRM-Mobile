@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState, useEffect} from 'react';
-import {View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Image, Text, TouchableOpacity} from 'react-native';
 // import Icon from '../../ui/components/icon';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {ImageConstant} from '../../hooks/ImageConstants';
@@ -8,9 +8,12 @@ import {ImageConstant} from '../../hooks/ImageConstants';
 import {BASE_URL} from '../../hooks/HandleApis';
 
 import GlobalCss from '../../assets/css/GlobalCss';
+import {styles} from '../../assets/css/ProfileScreen';
+
 export default function ProfileScreen({route, navigation}) {
+  const [userId, setUserId] = useState(route.params.userId);
+  const {reloadNotes, setReloadNotes} = route.params;
   const [data, setData] = useState([]);
-  const {userId, setUserId} = route.params;
   useEffect(() => {
     if (userId) {
       fetch(`${BASE_URL}/api/profile/${userId}`)
@@ -29,13 +32,12 @@ export default function ProfileScreen({route, navigation}) {
         });
     }
   }, [userId]);
-
   const handleSignOut = () => {
-    console.log('Signing out...');
     setUserId(null);
-    navigation.navigate('LoginScreen');
+    navigation.navigate('Root', {
+      screen: 'LoginScreen',
+    });
   };
-
   return (
     <View style={GlobalCss.container}>
       <View style={styles.header}>
@@ -102,66 +104,3 @@ export default function ProfileScreen({route, navigation}) {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    justifyContent: 'space-between',
-  },
-  header: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 30,
-    backgroundColor: '#087E8B',
-  },
-  headerText: {
-    fontSize: 18,
-    fontWeight: '900',
-    marginTop: 30,
-    paddingStart: 20,
-    textAlign: 'right',
-    color: 'white',
-    padding: 10,
-  },
-  content: {
-    flex: 4,
-  },
-  containerSection: {
-    // flex: 1,
-    flexDirection: 'row',
-    padding: 20,
-    justifyContent: 'space-between',
-  },
-  row: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  icon: {
-    color: '#000000',
-  },
-  image_logo: {
-    borderWidth: 10,
-    width: 80,
-    height: 80,
-    borderRadius: 100,
-  },
-  footer: {
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  signOutButton: {
-    backgroundColor: '#087E8B',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-  },
-  signOutButtonText: {
-    color: 'white',
-    fontSize: 16,
-  },
-  text: {
-    color: '#000000',
-  },
-});
