@@ -66,6 +66,7 @@ function App() {
                   <MainContainer
                     userId={userId}
                     reloadNotes={reloadNotes}
+                    setUserId={setUserId}
                     setReloadNotes={setReloadNotes}
                   />
                 )}
@@ -76,6 +77,7 @@ function App() {
                 children={() => (
                   <ProfileScreen
                     userId={userId}
+                    setUserId={setUserId}
                     reloadNotes={reloadNotes}
                     setReloadNotes={setReloadNotes}
                   />

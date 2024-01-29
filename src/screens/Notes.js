@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
+import {View, ScrollView, Text, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../assets/css/styles';
@@ -27,7 +27,6 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
         fetchData();
       }
     };
-
 
     const fetchData = async () => {
       try {
