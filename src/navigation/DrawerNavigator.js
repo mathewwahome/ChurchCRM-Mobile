@@ -5,8 +5,7 @@ import {
   DrawerContentScrollView,
   DrawerItem,
 } from '@react-navigation/drawer';
-import Icon from 'react-native-vector-icons/FontAwesome';
-
+import Icon from '../ui/components/icon';
 import BottomTabNavigator from './BottomTabNavigator';
 import ProfileScreen from '../screens/auth/ProfileScreen';
 import More from '../screens/More';
@@ -36,12 +35,9 @@ const CustomDrawerContent = props => {
           <>
             <Text style={DrawerNavigatorcss.NameText}>
               {userData.name}
-              <Icon name="person" style={DrawerNavigatorcss.icon} />
+              <Icon name="user" style={DrawerNavigatorcss.icon} />
             </Text>
-            <Text style={DrawerNavigatorcss.EmailText}>
-              {userData.email}
-              <Icon name="person" style={DrawerNavigatorcss.icon} />
-            </Text>
+            <Text style={DrawerNavigatorcss.EmailText}>{userData.email}</Text>
           </>
         )}
       </View>
@@ -134,7 +130,7 @@ const DrawerNavigator = ({userId, setUserId}) => {
           title: 'Home',
           headerRight: () => (
             <View style={DrawerNavigatorcss.headerRight}>
-              <Icon name="bell" size={20} color="#fff" />
+              <Icon name="bells" size={20} color="#fff" />
             </View>
           ),
         }}
