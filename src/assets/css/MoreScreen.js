@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#03686e',
   },
   username: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '900',
     marginTop: 30,
     paddingStart: 20,
@@ -33,12 +33,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   icon: {
+    marginLeft: 20,
     marginRight: 20,
-    color: '#000000',
-    fontSize: 18,
+    color: '#0A7E8B',
+    fontSize: 20,
   },
   linktext: {
-    color: 'blue',
+    color: '#0A7E8B',
   },
   heading: {
     color: 'white',
