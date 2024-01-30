@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
   img: {
     width: 150,
     height: 150,
-    // resizeMode: "contain",
   },
 
   login_view: {
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'sans-serif',
     fontWeight: '900',
-    color: 'blue',
+    color: '#0A7E8B',
   },
   inputContainer: {
     flexDirection: 'row',
