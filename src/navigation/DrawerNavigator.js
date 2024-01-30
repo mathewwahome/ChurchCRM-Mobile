@@ -82,7 +82,7 @@ const CustomDrawerContent = props => {
   );
 };
 
-const DrawerNavigator = ({userId, setUserId}) => {
+const DrawerNavigator = ({userId, setUserId, reloadNotes, setReloadNotes}) => {
   const [userData, setUserData] = useState(null);
   useEffect(() => {
     if (userId !== undefined) {
@@ -129,7 +129,13 @@ const DrawerNavigator = ({userId, setUserId}) => {
       )}>
       <Drawer.Screen
         name="HomeTabs"
-        component={BottomTabNavigator}
+        children={() => (
+          <BottomTabNavigator
+            userId={userId}
+            reloadNotes={reloadNotes}
+            setReloadNotes={setReloadNotes}
+          />
+        )}
         options={{
           title: 'Home',
           headerRight: () => (
