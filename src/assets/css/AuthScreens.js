@@ -202,5 +202,8 @@ const styles = StyleSheet.create({
   eyeIconContainer: {
     padding: 10,
   },
+  eye_icon: {
+    marginRight: 10,
+  },
 });
 export {styles};

@@ -1,28 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {ScrollView, View, Text, Image, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+// import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '../ui/components/icon';
 import {styles} from '../assets/css/MoreScreen';
 import {BASE_URL} from '../hooks/HandleApis';
 
 const menuItems = [
-  {iconName: 'book', text: 'Saved Sermons', screenName: 'SavedSermonsScreen'},
   {
-    iconName: 'bookmarks',
+    iconName: 'videocamera',
+    text: 'Saved Sermons',
+    screenName: 'SavedSermonsScreen',
+  },
+  {
+    iconName: 'wordfile1',
     text: 'Verse of the Day',
     screenName: 'VerseOfDayScreen',
   },
-  {iconName: 'note', text: 'Notes', screenName: 'NotesScreen'},
-  {iconName: 'event', text: 'Events', screenName: 'EventsScreen'},
-  {iconName: 'share', text: 'Share App', screenName: 'ShareAppScreen'},
+  {iconName: 'codepen-circle', text: 'Notes', screenName: 'NotesScreen'},
+  {iconName: 'picture', text: 'Events', screenName: 'EventsScreen'},
+  {iconName: 'sharealt', text: 'Share App', screenName: 'ShareAppScreen'},
   {iconName: 'info', text: 'About App', screenName: 'AboutAppScreen'},
   {
-    iconName: 'person',
+    iconName: 'link',
     text: 'Church Websites',
     screenName: 'ChurchWebsitesScreen',
   },
-  {iconName: 'settings', text: 'Settings', screenName: 'SettingScreen'},
-  {iconName: 'person', text: 'Profile Screen', screenName: 'ProfileScreen'},
+  {iconName: 'setting', text: 'Settings', screenName: 'SettingScreen'},
+  {iconName: 'user', text: 'Profile Screen', screenName: 'ProfileScreen'},
 ];
 
 export default function More({route}) {
@@ -42,7 +47,7 @@ export default function More({route}) {
         })
         .then(data => {
           setData(data);
-          setUserId(setUserId);
+          // setUserId(setUserId);
           // console.log('User Data:', data);
         })
         .catch(error => {
@@ -79,7 +84,7 @@ export default function More({route}) {
             />
           </View>
           <Text style={styles.username}>
-            {data.name} <Icon name="person" style={styles.icon} />{' '}
+            {data.name} <Icon name="rightcircle" style={styles.icon} />
           </Text>
         </View>
 

@@ -68,7 +68,9 @@ const DrawerNavigatorcss = StyleSheet.create({
     justifyContent: 'space-between',
   },
   icon: {
-    color: '#000000',
+    color: '#ffffff',
+    fontSize: 20,
+    marginLeft: 10,
   },
   image_logo: {
     borderWidth: 10,

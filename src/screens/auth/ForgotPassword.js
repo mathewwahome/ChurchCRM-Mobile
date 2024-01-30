@@ -51,7 +51,7 @@ const ForgotPassword = () => {
         </Text>
 
         <View style={styles.inputContainer}>
-          <Icon name="email" size={20} color="black" style={styles.icon} />
+          <Icon name="mail" size={20} color="black" style={styles.icon} />
           <TextInput
             style={styles.input}
             placeholder="Email"

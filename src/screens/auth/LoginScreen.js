@@ -90,6 +90,7 @@ export default function LoginScreen({setUserId}) {
                 }
                 right={
                   <TextInput.Icon
+                    style={styles.eye_icon}
                     name={showPassword ? 'eye' : 'eye-off'}
                     onPress={togglePasswordVisibility}
                     color="black"
