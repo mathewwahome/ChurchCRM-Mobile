@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import {
   View,
   Image,
@@ -11,21 +11,22 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import Modal from 'react-native-modal';
-import { useRef } from 'react';
+import {useRef} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ImageConstant } from '../../hooks/ImageConstants';
+import {ImageConstant} from '../../hooks/ImageConstants';
 import AppSnackbar from '../../hooks/SnackBar';
-import { BASE_URL } from '../../hooks/HandleApis';
-import { styles as authstyles } from '../../assets/css/AuthScreens';
+import {BASE_URL} from '../../hooks/HandleApis';
+import {styles as authstyles} from '../../assets/css/AuthScreens';
 import GlobalCss from '../../assets/css/GlobalCss';
-import { styles } from '../../assets/css/ProfileScreen';
+import {styles} from '../../assets/css/ProfileScreen';
 import CustomTextInput from '../../hooks/CustomTestInput';
-import { launchImageLibrary } from 'react-native-image-picker';
-import { useCallback } from 'react';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {useCallback} from 'react';
+import useAuth from '../../hooks/HandleAuth';
 
-export default function ProfileScreen({ route, navigation }) {
+export default function ProfileScreen({route, navigation}) {
   const [userId, setUserId] = useState(route.params.userId);
-  
+  const {handleLogout} = useAuth();
   const [data, setData] = useState([]);
   const appSnackbarRef = useRef();
 
@@ -40,7 +41,7 @@ export default function ProfileScreen({ route, navigation }) {
         })
         .then(data => {
           setData(data);
-          console.log('User Data:', data);
+          // console.log('User Data:', data);
         })
         .catch(error => {
           console.error('Error fetching user data:', error);
@@ -48,17 +49,18 @@ export default function ProfileScreen({ route, navigation }) {
     }
   }, [userId]);
 
-  // Sign Out
-  const handleSignOut = () => {
-    setUserId(null);
-    navigation.navigate('Root', {
-      screen: 'LoginScreen',
-    });
+  const handleSignOut = async () => {
+    try {
+      // Call handleLogout to sign the user out
+      await handleLogout();
+      // navigation.navigate('LoginScreen');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
   };
-
   // Update details
   const handleUpdate = async () => {
-    console.log(data)
+    console.log(data);
     const formData = new FormData();
     formData.append('name', data.name);
     formData.append('email', data.email);
@@ -83,18 +85,17 @@ export default function ProfileScreen({ route, navigation }) {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
-          }
+          },
         );
         if (response === 200) {
-          toggleModal()
-          console.log(response)
+          toggleModal();
+          console.log(response);
         }
-      }
-      catch (error) {
+      } catch (error) {
         console.error('failed');
       }
     }
-  }
+  };
 
   // Display Modal
   const [isModalVisible, setModalVisible] = useState(false);
@@ -110,10 +111,10 @@ export default function ProfileScreen({ route, navigation }) {
       includeBase64: false,
       width: 150,
       height: 150,
-    }
+    };
 
-    launchImageLibrary(options, (response) => {
-      console.log("Getting photo", response)
+    launchImageLibrary(options, response => {
+      console.log('Getting photo', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -121,25 +122,25 @@ export default function ProfileScreen({ route, navigation }) {
       } else {
         let imageUri = response.assets[0].uri;
         const lastDotIndex = imageUri.lastIndexOf('.');
-        const fileType = lastDotIndex !== -1 ? imageUri.slice(lastDotIndex + 1) : '';
+        const fileType =
+          lastDotIndex !== -1 ? imageUri.slice(lastDotIndex + 1) : '';
         console.log(imageUri);
         if (imageUri) {
           console.log('Selected image path:', imageUri);
-          setData(data => ({ ...data, profile_photo_path: imageUri }));
+          setData(data => ({...data, profile_photo_path: imageUri}));
         } else {
           console.log('Unable to determine image path.');
         }
       }
-    })
-  }, [data.profile_photo_path])
+    });
+  }, [data.profile_photo_path]);
 
   return (
     <View style={GlobalCss.container}>
       <View style={styles.header}>
         <View>
-
           <Image
-          style={{...styles.image_logo, marginTop: 10}}
+            style={{...styles.image_logo, marginTop: 10}}
             source={{
               uri: `${BASE_URL}/Mobile_App_Profile_Pics/${data.profile_photo_path}`,
             }}
@@ -180,33 +181,67 @@ export default function ProfileScreen({ route, navigation }) {
         </View>
 
         <View>
-          <Modal isVisible={isModalVisible} userId={userId} style={{ paddingTop: 100 }}>
-            <View style={{ flex: 1 }}>
+          <Modal
+            isVisible={isModalVisible}
+            userId={userId}
+            style={{paddingTop: 100}}>
+            <View style={{flex: 1}}>
               <ScrollView>
                 <View style={styles.login_view}>
                   <SafeAreaView style={styles.login_form}>
-                    <Text style={{ ...authstyles.login_text, color: '#ffffff', borderBottomColor: '#369DAE', borderBottomWidth: 2, }}>Edit Details</Text>
+                    <Text
+                      style={{
+                        ...authstyles.login_text,
+                        color: '#ffffff',
+                        borderBottomColor: '#369DAE',
+                        borderBottomWidth: 2,
+                      }}>
+                      Edit Details
+                    </Text>
                     <View>
-                      <View style={{ ...styles.account_container, flexDirection: 'column', justifyContent: 'space-between', paddingTop: 20 }}>
-                        <Text style={{ ...authstyles.login_text, color: '#ffffff', fontWeight: '600', fontSize: 16, }}>Profile Photo</Text>
-                        <TouchableOpacity onPress={handleChoosePhoto} style={{ ...styles.signOutButton, width: '65%', }}>
-                          <Text style={{ ...authstyles.auth_btn_text, color: '#ffffff' }}>
+                      <View
+                        style={{
+                          ...styles.account_container,
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          paddingTop: 20,
+                        }}>
+                        <Text
+                          style={{
+                            ...authstyles.login_text,
+                            color: '#ffffff',
+                            fontWeight: '600',
+                            fontSize: 16,
+                          }}>
+                          Profile Photo
+                        </Text>
+                        <TouchableOpacity
+                          onPress={handleChoosePhoto}
+                          style={{...styles.signOutButton, width: '65%'}}>
+                          <Text
+                            style={{
+                              ...authstyles.auth_btn_text,
+                              color: '#ffffff',
+                            }}>
                             Choose from device
                           </Text>
                         </TouchableOpacity>
                         {data.profile_photo_path && (
                           <View>
-                            <Image source={{ uri: data.profile_photo_path }} style={styles.image} />
+                            <Image
+                              source={{uri: data.profile_photo_path}}
+                              style={styles.image}
+                            />
                           </View>
                         )}
                       </View>
-                      
+
                       <CustomTextInput
                         iconName="user"
                         placeholder="Name"
                         value={data.name}
                         onChangeText={text =>
-                          setData(data => ({ ...data, name: text }))
+                          setData(data => ({...data, name: text}))
                         }
                       />
 
@@ -215,7 +250,7 @@ export default function ProfileScreen({ route, navigation }) {
                         placeholder="Email"
                         value={data.email}
                         onChangeText={text =>
-                          setData(data => ({ ...data, email: text }))
+                          setData(data => ({...data, email: text}))
                         }
                       />
 
@@ -224,7 +259,7 @@ export default function ProfileScreen({ route, navigation }) {
                         placeholder="Phone"
                         value={data.phone}
                         onChangeText={text =>
-                          setData(data => ({ ...data, phone: text }))
+                          setData(data => ({...data, phone: text}))
                         }
                       />
 
@@ -234,22 +269,33 @@ export default function ProfileScreen({ route, navigation }) {
                         secureTextEntry
                         value={data.password}
                         onChangeText={text =>
-                          setData(data => ({ ...data, password: text }))
+                          setData(data => ({...data, password: text}))
                         }
                       />
                     </View>
 
-                    <View style={{ ...styles.account_container , flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <View
+                      style={{
+                        ...styles.account_container,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
                       <TouchableOpacity
                         onPress={handleUpdate}
                         title="Update"
-                        style={{ ...styles.signOutButton, width: '35%'}}>
-                        <Text style={{ ...authstyles.auth_btn_text, color: '#ffffff' }}>
+                        style={{...styles.signOutButton, width: '35%'}}>
+                        <Text
+                          style={{
+                            ...authstyles.auth_btn_text,
+                            color: '#ffffff',
+                          }}>
                           Update
                         </Text>
                       </TouchableOpacity>
 
-                      <TouchableOpacity style={{ ...styles.signOutButton, width: '35%', }} onPress={toggleModal}>
+                      <TouchableOpacity
+                        style={{...styles.signOutButton, width: '35%'}}
+                        onPress={toggleModal}>
                         <Text style={authstyles.auth_btn_text}>Close</Text>
                       </TouchableOpacity>
                     </View>

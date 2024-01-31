@@ -8,16 +8,16 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {TextInput} from 'react-native-paper';
+
 import useAuth from '../../hooks/HandleAuth';
 import AppSnackbar from '../../hooks/SnackBar';
 import {useRef} from 'react';
 import {styles} from '../../assets/css/AuthScreens';
 import Logo from '../../utilities/Logo';
-
 import useForgotPassword from '../../hooks/HandleForgotPassword';
 import CustomTextInput from '../../hooks/CustomTestInput';
-
 import GlobalCss from '../../assets/css/GlobalCss';
+
 export default function LoginScreen({setUserId}) {
   const {handleLogin, getLoggedId} = useAuth();
 
@@ -37,11 +37,13 @@ export default function LoginScreen({setUserId}) {
   const myLoginFunc = async () => {
     try {
       await handleLogin(userData.email, userData.password);
-      const ID = getLoggedId();
-      setUserId(ID);
+
+      const loggedInUserId = await getLoggedId();
+      console.log(loggedInUserId);
+      setUserId(loggedInUserId);
       appSnackbarRef.current.showSnackbar('Logged in successfully', 'success');
       setTimeout(() => {
-        navigation.navigate('MainContainer');
+        navigation.navigate('DrawerNavigator');
       }, 2000);
     } catch (error) {
       if (error.response && error.response.status === 401) {

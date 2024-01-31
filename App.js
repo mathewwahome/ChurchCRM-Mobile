@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
-
+import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import MainContainer from './src/MainContainer';
+// import MainContainer from './src/MainContainer';
 import LandingScreen from './src/LandingScreen';
 import LoginScreen from './src/screens/auth/LoginScreen';
 import SignupScreen from './src/screens/auth/SignupScreen';
@@ -19,12 +18,25 @@ import EventView from './src/screens/view/EventView';
 import VideoPlayer from './src/screens/view/VideoPlayer';
 import SermonNotes from './src/screens/SermonNotes';
 import SplashScreen from './src/SplashScreen';
-import Notes from './src/screens/Notes';
 import SermonsStackNavigator from './src/navigation/stack-navigators/SermonsStackNavigator';
 import VerseOfTheDay from './src/screens/VerseOfTheDay/VerseOfTheDay';
+import useAuth from './src/hooks/HandleAuth';
+import DrawerNavigator from './src/navigation/DrawerNavigator';
 function App() {
   const [userId, setUserId] = useState(null);
   const [reloadNotes, setReloadNotes] = useState(false);
+
+  const {getLoggedId} = useAuth();
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      const loggedInUserId = await getLoggedId();
+      setUserId(loggedInUserId);
+    };
+
+    fetchUserId();
+  }, [getLoggedId]);
+
   const Stack = createStackNavigator();
   return (
     <SafeAreaProvider>
@@ -61,6 +73,20 @@ function App() {
           ) : (
             <>
               <Stack.Screen
+                name="DrawerNavigator"
+                options={{headerShown: false}}>
+                {props => (
+                  <DrawerNavigator
+                    {...props}
+                    userId={userId}
+                    setUserId={setUserId}
+                    reloadNotes={reloadNotes}
+                    setReloadNotes={setReloadNotes}
+                  />
+                )}
+              </Stack.Screen>
+
+              {/* <Stack.Screen
                 name="MainContainer"
                 children={() => (
                   <MainContainer
@@ -71,7 +97,8 @@ function App() {
                   />
                 )}
                 options={{headerShown: false}}
-              />
+              /> */}
+
               <Stack.Screen
                 name="ProfileScreen"
                 children={() => (
@@ -132,7 +159,6 @@ function App() {
                 component={SermonsStackNavigator}
                 options={{title: 'Sermons'}}
               />
-              {/* VerseOfDayScreen */}
               <Stack.Screen
                 name="VerseOfDayScreen"
                 component={VerseOfTheDay}
