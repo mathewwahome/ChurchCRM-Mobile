@@ -79,7 +79,9 @@ export default function More({route}) {
         <View style={styles.MoreContainer}>
           <View style={styles.itemContainer}>
             <Image
-              source={require('../assets/images/one.jpg')}
+              source={{
+                uri: `${BASE_URL}/Mobile_App_Profile_Pics/${data.profile_photo_path}`,
+              }}              
               style={styles.image_logo}
             />
           </View>

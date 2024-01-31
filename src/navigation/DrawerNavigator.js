@@ -25,17 +25,19 @@ const CustomDrawerContent = props => {
   return (
     <DrawerContentScrollView {...props}>
       <View style={DrawerNavigatorcss.header}>
-        <View style={DrawerNavigatorcss.itemContainer}>
-          <Image
-            source={require('../assets/images/one.jpg')}
-            style={DrawerNavigatorcss.image_logo}
-          />
-        </View>
         {userData && (
           <>
+            <View style={DrawerNavigatorcss.itemContainer}>
+              <Image
+                source={{
+                  uri: `${BASE_URL}/Mobile_App_Profile_Pics/${userData.profile_photo_path}`,
+                }}
+                style={DrawerNavigatorcss.image_logo}
+              />
+            </View>
             <Text style={DrawerNavigatorcss.NameText}>
+              <Icon name="user"  />
               {userData.name}
-              <Icon name="user" style={DrawerNavigatorcss.icon} />
             </Text>
             <Text style={DrawerNavigatorcss.EmailText}>{userData.email}</Text>
           </>
