@@ -18,7 +18,7 @@ import useForgotPassword from '../../hooks/HandleForgotPassword';
 import CustomTextInput from '../../hooks/CustomTestInput';
 import GlobalCss from '../../assets/css/GlobalCss';
 
-export default function LoginScreen({setUserId}) {
+export default function LoginScreen() {
   const {handleLogin, getLoggedId} = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -40,7 +40,6 @@ export default function LoginScreen({setUserId}) {
 
       const loggedInUserId = await getLoggedId();
       console.log(loggedInUserId);
-      setUserId(loggedInUserId);
       appSnackbarRef.current.showSnackbar('Logged in successfully', 'success');
       setTimeout(() => {
         navigation.navigate('DrawerNavigator');
