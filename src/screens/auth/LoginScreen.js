@@ -20,6 +20,7 @@ import GlobalCss from '../../assets/css/GlobalCss';
 
 export default function LoginScreen() {
   const {handleLogin, getLoggedId} = useAuth();
+  const [userId, setUserId] = useState(null);
 
   const [showPassword, setShowPassword] = useState(false);
   const appSnackbarRef = useRef();
@@ -40,9 +41,11 @@ export default function LoginScreen() {
 
       const loggedInUserId = await getLoggedId();
       console.log(loggedInUserId);
+      setUserId(loggedInUserId);
+
       appSnackbarRef.current.showSnackbar('Logged in successfully', 'success');
       setTimeout(() => {
-        navigation.navigate('DrawerNavigator');
+        navigation.navigate('DrawerNavigator', {userId: loggedInUserId});
       }, 2000);
     } catch (error) {
       if (error.response && error.response.status === 401) {

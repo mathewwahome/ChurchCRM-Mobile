@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-// import MainContainer from './src/MainContainer';
+import HomeStackNavigator from './src/navigation/stack-navigators/HomeStackNavigator';
 import LandingScreen from './src/LandingScreen';
 import LoginScreen from './src/screens/auth/LoginScreen';
 import SignupScreen from './src/screens/auth/SignupScreen';
@@ -23,10 +23,9 @@ import VerseOfTheDay from './src/screens/VerseOfTheDay/VerseOfTheDay';
 import useAuth from './src/hooks/HandleAuth';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
 function App() {
-  const [userId, setUserId] = useState(null);
   const [reloadNotes, setReloadNotes] = useState(false);
-
   const {getLoggedId} = useAuth();
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -42,35 +41,7 @@ function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="SplashScreen">
-          {userId == null ? (
-            <>
-              <Stack.Screen
-                name="SplashScreen"
-                component={SplashScreen}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="LandingScreen"
-                component={LandingScreen}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="LoginScreen"
-                children={() => <LoginScreen setUserId={setUserId} />}
-                options={{title: 'Login'}}
-              />
-              <Stack.Screen
-                name="SignupScreen"
-                component={SignupScreen}
-                options={{title: 'Register'}}
-              />
-              <Stack.Screen
-                name="ForgotPassword"
-                component={ForgotPassword}
-                options={{title: 'Reset Password'}}
-              />
-            </>
-          ) : (
+          {userId ? (
             <>
               <Stack.Screen
                 name="DrawerNavigator"
@@ -85,20 +56,6 @@ function App() {
                   />
                 )}
               </Stack.Screen>
-
-              {/* <Stack.Screen
-                name="MainContainer"
-                children={() => (
-                  <MainContainer
-                    userId={userId}
-                    reloadNotes={reloadNotes}
-                    setUserId={setUserId}
-                    setReloadNotes={setReloadNotes}
-                  />
-                )}
-                options={{headerShown: false}}
-              /> */}
-
               <Stack.Screen
                 name="ProfileScreen"
                 children={() => (
@@ -163,6 +120,34 @@ function App() {
                 name="VerseOfDayScreen"
                 component={VerseOfTheDay}
                 options={{headerShown: false}}
+              />
+            </>
+          ) : (
+            <>
+              <Stack.Screen
+                name="SplashScreen"
+                component={SplashScreen}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="LandingScreen"
+                component={LandingScreen}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="LoginScreen"
+                children={() => <LoginScreen setUserId={setUserId} />}
+                options={{title: 'Login'}}
+              />
+              <Stack.Screen
+                name="SignupScreen"
+                component={SignupScreen}
+                options={{title: 'Register'}}
+              />
+              <Stack.Screen
+                name="ForgotPassword"
+                component={ForgotPassword}
+                options={{title: 'Reset Password'}}
               />
             </>
           )}

@@ -25,11 +25,8 @@ const CustomDrawerContent = ({navigation, ...props}) => {
 
   const handleSignOut = async () => {
     try {
-      // Call handleLogout to sign the user out
       await handleLogout();
-
       navigation.navigate('LoginScreen');
-      console.log(userData);
     } catch (error) {
       console.error('Error signing out:', error);
     }
