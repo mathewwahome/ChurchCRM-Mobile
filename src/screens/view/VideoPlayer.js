@@ -108,14 +108,20 @@ const VideoPlayer = ({route}) => {
 };
 const extractVideoId = url => {
   const youtubeRegex =
-    /^(?:(?:(?:https?:)?\/\/)?(?:www\.)?)?(?:(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11}))(?:[?&][\S]*)?$/;
+    /^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/;
 
   const match = url.match(youtubeRegex);
 
   if (match) {
-    return match[4];
+    return match[2];
   }
 
   return null;
 };
 export default VideoPlayer;
+// SUPPORTED LINKS
+// https://youtu.be/SP0NTIJuwrI
+//
+//
+//
+//

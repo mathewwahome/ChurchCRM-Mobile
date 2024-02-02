@@ -5,22 +5,31 @@ import {
   DrawerContentScrollView,
   DrawerItem,
 } from '@react-navigation/drawer';
-import Icon from '../ui/components/icon';
+
 import BottomTabNavigator from './BottomTabNavigator';
+
 import ProfileScreen from '../screens/auth/ProfileScreen';
 import More from '../screens/More';
+
 import {BASE_URL} from '../hooks/HandleApis';
+
 import DrawerNavigatorcss from '../assets/css/DrawerNavigatorcss';
+import Icon from '../ui/components/icon';
 
 const Drawer = createDrawerNavigator();
+import useAuth from '../hooks/HandleAuth';
+const CustomDrawerContent = ({navigation, ...props}) => {
+  const {handleLogout} = useAuth();
 
-const CustomDrawerContent = props => {
-  const {userData, setUserId} = props;
+  const {userData} = props;
 
-  const handleSignOut = () => {
-    console.log('Signing out...');
-    // setUserId(null);
-    // navigation.navigate('LoginScreen');
+  const handleSignOut = async () => {
+    try {
+      await handleLogout();
+      navigation.navigate('LoginScreen');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
   };
   return (
     <DrawerContentScrollView {...props}>
@@ -36,7 +45,7 @@ const CustomDrawerContent = props => {
               />
             </View>
             <Text style={DrawerNavigatorcss.NameText}>
-              <Icon name="user"  />
+              <Icon name="user" />
               {userData.name}
             </Text>
             <Text style={DrawerNavigatorcss.EmailText}>{userData.email}</Text>
@@ -80,11 +89,17 @@ const CustomDrawerContent = props => {
   );
 };
 
-const DrawerNavigator = ({userId, setUserId, reloadNotes, setReloadNotes}) => {
+const DrawerNavigator = ({
+  userId,
+  setUserId,
+  reloadNotes,
+  setReloadNotes,
+  navigation,
+}) => {
   const [userData, setUserData] = useState(null);
   useEffect(() => {
     if (userId !== undefined) {
-      console.log('user id caontainer:', userId);
+      // console.log('userID:', userId);
 
       fetchUserData(userId);
     }
@@ -97,7 +112,7 @@ const DrawerNavigator = ({userId, setUserId, reloadNotes, setReloadNotes}) => {
 
       setUserData(userData);
 
-      console.log('User Data:', userData);
+      // console.log('User Data:', userData);
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
@@ -121,6 +136,7 @@ const DrawerNavigator = ({userId, setUserId, reloadNotes, setReloadNotes}) => {
       drawerContent={props => (
         <CustomDrawerContent
           {...props}
+          navigation={navigation}
           userData={userData}
           setUserId={setUserId}
         />
