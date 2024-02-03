@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import HomeStackNavigator from './stack-navigators/HomeStackNavigator';
+import Home from './stack-navigators/Home';
 import SermonsStackNavigator from './stack-navigators/SermonsStackNavigator';
 import EventsScreen from '../screens/EventsScreen';
 import Notes from '../screens/Notes';
 
-const Home = 'Home';
+const HomeScreen = 'Home';
 const Sermons = 'Sermons';
 const notes = 'Notes';
 const more = 'More';
@@ -15,17 +15,17 @@ const events = 'Events';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator = ({userId, reloadNotes, setReloadNotes}) => {
+const BottomTabNavigator = ({ userId, reloadNotes, setReloadNotes }) => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      screenOptions={({route}) => ({
+      screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarIcon: ({focused, color, size}) => {
+        tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           let rn = route.name;
 
-          if (rn === Home) {
+          if (rn === HomeScreen) {
             iconName = focused ? 'home' : 'home-outline';
           } else if (rn === Sermons) {
             iconName = focused ? 'list' : 'list-outline';
@@ -54,14 +54,19 @@ const BottomTabNavigator = ({userId, reloadNotes, setReloadNotes}) => {
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeStackNavigator}
-        options={{tabBarVisible: false}}
+        component={Home}
+        options={{ tabBarVisible: false,
+          headerRight: () => (
+            <View style={DrawerNavigatorcss.headerRight}>
+              <Icon name="bells" size={20} color="#fff" />
+            </View>
+          ), }}
       />
 
       <Tab.Screen
         name="Sermons"
         component={SermonsStackNavigator}
-        options={{tabBarVisible: false}}
+        options={{ tabBarVisible: false }}
       />
       <Tab.Screen
         name="Notes"
@@ -72,13 +77,13 @@ const BottomTabNavigator = ({userId, reloadNotes, setReloadNotes}) => {
             setReloadNotes={setReloadNotes}
           />
         )}
-        options={{tabBarVisible: false}}
+        options={{ tabBarVisible: false }}
       />
 
       <Tab.Screen
         name="Events"
         component={EventsScreen}
-        options={{tabBarVisible: false}}
+        options={{ tabBarVisible: false }}
       />
     </Tab.Navigator>
   );

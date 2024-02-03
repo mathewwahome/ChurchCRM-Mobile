@@ -18,13 +18,13 @@ import useForgotPassword from '../../hooks/HandleForgotPassword';
 import CustomTextInput from '../../hooks/CustomTestInput';
 import GlobalCss from '../../assets/css/GlobalCss';
 
-export default function LoginScreen() {
-  const {handleLogin, getLoggedId} = useAuth();
-  const [userId, setUserId] = useState(null);
+export default function LoginScreen({ setUserId }) {
+  const { handleLogin, getStoredUserData } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const appSnackbarRef = useRef();
-  const navigation = useNavigation();
+
+  let loggedUser = null
 
   const [userData, setUserData] = useState({
     email: '',
@@ -37,15 +37,14 @@ export default function LoginScreen() {
 
   const myLoginFunc = async () => {
     try {
-      await handleLogin(userData.email, userData.password);
-
-      const loggedInUserId = await getLoggedId();
-      console.log(loggedInUserId);
-      setUserId(loggedInUserId);
+      loggedUser = await handleLogin(userData.email, userData.password);
+      
+      setUserId(loggedUser.my_id);
+      console.log("Saved user ID: ", loggedUser.my_id)
 
       appSnackbarRef.current.showSnackbar('Logged in successfully', 'success');
       setTimeout(() => {
-        navigation.navigate('DrawerNavigator', {userId: loggedInUserId});
+        // navigation.navigate('Home');
       }, 2000);
     } catch (error) {
       if (error.response && error.response.status === 401) {

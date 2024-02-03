@@ -30,11 +30,10 @@ const menuItems = [
   {iconName: 'user', text: 'Profile Screen', screenName: 'ProfileScreen'},
 ];
 
-export default function More({route}) {
+export default function More({userId}) {
   const navigation = useNavigation();
 
   const [data, setData] = useState([]);
-  const {userId, setUserId} = route.params;
 
   useEffect(() => {
     if (userId) {
