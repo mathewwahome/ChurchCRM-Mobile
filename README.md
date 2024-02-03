@@ -76,6 +76,8 @@ Now that you have successfully run the app, let's modify it.
 
 ## Creating APKs
 ## 1. Build Release APK:
+run the react-native bundle
+```bash npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res ```
     - To create a release build APK, run:
      ```bash
      cd android && ./gradlew bundleRelease
