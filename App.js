@@ -1,9 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-
-import HomeStackNavigator from './src/navigation/stack-navigators/HomeStackNavigator';
+import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import LandingScreen from './src/LandingScreen';
 import LoginScreen from './src/screens/auth/LoginScreen';
 import SignupScreen from './src/screens/auth/SignupScreen';
@@ -22,134 +20,140 @@ import SermonsStackNavigator from './src/navigation/stack-navigators/SermonsStac
 import VerseOfTheDay from './src/screens/VerseOfTheDay/VerseOfTheDay';
 import useAuth from './src/hooks/HandleAuth';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
+import Home from './src/navigation/stack-navigators/Home';
+import DrawerNavigatorcss from './src/assets/css/DrawerNavigatorcss';
+import { View, Icon } from 'react-native';
 function App() {
   const [reloadNotes, setReloadNotes] = useState(false);
-  const {getLoggedId} = useAuth();
+  // const {getLoggedId} = useAuth();
   const [userId, setUserId] = useState(null);
 
-  useEffect(() => {
-    const fetchUserId = async () => {
-      const loggedInUserId = await getLoggedId();
-      setUserId(loggedInUserId);
-    };
+  // useEffect(() => {
+  //   const fetchUserId = async () => {
+  //     const loggedInUserId = await getLoggedId();
+  //     setUserId(loggedInUserId);
+  //   };
 
-    fetchUserId();
-  }, [getLoggedId]);
+  //   fetchUserId();
+  // }, [getLoggedId]);
 
   const Stack = createStackNavigator();
   return (
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="SplashScreen">
-          {userId ? (
-            <>
-              <Stack.Screen
-                name="DrawerNavigator"
-                options={{headerShown: false}}>
-                {props => (
-                  <DrawerNavigator
-                    {...props}
-                    userId={userId}
-                    setUserId={setUserId}
-                    reloadNotes={reloadNotes}
-                    setReloadNotes={setReloadNotes}
-                  />
-                )}
-              </Stack.Screen>
-              <Stack.Screen
-                name="ProfileScreen"
-                children={() => (
-                  <ProfileScreen
-                    userId={userId}
-                    setUserId={setUserId}
-                    reloadNotes={reloadNotes}
-                    setReloadNotes={setReloadNotes}
-                  />
-                )}
-                options={{title: 'Profile'}}
-              />
-              <Stack.Screen
-                name="SettingScreen"
-                component={SettingScreen}
-                options={{title: 'Settings'}}
-              />
-              <Stack.Screen
-                name="NewNotes"
-                children={() => (
-                  <NewNotes userId={userId} setReloadNotes={setReloadNotes} />
-                )}
-                options={{title: 'New Note'}}
-              />
-              <Stack.Screen
-                name="SermonNotes"
-                component={SermonNotes}
-                options={{title: 'Sermon Notes'}}
-              />
-
-              <Stack.Screen
-                name="DocumentViewer"
-                component={DocumentViewer}
-                options={{title: 'Documents'}}
-              />
-              <Stack.Screen
-                name="EventsScreen"
-                component={EventsScreen}
-                options={{title: 'Events'}}
-              />
-              <Stack.Screen
-                name="AnnouncementView"
-                component={AnnouncementView}
-                options={{title: 'Announcement'}}
-              />
-              <Stack.Screen
-                name="EventView"
-                component={EventView}
-                options={{title: 'Event'}}
-              />
-              <Stack.Screen
-                name="VideoPlayer"
-                component={VideoPlayer}
-                options={{title: 'Video'}}
-              />
-              <Stack.Screen
-                name="SavedSermonsScreen"
-                component={SermonsStackNavigator}
-                options={{title: 'Sermons'}}
-              />
-              <Stack.Screen
-                name="VerseOfDayScreen"
-                component={VerseOfTheDay}
-                options={{headerShown: false}}
-              />
-            </>
-          ) : (
+          {userId == null ? (
             <>
               <Stack.Screen
                 name="SplashScreen"
                 component={SplashScreen}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="LandingScreen"
                 component={LandingScreen}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="LoginScreen"
-                children={() => <LoginScreen setUserId={setUserId} />}
-                options={{title: 'Login'}}
+                children={() => <LoginScreen setUserId={setUserId} userId={userId}/>}
+                options={{ title: 'Login' }}
               />
               <Stack.Screen
                 name="SignupScreen"
                 component={SignupScreen}
-                options={{title: 'Register'}}
+                options={{ title: 'Register' }}
               />
               <Stack.Screen
                 name="ForgotPassword"
                 component={ForgotPassword}
-                options={{title: 'Reset Password'}}
+                options={{ title: 'Reset Password' }}
               />
             </>
+          ) : (
+              <>
+
+                <Stack.Screen
+                  name="DrawerNavigator"
+                  children={() => (
+                    <DrawerNavigator
+                      userId={userId}
+                      setUserId={setUserId}
+                    />
+                  )}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="ProfileScreen"
+                  children={() => (
+                    <ProfileScreen
+                      userId={userId}
+                      setUserId={setUserId}
+                    />
+                  )}
+                  options={{ title: 'Profile' }}
+                />
+                <Stack.Screen
+                  name="SettingScreen"
+                  component={SettingScreen}
+                  options={{ title: 'Settings' }}
+                />
+                <Stack.Screen
+                  name="NewNotes"
+                  children={() => (
+                    <NewNotes userId={userId} setReloadNotes={setReloadNotes} />
+                  )}
+                  options={{ title: 'New Note' }}
+                />
+                <Stack.Screen
+                  name="Notes"
+                  children={() => (
+                    <Notes userId={userId} setReloadNotes={setReloadNotes} reloadNotes={reloadNotes}/>
+                  )}
+                  options={{ title: 'Notes' }}
+                />
+                <Stack.Screen
+                  name="SermonNotes"
+                  component={SermonNotes}
+                  options={{ title: 'Sermon Notes' }}
+                />
+
+                <Stack.Screen
+                  name="DocumentViewer"
+                  component={DocumentViewer}
+                  options={{ title: 'Documents' }}
+                />
+                <Stack.Screen
+                  name="EventsScreen"
+                  component={EventsScreen}
+                  options={{ title: 'Events' }}
+                />
+                <Stack.Screen
+                  name="AnnouncementView"
+                  component={AnnouncementView}
+                  options={{ title: 'Announcement' }}
+                />
+                <Stack.Screen
+                  name="EventView"
+                  component={EventView}
+                  options={{ title: 'Event' }}
+                />
+                <Stack.Screen
+                  name="VideoPlayer"
+                  component={VideoPlayer}
+                  options={{ title: 'Video' }}
+                />
+                <Stack.Screen
+                  name="SavedSermonsScreen"
+                  component={SermonsStackNavigator}
+                  options={{ title: 'Sermons' }}
+                />
+                <Stack.Screen
+                  name="VerseOfDayScreen"
+                  component={VerseOfTheDay}
+                  options={{ headerShown: false }}
+                />
+              </>
           )}
         </Stack.Navigator>
       </NavigationContainer>
@@ -158,3 +162,4 @@ function App() {
 }
 
 export default App;
+

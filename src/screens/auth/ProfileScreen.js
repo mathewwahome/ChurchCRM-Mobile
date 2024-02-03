@@ -24,8 +24,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {useCallback} from 'react';
 import useAuth from '../../hooks/HandleAuth';
 
-export default function ProfileScreen({route, navigation}) {
-  const [userId, setUserId] = useState(route.params.userId);
+export default function ProfileScreen({userId, setUserId}) {
   const {handleLogout} = useAuth();
   const [data, setData] = useState([]);
   const appSnackbarRef = useRef();
@@ -53,7 +52,7 @@ export default function ProfileScreen({route, navigation}) {
     try {
       // Call handleLogout to sign the user out
       await handleLogout();
-      // navigation.navigate('LoginScreen');
+      
     } catch (error) {
       console.error('Error signing out:', error);
     }

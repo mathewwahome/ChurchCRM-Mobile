@@ -21,12 +21,13 @@ import useAuth from '../hooks/HandleAuth';
 const CustomDrawerContent = ({navigation, ...props}) => {
   const {handleLogout} = useAuth();
 
-  const {userData} = props;
+  const {userData, userId, setUserId} = props;
 
   const handleSignOut = async () => {
     try {
       await handleLogout();
-      navigation.navigate('LoginScreen');
+      
+      console.log(userId)
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -98,7 +99,7 @@ const DrawerNavigator = ({
 }) => {
   const [userData, setUserData] = useState(null);
   useEffect(() => {
-    if (userId !== undefined) {
+    if (userId) {
       // console.log('userID:', userId);
 
       fetchUserData(userId);
@@ -108,9 +109,9 @@ const DrawerNavigator = ({
   const fetchUserData = async userId => {
     try {
       const response = await fetch(`${BASE_URL}/api/profile/${userId}`);
-      const userData = await response.json();
+      const my_Data = await response.json();
 
-      setUserData(userData);
+      setUserData(my_Data);
 
       // console.log('User Data:', userData);
     } catch (error) {
@@ -138,6 +139,7 @@ const DrawerNavigator = ({
           {...props}
           navigation={navigation}
           userData={userData}
+          userId={userId}
           setUserId={setUserId}
         />
       )}>
@@ -161,8 +163,9 @@ const DrawerNavigator = ({
       />
       <Drawer.Screen
         name="ProfileScreen"
-        component={ProfileScreen}
-        initialParams={{userId: userId}}
+        children={() => (
+          <ProfileScreen userId={userId} setUserId={setUserId}/>
+        )}
         options={{
           title: 'ProfileScreen',
           labelStyle: DrawerNavigatorcss.drawerLabelWhite,
@@ -173,8 +176,9 @@ const DrawerNavigator = ({
       />
       <Drawer.Screen
         name="More"
-        component={More}
-        initialParams={{userId: userId}}
+        children={() => (
+          <More userId={userId}/>
+        )}
         options={{
           title: 'More',
           labelStyle: DrawerNavigatorcss.drawerLabelWhite,

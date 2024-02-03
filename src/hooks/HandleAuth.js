@@ -1,6 +1,5 @@
 import {BASE_URL} from './HandleApis';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useState} from 'react';
 
 const useAuth = () => {
   const config = {
@@ -8,23 +7,18 @@ const useAuth = () => {
     'Content-Type': 'application/json',
   };
 
-  const [userId, setUserId] = useState(null);
+let token = null
+let userId = null
+let stored_userId = null
+let stored_token = null
+let retrieved_userId = null
+let retrieved_token = null
 
   const storeUserData = async (token, userId) => {
     try {
-      await AsyncStorage.setItem('userToken', token);
-      await AsyncStorage.setItem('userId', userId.toString());
+     await AsyncStorage.setItem('userId', userId.toString());
     } catch (error) {
       console.error('Error storing user data:', error);
-    }
-  };
-
-  const clearUserData = async () => {
-    try {
-      await AsyncStorage.removeItem('userToken');
-      await AsyncStorage.removeItem('userId');
-    } catch (error) {
-      console.error('Error clearing user data:', error);
     }
   };
 
@@ -38,13 +32,15 @@ const useAuth = () => {
 
       if (response.ok) {
         const data = await response.json();
-        const token = data.access_token;
-        const userId = data.user_id;
+        token = data.access_token;
+        userId = data.user_id;
 
-        // Store user data in AsyncStorage
-        await storeUserData(token, userId);
+        storeUserData(token, userId);
 
-        return {token, userId};
+        const my_id = await AsyncStorage.getItem('userId');
+        
+        
+        return { my_id };
       } else {
         console.error('Login failed: No data in the response');
         return null;
@@ -58,9 +54,13 @@ const useAuth = () => {
   const handleLogout = async () => {
     try {
       // Clear user data from AsyncStorage
-      await clearUserData();
-      setUserId(null);
-      console.log('User ID set to null');
+      // await clearUserData();
+      await AsyncStorage.removeItem('userToken');
+      await AsyncStorage.removeItem('userId');
+
+      return {
+        userId
+      }
     } catch (error) {
       console.error('Error logging out:', error);
     }
@@ -68,10 +68,10 @@ const useAuth = () => {
 
   const getStoredUserData = async () => {
     try {
-      const token = await AsyncStorage.getItem('userToken');
-      const userId = await AsyncStorage.getItem('userId');
+      retrieved_userId = await AsyncStorage.getItem('userToken');
+      retrieved_token = await AsyncStorage.getItem('userId');
 
-      return {token, userId};
+      return { retrieved_userId, retrieved_token };
     } catch (error) {
       console.error('Error getting stored user data:', error);
       return null;
@@ -82,16 +82,6 @@ const useAuth = () => {
     handleLogin,
     handleLogout,
     getStoredUserData,
-    getLoggedId: async () => {
-      try {
-        const userData = await getStoredUserData();
-        console.log('User Data:', userData);
-        return userData ? userData.userId : null;
-      } catch (error) {
-        console.error('Error getting logged ID:', error);
-        return null;
-      }
-    },
   };
 };
 
