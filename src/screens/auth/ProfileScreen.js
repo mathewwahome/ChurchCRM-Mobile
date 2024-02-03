@@ -5,7 +5,6 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  Button,
   ScrollView,
   SafeAreaView,
 } from 'react-native';
@@ -13,7 +12,6 @@ import axios from 'axios';
 import Modal from 'react-native-modal';
 import {useRef} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {ImageConstant} from '../../hooks/ImageConstants';
 import AppSnackbar from '../../hooks/SnackBar';
 import {BASE_URL} from '../../hooks/HandleApis';
 import {styles as authstyles} from '../../assets/css/AuthScreens';
@@ -51,8 +49,10 @@ export default function ProfileScreen({userId, setUserId}) {
   const handleSignOut = async () => {
     try {
       // Call handleLogout to sign the user out
-      await handleLogout();
-      
+      const test = await handleLogout();
+      console.log('signing out:');
+
+      setUserId(test.userId);
     } catch (error) {
       console.error('Error signing out:', error);
     }

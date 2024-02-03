@@ -18,16 +18,17 @@ import Icon from '../ui/components/icon';
 
 const Drawer = createDrawerNavigator();
 import useAuth from '../hooks/HandleAuth';
-const CustomDrawerContent = ({navigation, ...props}) => {
+const CustomDrawerContent = ({...props}) => {
   const {handleLogout} = useAuth();
 
-  const {userData, userId, setUserId} = props;
+  const {userData, setUserId} = props;
 
   const handleSignOut = async () => {
     try {
-      await handleLogout();
-      
-      console.log(userId)
+      const test = await handleLogout();
+      console.log('signing out:');
+
+      setUserId(test.userId);
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -163,9 +164,7 @@ const DrawerNavigator = ({
       />
       <Drawer.Screen
         name="ProfileScreen"
-        children={() => (
-          <ProfileScreen userId={userId} setUserId={setUserId}/>
-        )}
+        children={() => <ProfileScreen userId={userId} setUserId={setUserId} />}
         options={{
           title: 'ProfileScreen',
           labelStyle: DrawerNavigatorcss.drawerLabelWhite,
@@ -176,9 +175,7 @@ const DrawerNavigator = ({
       />
       <Drawer.Screen
         name="More"
-        children={() => (
-          <More userId={userId}/>
-        )}
+        children={() => <More userId={userId} />}
         options={{
           title: 'More',
           labelStyle: DrawerNavigatorcss.drawerLabelWhite,
