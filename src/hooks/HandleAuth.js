@@ -7,16 +7,16 @@ const useAuth = () => {
     'Content-Type': 'application/json',
   };
 
-let token = null
-let userId = null
-let stored_userId = null
-let stored_token = null
-let retrieved_userId = null
-let retrieved_token = null
+  let token = null;
+  let userId = null;
+  let stored_userId = null;
+  let stored_token = null;
+  let retrieved_userId = null;
+  let retrieved_token = null;
 
   const storeUserData = async (token, userId) => {
     try {
-     await AsyncStorage.setItem('userId', userId.toString());
+      await AsyncStorage.setItem('userId', userId.toString());
     } catch (error) {
       console.error('Error storing user data:', error);
     }
@@ -38,9 +38,8 @@ let retrieved_token = null
         storeUserData(token, userId);
 
         const my_id = await AsyncStorage.getItem('userId');
-        
-        
-        return { my_id };
+
+        return {my_id};
       } else {
         console.error('Login failed: No data in the response');
         return null;
@@ -54,13 +53,13 @@ let retrieved_token = null
   const handleLogout = async () => {
     try {
       // Clear user data from AsyncStorage
-      // await clearUserData();
       await AsyncStorage.removeItem('userToken');
       await AsyncStorage.removeItem('userId');
 
       return {
-        userId
-      }
+        userId,
+        token,
+      };
     } catch (error) {
       console.error('Error logging out:', error);
     }
@@ -71,7 +70,7 @@ let retrieved_token = null
       retrieved_userId = await AsyncStorage.getItem('userToken');
       retrieved_token = await AsyncStorage.getItem('userId');
 
-      return { retrieved_userId, retrieved_token };
+      return {retrieved_userId, retrieved_token};
     } catch (error) {
       console.error('Error getting stored user data:', error);
       return null;

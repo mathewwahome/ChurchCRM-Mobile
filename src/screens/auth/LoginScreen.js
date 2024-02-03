@@ -18,13 +18,13 @@ import useForgotPassword from '../../hooks/HandleForgotPassword';
 import CustomTextInput from '../../hooks/CustomTestInput';
 import GlobalCss from '../../assets/css/GlobalCss';
 
-export default function LoginScreen({ setUserId }) {
-  const { handleLogin, getStoredUserData } = useAuth();
+export default function LoginScreen({setUserId}) {
+  const {handleLogin} = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const appSnackbarRef = useRef();
 
-  let loggedUser = null
+  let loggedUser = null;
 
   const [userData, setUserData] = useState({
     email: '',
@@ -38,9 +38,9 @@ export default function LoginScreen({ setUserId }) {
   const myLoginFunc = async () => {
     try {
       loggedUser = await handleLogin(userData.email, userData.password);
-      
+
       setUserId(loggedUser.my_id);
-      console.log("Saved user ID: ", loggedUser.my_id)
+      console.log('Saved user ID: ', loggedUser.my_id);
 
       appSnackbarRef.current.showSnackbar('Logged in successfully', 'success');
       setTimeout(() => {
