@@ -17,6 +17,8 @@ const useAuth = () => {
   const storeUserData = async (token, userId) => {
     try {
       await AsyncStorage.setItem('userId', userId.toString());
+      await AsyncStorage.setItem('userToken', token);
+
     } catch (error) {
       console.error('Error storing user data:', error);
     }
@@ -67,8 +69,8 @@ const useAuth = () => {
 
   const getStoredUserData = async () => {
     try {
-      retrieved_userId = await AsyncStorage.getItem('userToken');
-      retrieved_token = await AsyncStorage.getItem('userId');
+      retrieved_userId = await AsyncStorage.getItem('userId');
+      retrieved_token = await AsyncStorage.getItem('userToken');
 
       return {retrieved_userId, retrieved_token};
     } catch (error) {

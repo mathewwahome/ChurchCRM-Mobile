@@ -17,7 +17,7 @@ const menuItems = [
     text: 'Verse of the Day',
     screenName: 'VerseOfDayScreen',
   },
-  {iconName: 'codepen-circle', text: 'Notes', screenName: 'NotesScreen'},
+  {iconName: 'codepen-circle', text: 'Notes', screenName: 'Notes'},
   {iconName: 'picture', text: 'Events', screenName: 'EventsScreen'},
   {iconName: 'sharealt', text: 'Share App', screenName: 'ShareAppScreen'},
   {iconName: 'info', text: 'About App', screenName: 'AboutAppScreen'},
@@ -53,7 +53,7 @@ export default function More({userId}) {
           console.error('Error fetching user data:', error);
         });
     }
-  }, [setUserId, userId]);
+  }, [userId]);
 
   const navigateToScreen = screenName => {
     navigation.navigate(screenName);
@@ -80,7 +80,7 @@ export default function More({userId}) {
             <Image
               source={{
                 uri: `${BASE_URL}/Mobile_App_Profile_Pics/${data.profile_photo_path}`,
-              }}              
+              }}
               style={styles.image_logo}
             />
           </View>
