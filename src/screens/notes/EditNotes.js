@@ -1,74 +1,63 @@
-import React, {useState} from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  TextInput,
-  StyleSheet,
-  Pressable,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {styles} from '../../../assets/css/styles';
+import React, {useState, useEffect} from 'react';
+import {View, ScrollView, Text, TextInput, Pressable} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {styles} from '../../assets/css/styles';
+import axios from 'axios';
+import {BASE_URL} from '../../hooks/HandleApis';
 
-export default function NewNotes({navigation, notesId}) {
-  const updateUrl = '';
-  const getUrl = '';
-  const options = {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: jsonData,
-  };
+export default function EditNotes({userId, setReloadNotes, route}) {
+  const {noteId} = route.params;
 
-  const [data, setData] = useState({
-    id: null,
-    Topic: '',
-    Notes: '',
-  });
+  const [note_topic, setTopic] = useState('');
+  const [content, setContent] = useState('');
+  const [data, setData] = useState({});
 
-  const handleChange = (name, value) => {
-    setData({
-      ...data,
-      [name]: value,
-    });
-  };
+  console.log('note id', noteId);
 
-  const getNotes = () => {};
-
-  const updateNotes = () => {
-    useEffect(() => {
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const jsonData = JSON.stringify(data);
-
-        fetch(updateUrl, options)
-          .then(response => {
-            console.log(response);
-          })
-          .catch(error => {
-            console.log('An error occured: ', error);
-          });
+        const response = await fetch(`${BASE_URL}/api/getNote/${noteId}`);
+        console.log('Response:', response);
+        if (response.ok) {
+          const responseData = await response.json();
+          console.log('Response Data:', responseData);
+          if (!responseData.error) {
+            setData(responseData);
+            console.log('Note Data:', responseData);
+          } else {
+            console.error('Note not found');
+          }
+        } else {
+          console.error('Failed to fetch data:', response.statusText);
+        }
       } catch (error) {
-        console.error('An error occurred:', error);
+        console.error('Displaying notes failed:', error);
       }
-    }, [notesId]);
-  };
+    };
+
+    fetchData();
+  }, [noteId]);
 
   return (
     <ScrollView>
       <View style={styles.newNotesContainer}>
-        <Text style={styles.notesLabel}>Take notes</Text>
+        <Text style={styles.notesLabel}>Edit Topic</Text>
+        <TextInput
+          style={styles.notesInput}
+          value={data.note_topic}
+          onChangeText={setTopic}
+        />
 
-        <Text style={styles.notesLabel}>{data.Topic}</Text>
+        <Text style={styles.notesLabel}>Edit Notes</Text>
         <TextInput
           style={styles.notesTextArea}
           multiline={true}
-          value={data.Notes}
-          onChangeText={text => handleChange(data.Notes, text)}
+          value={data.content}
+          onChangeText={setContent}
         />
-
-        <Pressable style={styles.submitNotesButton} onPress={updateNotes}>
-          <Text style={styles.submitNotes}>Update Notes</Text>
+        <Pressable style={styles.submitNotesButton}>
+          <Text style={styles.submitNotes}>Update Note</Text>
         </Pressable>
       </View>
     </ScrollView>
