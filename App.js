@@ -21,6 +21,7 @@ import VerseOfTheDay from './src/screens/VerseOfTheDay/VerseOfTheDay';
 import useAuth from './src/hooks/HandleAuth';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
 import Notes from './src/screens/Notes';
+import EditNotes from './src/screens/notes/EditNotes';
 function App() {
   const [reloadNotes, setReloadNotes] = useState(false);
   const {getStoredUserData} = useAuth();
@@ -116,6 +117,7 @@ function App() {
                 )}
                 options={{title: 'Notes'}}
               />
+              <Stack.Screen name="EditNotes" component={EditNotes} />
               <Stack.Screen
                 name="SermonNotes"
                 component={SermonNotes}

@@ -15,30 +15,36 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
     navigation.navigate('NewNotes');
   };
 
-  // const editNoteScreen = noteId => {
-  //   console.log('go to edit screen');
-  //   navigation.navigate('EditNotes', {noteId});
-  // };
+  const editNoteScreen = noteId => {
+    // console.log('go to edit notes screen', noteId);
+    navigation.navigate('EditNotes', {noteId});
+  };
 
   const [data, setData] = useState({});
+
   useEffect(() => {
     const handleReload = () => {
       if (reloadNotes) {
         fetchData();
       }
     };
-
     const fetchData = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/api/showNotes/${userId}`);
-        setData(response.data);
-        setReloadNotes(false);
+
+        if (response.data && !response.data.error) {
+          setData(response.data);
+          // console.log('Note Data:', response.data);
+        } else {
+          console.error('Note not found');
+        }
       } catch (error) {
         console.error('Displaying notes failed:', error);
       }
     };
+
     fetchData();
-  }, [reloadNotes]);
+  }, [reloadNotes, userId]);
 
   return (
     <View>
