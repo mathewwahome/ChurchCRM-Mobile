@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,28 +8,31 @@ import {
   Share,
   Clipboard,
 } from 'react-native';
-import {styles} from '../../assets/css/HomeScreen';
-import {getVerseOfTheDayWithImage} from '../../hooks/verseOfTheDay';
+import { styles } from '../../assets/css/HomeScreen';
+import { getVerseOfTheDayWithImage } from '../../hooks/verseOfTheDay';
 
-export default function VerseOfTheDay({navigation}) {
+export default function VerseOfTheDay({ navigation }) {
   const [verseData, setVerseData] = useState({
-    verse: {citation: '', passage: ''},
+    verse: { citation: '', passage: '' },
     imageUrl: '',
     loading: true,
   });
 
+  const [verseLoading, setVerseLoading] = useState(true)
+
   useEffect(() => {
     const fetchAllVerse = async () => {
       try {
-        const {passage, citation, imageUrl} = await getVerseOfTheDayWithImage();
+        const { passage, citation, imageUrl } = await getVerseOfTheDayWithImage();
         setVerseData({
-          verse: {passage, citation},
+          verse: { passage, citation },
           imageUrl,
           loading: false,
         });
+        setVerseLoading(false)
       } catch (error) {
         console.error('Error fetching verse:', error);
-        setVerseData(prevData => ({...prevData, loading: false}));
+        setVerseData(prevData => ({ ...prevData, loading: false }));
       }
     };
 
@@ -58,7 +61,7 @@ export default function VerseOfTheDay({navigation}) {
     try {
       const message = `${verseData.verse.passage}\n${verseData.verse.citation}`;
       const url = verseData.imageUrl;
-      await Share.share({message, url});
+      await Share.share({ message, url });
     } catch (error) {
       console.error('Error sharing:', error);
     }
@@ -76,36 +79,29 @@ export default function VerseOfTheDay({navigation}) {
         source={require('../../assets/images/verse_bg.jpg')}
         style={styles.backgroundImage}
         blurRadius={10}>
-        <View style={styles.view}>
-          {verseData.loading ? (
-            <Text style={styles.loadingText}>Verse of the day loading...</Text>
-          ) : (
-            <>
-              {verseData.verse && verseData.verse.passage ? (
-                <>
-                  <Text style={styles.passage}>{verseData.verse.passage}</Text>
-                  <Text style={styles.verse}>{verseData.verse.citation}</Text>
-                  {verseData.imageUrl ? (
-                    <Image
-                      style={styles.verseImage}
-                      source={{uri: verseData.imageUrl}}
-                    />
-                  ) : null}
-                  <TouchableOpacity
-                    onPress={shareContent}
-                    style={styles.shareButtonContainer}>
-                    <Text style={styles.shareButton}>Share</Text>
-                  </TouchableOpacity>
-                </>
-              ) : (
-                <Text style={styles.loadingText}>
-                  Verse of the day not available
-                </Text>
-              )}
-            </>
-          )}
-        </View>
+      {verseLoading ? (
+          <Text style={styles.verseLoadingText}>Verse of the day loading...</Text>
+       
+      ) : verseData.verse && verseData.verse.passage ? (
+          <View style={styles.view}>
+
+            <Text style={styles.passage}>{verseData.verse.passage}</Text>
+            <Text style={styles.verse}>{verseData.verse.citation}</Text>
+
+            <TouchableOpacity
+              onPress={shareContent}
+              style={styles.shareButtonContainer}>
+              <Text style={styles.shareButton}>Share</Text>
+            </TouchableOpacity>
+
+          </View>
+      ) : (
+        <Text style={styles.loadingText}>
+          Verse of the day not available
+        </Text>
+      )
+      }
       </ImageBackground>
-    </View>
+    </View >
   );
 }
