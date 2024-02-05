@@ -42,7 +42,12 @@ export default function Sermons() {
                 navigation.navigate('VideoPlayer', {sermon: sermon})
               }>
               <View>
-                <View style={{flexDirection: 'row', paddingTop: 5, paddingBottom: 20}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    paddingTop: 5,
+                    paddingBottom: 20,
+                  }}>
                   <View style={{marginRight: 10}}>
                     <Image
                       style={styles.image}

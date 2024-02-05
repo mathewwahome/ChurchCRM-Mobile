@@ -156,11 +156,7 @@ function App() {
                 component={SermonsStackNavigator}
                 options={{title: 'Sermons'}}
               />
-              <Stack.Screen
-                name="VerseOfDayScreen"
-                component={VerseOfTheDay}
-                options={{headerShown: false}}
-              />
+              <Stack.Screen name="VerseOfDayScreen" component={VerseOfTheDay} />
             </>
           )}
         </Stack.Navigator>
