@@ -4,8 +4,8 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    width: null,
-    height: null,
+    width: '100%',
+    height: 200,
   },
   verse_background: {
     flex: 1,
@@ -61,14 +61,24 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 16,
+    fontWeight: '800',
     color: '#0A7E8B',
     textAlign: 'center',
+    marginVertical: 50,
+  },
+  verseLoadingText: {
+    fontSize: 16,
+    color: '#ffffff',
+    fontWeight: '800',
+    textAlign: 'center',
+    paddingVertical: '20%',
   },
   shareButtonContainer: {
     backgroundColor: '#087E8B',
     padding: 8,
     paddingHorizontal: 10,
     borderRadius: 5,
+    marginTop: 8,
   },
 
   shareButton: {

@@ -50,25 +50,43 @@ const VideoPlayer = ({route}) => {
     }
 
     console.log('File Extension:', fileExtension);
-
-    return Platform.select({
-      android: config({
-        fileCache: true,
-        addAndroidDownloads: {
-          useDownloadManager: true,
-          notification: true,
-          path: `${dir}/${Math.random()}/${sermon.Title}.${fileExtension}`,
-          mime: mimeType,
-        },
-      }),
-      ios: {
-        fileCache: config.fileCache,
-        title: config.title,
-        path: config.path,
-        appendExt: fileExtension,
-        mime: mimeType,
+        
+    const configfiles = {
+      fileCache: true,
+      addAndroidDownloads: {
+        useDownloadManager: true,
+        notification: true,
+        title: `${sermon.Title}`,
+        path: `${dir}/${Math.random()}/${sermon.Title}.${fileExtension}`,
       },
-    })
+      useDownloadManager: true,
+      notification: true,
+      title: `${sermon.Title}`,
+      path: `${dir}/${Math.random()}/${sermon.Title}.${fileExtension}`,
+    };
+
+    const configOptions = Platform.select({
+      ios: configfiles,
+      android: configfiles,
+    });
+
+    config(configOptions || {})
+    // Platform.select({
+    //   android: {
+    //     fileCache: true,
+    //     addAndroidDownloads: {
+    //       useDownloadManager: true,
+    //       notification: true,
+    //       path: `${dir}/${Math.random()}/${sermon.Title}.${fileExtension}`,
+    //       mime: mimeType,
+    //     },
+    //   },
+    //   ios: {
+    //     fileCache: true,
+    //     path: `${dir}/${Math.random()}/${sermon.Title}.${fileExtension}`, 
+    //     appendExt: fileExtension,
+    //   },
+    // })
       .fetch('GET', `${BASE_URL}/api/download_notes/${sermonId}`)
       .then(response => {
         console.log(response);
