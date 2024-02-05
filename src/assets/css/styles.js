@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 10,
   },
-  
+
   notesDateText: {
     position: 'absolute',
     bottom: 35,
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderTopWidth: 3,
     borderTopColor: '#E53436',
-    
   },
   notesTopic: {
     position: 'absolute',
@@ -96,10 +95,11 @@ const styles = StyleSheet.create({
   notesTextArea: {
     height: 200,
     flex: 1,
+    textAlign: 'left',
     borderWidth: 2,
     borderColor: '#707070',
     borderRadius: 8,
-    padding: 1,
+    padding: 15,
     backgroundColor: 'white',
     color: 'black',
   },

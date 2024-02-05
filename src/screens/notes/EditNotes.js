@@ -5,14 +5,20 @@ import {styles} from '../../assets/css/styles';
 import axios from 'axios';
 import {BASE_URL} from '../../hooks/HandleApis';
 
-export default function EditNotes({userId, setReloadNotes, route}) {
+export default function EditNotes({setReloadNotes, route}) {
   const {noteId} = route.params;
 
-  const [note_topic, setTopic] = useState('');
-  const [content, setContent] = useState('');
+  const navigation = useNavigation();
   const [data, setData] = useState({});
 
-  console.log('note id', noteId);
+  let [note_topic, setTopic] = useState('');
+  let [content, setContent] = useState('');
+
+  const handleChange = input => {
+    // Update the state with the new input
+    setTopic(input);
+    setContent(input);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +31,8 @@ export default function EditNotes({userId, setReloadNotes, route}) {
           if (!responseData.error) {
             setData(responseData);
             console.log('Note Data:', responseData);
+            const userId = responseData.userId;
+            console.log('Users id ', userId);
           } else {
             console.error('Note not found');
           }
@@ -39,6 +47,31 @@ export default function EditNotes({userId, setReloadNotes, route}) {
     fetchData();
   }, [noteId]);
 
+  // updateNote
+  const userId = data.userId;
+
+  const updateNote = async () => {
+    console.log('User id ', userId);
+    try {
+      const user_id_fk = data.userId;
+      console.log('The content: ', note_topic, content, user_id_fk);
+      const response = await axios.post(
+        `${BASE_URL}/api/updateNote/${noteId}`,
+        {
+          user_id_fk,
+          note_topic,
+          content,
+        },
+      );
+      console.log('updated Note data: ', response.data);
+      if (response.status === 200) {
+        setReloadNotes(true);
+        navigation.navigate('Notes');
+      }
+    } catch (error) {
+      console.error('Notes Update failed:', error);
+    }
+  };
   return (
     <ScrollView>
       <View style={styles.newNotesContainer}>
@@ -54,9 +87,11 @@ export default function EditNotes({userId, setReloadNotes, route}) {
           style={styles.notesTextArea}
           multiline={true}
           value={data.content}
+          numberOfLines={10}
           onChangeText={setContent}
+          placeholder="useless placeholder"
         />
-        <Pressable style={styles.submitNotesButton}>
+        <Pressable style={styles.submitNotesButton} onPress={updateNote}>
           <Text style={styles.submitNotes}>Update Note</Text>
         </Pressable>
       </View>
