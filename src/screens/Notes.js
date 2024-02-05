@@ -7,6 +7,7 @@ import {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {BASE_URL} from '../hooks/HandleApis';
 import GlobalCss from '../assets/css/GlobalCss';
+import moment from 'moment';
 export default function Notes({userId, reloadNotes, setReloadNotes}) {
   const navigation = useNavigation();
   console.log(userId);
@@ -16,8 +17,7 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
   };
 
   const editNoteScreen = noteId => {
-    // console.log('go to edit notes screen', noteId);
-    navigation.navigate('EditNotes', {noteId});
+    navigation.navigate('ViewNote', {noteId});
   };
 
   const [data, setData] = useState({});
@@ -34,7 +34,6 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
 
         if (response.data && !response.data.error) {
           setData(response.data);
-          // console.log('Note Data:', response.data);
         } else {
           console.log('Error displaying notes.');
         }
@@ -66,10 +65,12 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
                     style={[
                       styles.notesContainer,
                       {
-                        backgroundColor: '#FCB460',
+                        backgroundColor: '#087E8B',
                       },
                     ]}>
-                    <Text style={styles.notesDateText}>{notes.content}</Text>
+                    <Text style={styles.notesDateText}>
+                      {moment(notes.updated_at).format('YYYY/dddd - HH:mm')}
+                    </Text>
                     <Text style={styles.notesTopic}>{notes.note_topic}</Text>
                   </TouchableOpacity>
                 ))

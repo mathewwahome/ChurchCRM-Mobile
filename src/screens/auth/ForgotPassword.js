@@ -16,7 +16,7 @@ const ForgotPassword = () => {
       const response = await axios.post(`${BASE_URL}/api/forgot-password`, {
         email: email,
       });
-
+      console.log(response);
       if (response.data && response.data.message === 'passwords.throttled') {
         appSnackbarRef.current.showSnackbar(
           'Too many password reset requests. Please wait a moment and try again.',
