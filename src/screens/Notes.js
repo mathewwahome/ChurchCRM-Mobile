@@ -36,7 +36,7 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
           setData(response.data);
           // console.log('Note Data:', response.data);
         } else {
-          console.error('Note not found');
+          console.log('Error displaying notes.');
         }
       } catch (error) {
         console.error('Displaying notes failed:', error);

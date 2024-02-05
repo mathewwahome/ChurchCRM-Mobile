@@ -7,11 +7,7 @@ import {BASE_URL} from '../../hooks/HandleApis';
 
 export default function EditNotes({userId, setReloadNotes, route}) {
   const {noteId} = route.params;
-
-  const [note_topic, setTopic] = useState('');
-  const [content, setContent] = useState('');
   const [data, setData] = useState({});
-
   console.log('note id', noteId);
 
   useEffect(() => {
@@ -38,7 +34,33 @@ export default function EditNotes({userId, setReloadNotes, route}) {
 
     fetchData();
   }, [noteId]);
+  // updateNote
+  let [note_topic, setTopic] = useState('');
+  let [content, setContent] = useState('');
+  let navigation = useNavigation();
 
+  const updateNote = async () => {
+    console.log('User id ', userId);
+    try {
+      const user_id_fk = userId;
+      console.log('The content: ', note_topic, content, user_id_fk);
+      const response = await axios.post(
+        `${BASE_URL}/api/updateNote/${noteId}`,
+        {
+          user_id_fk,
+          note_topic,
+          content,
+        },
+      );
+      console.log('updated Note data: ', response.data);
+      if (response.status === 200) {
+        setReloadNotes(true);
+        navigation.navigate('Notes');
+      }
+    } catch (error) {
+      console.error('Notes Update failed:', error);
+    }
+  };
   return (
     <ScrollView>
       <View style={styles.newNotesContainer}>
@@ -56,7 +78,7 @@ export default function EditNotes({userId, setReloadNotes, route}) {
           value={data.content}
           onChangeText={setContent}
         />
-        <Pressable style={styles.submitNotesButton}>
+        <Pressable style={styles.submitNotesButton} onPress={updateNote}>
           <Text style={styles.submitNotes}>Update Note</Text>
         </Pressable>
       </View>
