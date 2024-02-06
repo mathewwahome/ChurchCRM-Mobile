@@ -1,5 +1,6 @@
 import {BASE_URL} from './HandleApis';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useRef} from 'react';
 
 const useAuth = () => {
   const config = {
@@ -18,7 +19,6 @@ const useAuth = () => {
     try {
       await AsyncStorage.setItem('userId', userId.toString());
       await AsyncStorage.setItem('userToken', token);
-
     } catch (error) {
       console.error('Error storing user data:', error);
     }
@@ -43,11 +43,9 @@ const useAuth = () => {
 
         return {my_id};
       } else {
-        console.error('Login failed: No data in the response');
         return null;
       }
     } catch (error) {
-      console.error('Login failed:', error);
       throw error;
     }
   };

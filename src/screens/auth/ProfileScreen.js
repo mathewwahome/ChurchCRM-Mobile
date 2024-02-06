@@ -26,6 +26,7 @@ export default function ProfileScreen({userId, setUserId}) {
   const {handleLogout} = useAuth();
   const [data, setData] = useState([]);
   const appSnackbarRef = useRef();
+  // dropdown selection
 
   useEffect(() => {
     if (userId) {

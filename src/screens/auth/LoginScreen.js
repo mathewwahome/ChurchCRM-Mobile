@@ -47,17 +47,13 @@ export default function LoginScreen({setUserId}) {
         // navigation.navigate('Home');
       }, 2000);
     } catch (error) {
-      if (error.response && error.response.status === 401) {
+      if (error.response && error.response.status === 404) {
         appSnackbarRef.current.showSnackbar(
           'Wrong email or password',
           'warning',
         );
-      } else {
-        appSnackbarRef.current.showSnackbar(
-          'An unexpected error occurred. Please try again.',
-          'error',
-        );
-        console.error('Login failed:', error);
+      } else if (error.response === 502) {
+        appSnackbarRef.current.showSnackbar('404', 'error');
       }
     }
   };
