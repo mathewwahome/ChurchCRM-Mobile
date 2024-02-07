@@ -38,7 +38,14 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
           console.log('Error displaying notes.');
         }
       } catch (error) {
-        console.error('Displaying notes failed:', error);
+        if (error.response && error.response.status === 404) {
+          console.error(
+            'You dont have any available notes:',
+            error.response.status,
+          );
+        } else {
+          console.error('Error fetching notes:', error);
+        }
       }
     };
 

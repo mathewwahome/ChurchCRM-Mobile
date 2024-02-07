@@ -1,69 +1,73 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, ScrollView, Text, TextInput, Pressable} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {styles} from '../../assets/css/styles';
 import axios from 'axios';
 import {BASE_URL} from '../../hooks/HandleApis';
 
-export default function EditNotes({setReloadNotes, route}) {
-  const {noteId} = route.params;
-
-  const navigation = useNavigation();
-  const [data, setData] = useState({});
-
-  let [note_topic, setTopic] = useState('');
-  let [content, setContent] = useState('');
-
-  const handleChange = input => {
-    // Update the state with the new input
-    setTopic(input);
-    setContent(input);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/api/getNote/${noteId}`);
-        console.log('Response:', response);
-        if (response.ok) {
-          const responseData = await response.json();
-          console.log('Response Data:', responseData);
-          if (!responseData.error) {
-            setData(responseData);
-            console.log('Note Data:', responseData);
-            const userId = responseData.userId;
-            console.log('Users id ', userId);
-          } else {
-            console.error('Note not found');
-          }
-        } else {
-          console.error('Failed to fetch data:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Displaying notes failed:', error);
+const fetchData = async (
+  noteId,
+  setData,
+  setTopic,
+  setContent,
+  setUserid,
+  setLoading,
+) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/getNote/${noteId}`);
+    if (response.ok) {
+      const responseData = await response.json();
+      if (!responseData.error) {
+        setData(responseData);
+        setTopic(responseData.note_topic);
+        setContent(responseData.content);
+        setUserid(responseData.userID);
+        setLoading(false);
+      } else {
+        console.error('Note not found');
+        setLoading(false);
       }
-    };
+    } else {
+      console.error('Failed to fetch data:', response.statusText);
+      setLoading(false);
+    }
+  } catch (error) {
+    console.error('Displaying notes failed:', error);
+    setLoading(false);
+  }
+};
 
-    fetchData();
+export default function EditNotes({route}) {
+  const {noteId} = route.params;
+  const {setReloadNotes} = route.params;
+  const navigation = useNavigation();
+  const [data, setData] = useState({
+    note_topic: '',
+    content: '',
+    userId: '',
+  });
+
+  const [loading, setLoading] = useState(true);
+  const [note_topic, setTopic] = useState('');
+  const [content, setContent] = useState('');
+  const [userID, setUserid] = useState('');
+
+  useFocusEffect(() => {
+    setLoading(false);
+    fetchData(noteId, setData, setTopic, setContent, setUserid, setLoading);
   }, [noteId]);
 
-  // updateNote
-  const userId = data.userId;
-
   const updateNote = async () => {
-    console.log('User id ', userId);
     try {
-      const user_id_fk = data.userId;
-      console.log('The content: ', note_topic, content, user_id_fk);
+      console.log('The content: ', note_topic, content, noteId, userID);
       const response = await axios.post(
         `${BASE_URL}/api/updateNote/${noteId}`,
         {
-          user_id_fk,
+          userID,
           note_topic,
           content,
         },
       );
-      console.log('updated Note data: ', response.data);
       if (response.status === 200) {
         setReloadNotes(true);
         navigation.navigate('Notes');
@@ -72,28 +76,29 @@ export default function EditNotes({setReloadNotes, route}) {
       console.error('Notes Update failed:', error);
     }
   };
+
   return (
     <ScrollView>
       <View style={styles.newNotesContainer}>
         <Text style={styles.notesLabel}>Edit Topic</Text>
         <TextInput
           style={styles.notesInput}
-          value={data.note_topic}
-          onChangeText={setTopic}
+          value={note_topic}
+          onChangeText={text => setTopic(text)}
         />
 
         <Text style={styles.notesLabel}>Edit Notes</Text>
         <TextInput
           style={styles.notesTextArea}
           multiline={true}
-          value={data.content}
-          numberOfLines={10}
-          onChangeText={setContent}
-          placeholder="useless placeholder"
+          value={content}
+          onChangeText={text => setContent(text)}
         />
-        <Pressable style={styles.submitNotesButton} onPress={updateNote}>
-          <Text style={styles.submitNotes}>Update Note</Text>
-        </Pressable>
+        <View>
+          <Pressable style={styles.submitNotesButton} onPress={updateNote}>
+            <Text style={styles.submitNotes}>Update Note</Text>
+          </Pressable>
+        </View>
       </View>
     </ScrollView>
   );

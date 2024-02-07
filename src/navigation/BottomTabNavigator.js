@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import {View} from 'react-native';
 import Home from './stack-navigators/Home';
 import SermonsStackNavigator from './stack-navigators/SermonsStackNavigator';
 import EventsScreen from '../screens/EventsScreen';
@@ -10,33 +10,28 @@ import Notes from '../screens/Notes';
 const HomeScreen = 'Home';
 const Sermons = 'Sermons';
 const notes = 'Notes';
-const more = 'More';
 const events = 'Events';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator = ({ userId, reloadNotes, setReloadNotes }) => {
+const BottomTabNavigator = ({userId, reloadNotes, setReloadNotes}) => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      screenOptions={({ route }) => ({
+      screenOptions={({route}) => ({
         headerShown: false,
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({focused, color, size}) => {
           let iconName;
-          let rn = route.name;
+          const {name} = route;
 
-          if (rn === HomeScreen) {
+          if (name === HomeScreen) {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (rn === Sermons) {
+          } else if (name === Sermons) {
             iconName = focused ? 'list' : 'list-outline';
-          } else if (rn === notes) {
+          } else if (name === notes) {
             iconName = focused ? 'document-text' : 'document-text-outline';
-          } else if (rn === events) {
+          } else if (name === events) {
             iconName = focused ? 'notifications' : 'notifications-outline';
-          } else if (rn === more) {
-            iconName = focused
-              ? 'ellipsis-horizontal'
-              : 'ellipsis-horizontal-outline';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -55,18 +50,19 @@ const BottomTabNavigator = ({ userId, reloadNotes, setReloadNotes }) => {
       <Tab.Screen
         name="Home"
         component={Home}
-        options={{ tabBarVisible: false,
+        options={{
+          tabBarVisible: false,
           headerRight: () => (
             <View style={DrawerNavigatorcss.headerRight}>
               <Icon name="bells" size={20} color="#fff" />
             </View>
-          ), }}
+          ),
+        }}
       />
-
       <Tab.Screen
         name="Sermons"
         component={SermonsStackNavigator}
-        options={{ tabBarVisible: false }}
+        options={{tabBarVisible: false}}
       />
       <Tab.Screen
         name="Notes"
@@ -77,13 +73,12 @@ const BottomTabNavigator = ({ userId, reloadNotes, setReloadNotes }) => {
             setReloadNotes={setReloadNotes}
           />
         )}
-        options={{ tabBarVisible: false }}
+        options={{tabBarVisible: false}}
       />
-
       <Tab.Screen
         name="Events"
         component={EventsScreen}
-        options={{ tabBarVisible: false }}
+        options={{tabBarVisible: false}}
       />
     </Tab.Navigator>
   );

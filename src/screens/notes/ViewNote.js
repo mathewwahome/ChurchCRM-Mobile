@@ -4,9 +4,9 @@ import {useNavigation} from '@react-navigation/native';
 import {styles} from '../../assets/css/styles';
 import {BASE_URL} from '../../hooks/HandleApis';
 import GlobalCss from '../../assets/css/GlobalCss';
-export default function ViewNote({route}) {
-  const {noteId} = route.params;
 
+export default function ViewNote({route, setReloadNotes}) {
+  const {noteId} = route.params;
   const navigation = useNavigation();
   const [data, setData] = useState({});
 
@@ -14,15 +14,10 @@ export default function ViewNote({route}) {
     const fetchData = async () => {
       try {
         const response = await fetch(`${BASE_URL}/api/getNote/${noteId}`);
-        console.log('Response:', response);
         if (response.ok) {
           const responseData = await response.json();
-          console.log('Response Data:', responseData);
           if (!responseData.error) {
             setData(responseData);
-            console.log('Note Data:', responseData);
-            const userId = responseData.userId;
-            console.log('Users id ', userId);
           } else {
             console.error('Note not found');
           }
@@ -36,12 +31,11 @@ export default function ViewNote({route}) {
 
     fetchData();
   }, [noteId]);
-  console.log('go to edit notes screen', noteId);
 
   const editNoteScreen = () => {
-    console.log('go to edit notes screen', noteId);
-    navigation.navigate('EditNotes', {noteId});
+    navigation.navigate('EditNotes', {noteId, setReloadNotes});
   };
+
   return (
     <ScrollView>
       <View style={styles.newNotesContainer}>

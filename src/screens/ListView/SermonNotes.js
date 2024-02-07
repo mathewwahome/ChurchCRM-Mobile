@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../../assets/css/HomeScreen';
-import {createStackNavigator} from '@react-navigation/stack';
 import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
-
-const Stack = createStackNavigator();
+import {useNavigation} from '@react-navigation/native';
 
 export const fetchSermonsNotes = async () => {
   return fetchDataByEndpoint('fetchSermonnotes');
 };
 
-export default function SermonsNotes({navigation}) {
+export default function SermonNotes() {
   const [sermonsNotesData, setSermonsNotesData] = useState([]);
   const [sermonsNotesLoading, setSermonsNotesLoading] = useState(true);
 
@@ -27,6 +25,7 @@ export default function SermonsNotes({navigation}) {
 
     fetchData();
   }, []);
+  const navigation = useNavigation();
 
   return (
     <View style={styles.sermonNoteContainer}>
@@ -36,31 +35,40 @@ export default function SermonsNotes({navigation}) {
           <Text style={styles.loadingText}>Loading sermon Notes...</Text>
         ) : sermonsNotesData && sermonsNotesData.length > 0 ? (
           sermonsNotesData.map(sermonnotes => (
-            <View key={sermonnotes.id}>
-              <View style={{flexDirection: 'row', padding: 10}}>
-                <View style={{marginRight: 10}}>
-                  <Image
-                    style={styles.image}
-                    source={{
-                      uri: `${BASE_URL}/Notes_Thumbnails/${sermonnotes.notesimage}`,
-                    }}
-                  />
-                  <Text style={styles.sermonDate}>
-                    {new Date(sermonnotes.created_at).toLocaleDateString(
-                      undefined,
-                      {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      },
-                    )}
-                  </Text>
-                  <Text style={styles.sermonText}>
-                    {sermonnotes.sermondescription.slice(0, 25)}
-                  </Text>
+            <TouchableOpacity
+              key={sermonnotes.id}
+              onPress={() =>
+                navigation.navigate('SermonNotesView', {
+                  announcement: sermonnotes,
+                  imageUri: `${BASE_URL}/Notes_Thumbnails/${sermonnotes.notesimage}`,
+                })
+              }>
+              <View key={sermonnotes.id}>
+                <View style={{flexDirection: 'row', padding: 10}}>
+                  <View style={{marginRight: 10}}>
+                    <Image
+                      style={styles.image}
+                      source={{
+                        uri: `${BASE_URL}/Notes_Thumbnails/${sermonnotes.notesimage}`,
+                      }}
+                    />
+                    <Text style={styles.sermonDate}>
+                      {new Date(sermonnotes.created_at).toLocaleDateString(
+                        undefined,
+                        {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        },
+                      )}
+                    </Text>
+                    <Text style={styles.sermonText}>
+                      {sermonnotes.sermondescription.slice(0, 25)}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           ))
         ) : (
           <Text style={styles.loadingText}>No Sermon Notes available</Text>
