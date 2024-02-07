@@ -1,9 +1,41 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, ScrollView, Text, TextInput, Pressable} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {styles} from '../../assets/css/styles';
 import axios from 'axios';
 import {BASE_URL} from '../../hooks/HandleApis';
+
+const fetchData = async (
+  noteId,
+  setData,
+  setTopic,
+  setContent,
+  setUserid,
+  setLoading,
+) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/getNote/${noteId}`);
+    if (response.ok) {
+      const responseData = await response.json();
+      if (!responseData.error) {
+        setData(responseData);
+        setTopic(responseData.note_topic);
+        setContent(responseData.content);
+        setUserid(responseData.userID);
+        setLoading(false);
+      } else {
+        console.error('Note not found');
+        setLoading(false);
+      }
+    } else {
+      console.error('Failed to fetch data:', response.statusText);
+      setLoading(false);
+    }
+  } catch (error) {
+    console.error('Displaying notes failed:', error);
+    setLoading(false);
+  }
+};
 
 export default function EditNotes({route}) {
   const {noteId} = route.params;
@@ -20,36 +52,10 @@ export default function EditNotes({route}) {
   const [content, setContent] = useState('');
   const [userID, setUserid] = useState('');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/api/getNote/${noteId}`);
-        if (response.ok) {
-          const responseData = await response.json();
-          if (!responseData.error) {
-            setData(responseData);
-            setTopic(responseData.note_topic);
-            setContent(responseData.content);
-            setUserid(responseData.userID);
-            setLoading(false);
-          } else {
-            console.error('Note not found');
-            setLoading(false);
-          }
-        } else {
-          console.error('Failed to fetch data:', response.statusText);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Displaying notes failed:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+  useFocusEffect(() => {
+    setLoading(false);
+    fetchData(noteId, setData, setTopic, setContent, setUserid, setLoading);
   }, [noteId]);
-
-  console.log('id', userID);
 
   const updateNote = async () => {
     try {
