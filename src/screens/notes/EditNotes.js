@@ -5,30 +5,33 @@ import {styles} from '../../assets/css/styles';
 import axios from 'axios';
 import {BASE_URL} from '../../hooks/HandleApis';
 
-export default function EditNotes({userId, setReloadNotes, route}) {
+export default function EditNotes({route}) {
   const {noteId} = route.params;
+  const {setReloadNotes} = route.params;
   const navigation = useNavigation();
   const [data, setData] = useState({
     note_topic: '',
     content: '',
+    userId: '',
   });
 
+  const [loading, setLoading] = useState(true);
   const [note_topic, setTopic] = useState('');
   const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [userID, setUserid] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${BASE_URL}/api/getNote/${noteId}`);
-        console.log('Response:', response);
         if (response.ok) {
           const responseData = await response.json();
-          console.log('Response Data:', responseData);
           if (!responseData.error) {
             setData(responseData);
+            setTopic(responseData.note_topic);
+            setContent(responseData.content);
+            setUserid(responseData.userID);
             setLoading(false);
-            console.log('Note Data:', responseData);
           } else {
             console.error('Note not found');
             setLoading(false);
@@ -46,19 +49,19 @@ export default function EditNotes({userId, setReloadNotes, route}) {
     fetchData();
   }, [noteId]);
 
+  console.log('id', userID);
+
   const updateNote = async () => {
     try {
-      const user_id_fk = userId;
-      console.log('The content: ', note_topic, content, noteId);
+      console.log('The content: ', note_topic, content, noteId, userID);
       const response = await axios.post(
         `${BASE_URL}/api/updateNote/${noteId}`,
         {
-          user_id_fk,
+          userID,
           note_topic,
           content,
         },
       );
-      console.log('updated Note data: ', response.data);
       if (response.status === 200) {
         setReloadNotes(true);
         navigation.navigate('Notes');
@@ -74,16 +77,16 @@ export default function EditNotes({userId, setReloadNotes, route}) {
         <Text style={styles.notesLabel}>Edit Topic</Text>
         <TextInput
           style={styles.notesInput}
-          value={data.note_topic}
-          onChangeText={setTopic}
+          value={note_topic}
+          onChangeText={text => setTopic(text)}
         />
 
         <Text style={styles.notesLabel}>Edit Notes</Text>
         <TextInput
           style={styles.notesTextArea}
           multiline={true}
-          value={data.content}
-          onChangeText={setContent}
+          value={content}
+          onChangeText={text => setContent(text)}
         />
         <View>
           <Pressable style={styles.submitNotesButton} onPress={updateNote}>

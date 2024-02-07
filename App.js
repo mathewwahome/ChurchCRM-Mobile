@@ -12,9 +12,9 @@ import NewNotes from './src/screens/notes/NewNotes';
 import DocumentViewer from './src/screens/DocumentViewer';
 import EventsScreen from './src/screens/EventsScreen';
 import AnnouncementView from './src/screens/view/AnnouncementView';
+import SermonNotesView from './src/screens/view/SermonNotesView';
 import EventView from './src/screens/view/EventView';
 import VideoPlayer from './src/screens/view/VideoPlayer';
-import SermonNotes from './src/screens/SermonNotes';
 import SplashScreen from './src/SplashScreen';
 import SermonsStackNavigator from './src/navigation/stack-navigators/SermonsStackNavigator';
 import VerseOfTheDay from './src/screens/VerseOfTheDay/VerseOfTheDay';
@@ -118,12 +118,18 @@ function App() {
                 )}
                 options={{title: 'Notes'}}
               />
-              <Stack.Screen name="EditNotes" component={EditNotes} />
-              <Stack.Screen name="ViewNote" component={ViewNote} />
               <Stack.Screen
-                name="SermonNotes"
-                component={SermonNotes}
-                options={{title: 'Sermon Notes'}}
+                name="EditNotes"
+                component={EditNotes}
+                initialParams={{setReloadNotes}}
+              />
+              <Stack.Screen
+                name="ViewNote"
+                component={ViewNote}
+                options={{
+                  title: 'Documents',
+                  setReloadNotes: setReloadNotes,
+                }}
               />
 
               <Stack.Screen
@@ -157,6 +163,10 @@ function App() {
                 options={{title: 'Sermons'}}
               />
               <Stack.Screen name="VerseOfDayScreen" component={VerseOfTheDay} />
+              <Stack.Screen
+                name="SermonNotesView"
+                component={SermonNotesView}
+              />
             </>
           )}
         </Stack.Navigator>

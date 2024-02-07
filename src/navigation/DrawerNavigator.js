@@ -154,6 +154,7 @@ const DrawerNavigator = ({
           />
         )}
         options={{
+          title: 'Home',
           headerRight: () => (
             <View style={DrawerNavigatorcss.headerRight}>
               <Icon name="bells" size={20} color="#fff" />
