@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://b4b8-197-232-61-243.ngrok-free.app';
+export const BASE_URL = 'https://0745-41-90-186-26.ngrok-free.app';
 
 const config = {
   Accept: 'application/json',
