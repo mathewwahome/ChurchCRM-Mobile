@@ -1,24 +1,25 @@
-import React, {useState, useEffect} from 'react';
-import {View, ScrollView, Text, TextInput, Pressable, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {
+  View,
+  ScrollView,
+  Text,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../../assets/css/styles';
 import axios from 'axios';
 import {BASE_URL} from '../../hooks/HandleApis';
+import {actions, RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
 
-export default function EditNotes({ noteId, reloadNotes, setReloadNotes }) {
+export default function EditNotes({noteId, reloadNotes, setReloadNotes}) {
   const navigation = useNavigation();
-  const [data, setData] = useState({
-    note_topic: '',
-    content: '',
-    userId: '',
-  });
-
-  const [loading, setLoading] = useState(true);
   const [note_topic, setTopic] = useState('');
-  const [content, setContent] = useState('');
   const [userID, setUserid] = useState('');
+  const richText = useRef();
 
-  // Fetch data on page load
   useEffect(() => {
     fetchData();
   }, []);
@@ -29,39 +30,31 @@ export default function EditNotes({ noteId, reloadNotes, setReloadNotes }) {
       if (response.ok) {
         const responseData = await response.json();
         if (!responseData.error) {
-          setData(responseData);
           setTopic(responseData.note_topic);
-          setContent(responseData.content);
           setUserid(responseData.userID);
-          setLoading(false);
+          if (richText.current) {
+            richText.current.setContentHTML(responseData.content);
+          }
         } else {
           console.error('Note not found');
-          setLoading(false);
         }
       } else {
         console.error('Failed to fetch data:', response.statusText);
-        setLoading(false);
       }
     } catch (error) {
       console.error('Displaying notes failed:', error);
-      setLoading(false);
     }
   };
 
   const updateNote = async () => {
     try {
-      // console.log('The content: ', note_topic, content, noteId, userID);
-      // console.log('setReloadNotes:', setReloadNotes);
-      // if (typeof setReloadNotes === 'function') {
-      //   setReloadNotes(true);
-      //   console.log('setReloadNotes called');
-      // }
+      const contentHtml = await richText.current.getContentHtml();
       const response = await axios.post(
         `${BASE_URL}/api/updateNote/${noteId}`,
         {
           userID,
           note_topic,
-          content,
+          content: contentHtml,
         },
       );
       if (response.status === 200) {
@@ -73,6 +66,8 @@ export default function EditNotes({ noteId, reloadNotes, setReloadNotes }) {
     }
   };
 
+  const handleHead = ({tintColor}) => <Text style={{color: tintColor}}>p</Text>;
+
   return (
     <ScrollView>
       <View style={styles.newNotesContainer}>
@@ -83,15 +78,34 @@ export default function EditNotes({ noteId, reloadNotes, setReloadNotes }) {
           onChangeText={text => setTopic(text)}
         />
 
-        <Text style={styles.notesLabel}>Edit Notes</Text>
-        <TextInput
-          style={styles.notesTextArea}
-          multiline={true}
-          value={content}
-          onChangeText={text => setContent(text)}
-        />
+        <Text style={styles.notesLabel}>Take notes</Text>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <RichToolbar
+            style={{marginTop: 10}}
+            editor={richText}
+            actions={[
+              actions.setBold,
+              actions.insertBulletsList,
+              actions.insertOrderedList,
+              actions.insertLink,
+              actions.setStrikethrough,
+              actions.setItalic,
+              actions.setUnderline,
+              actions.heading1,
+            ]}
+            iconMap={{[actions.heading1]: handleHead}}
+          />
+          <RichEditor
+            style={{backgroundColor: 'white', color: 'black'}}
+            ref={richText}
+            onChange={() => {}}
+          />
+        </KeyboardAvoidingView>
         <View>
-          <TouchableOpacity style={styles.submitNotesButton} onPress={updateNote}>
+          <TouchableOpacity
+            style={styles.submitNotesButton}
+            onPress={updateNote}>
             <Text style={styles.submitNotes}>Update Note</Text>
           </TouchableOpacity>
         </View>

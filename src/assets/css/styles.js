@@ -150,5 +150,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     width: '100%',
   },
+  
 });
 export {styles};

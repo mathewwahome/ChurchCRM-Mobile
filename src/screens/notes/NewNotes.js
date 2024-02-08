@@ -1,14 +1,24 @@
-import React, {useState} from 'react';
-import {View, ScrollView, Text, TextInput, Pressable, TouchableOpacity} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {
+  View,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../../assets/css/styles';
 import axios from 'axios';
 import {BASE_URL} from '../../hooks/HandleApis';
+import {actions, RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
 
 export default function NewNotes({userId, setReloadNotes}) {
   const [note_topic, setTopic] = useState('');
   const [content, setContent] = useState('');
   const navigation = useNavigation();
+  const richText = useRef();
 
   const saveNotes = async () => {
     console.log('User id ', userId);
@@ -30,6 +40,15 @@ export default function NewNotes({userId, setReloadNotes}) {
     }
   };
 
+  const handleHead = ({tintColor}) => (
+    <Text style={{color: tintColor}}>H1</Text>
+  );
+
+  const getContent = async () => {
+    const htmlContent = await richText.current.getContentHtml();
+    setContent(htmlContent);
+  };
+
   return (
     <ScrollView>
       <View style={styles.newNotesContainer}>
@@ -40,15 +59,44 @@ export default function NewNotes({userId, setReloadNotes}) {
           onChangeText={setTopic}
         />
 
+        {/* The text editor */}
         <Text style={styles.notesLabel}>Take notes</Text>
-        <TextInput
-          style={styles.notesTextArea}
-          multiline={true}
-          value={content}
-          onChangeText={setContent}
-        />
-
-        <TouchableOpacity style={styles.submitNotesButton} onPress={saveNotes}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <RichToolbar
+            style={{marginTop: 10}}
+            editor={richText}
+            actions={[
+              actions.setBold,
+              actions.insertBulletsList,
+              actions.insertOrderedList,
+              actions.insertLink,
+              actions.setStrikethrough,
+              actions.setItalic,
+              actions.setUnderline,
+              actions.heading1,
+            ]}
+            iconMap={{[actions.heading1]: handleHead}}
+          />
+          <RichEditor
+            style={[
+              styles.takeNotesIn,
+              {backgroundColor: 'white', color: 'black'},
+            ]}
+            ref={richText}
+            onChange={descriptionText => {
+              console.log('descriptionText:', descriptionText);
+            }}
+            value={content}
+            onChangeText={setContent}
+          />
+        </KeyboardAvoidingView>
+        <TouchableOpacity
+          style={styles.submitNotesButton}
+          onPress={() => {
+            getContent();
+            saveNotes();
+          }}>
           <Text style={styles.submitNotes}> Add Notes</Text>
         </TouchableOpacity>
       </View>
