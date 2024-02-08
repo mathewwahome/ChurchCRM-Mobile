@@ -3,10 +3,8 @@ import {Text, ScrollView, View, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from './assets/css/AuthScreens';
 import Logo from './utilities/Logo';
-import useForgotPassword from './hooks/HandleForgotPassword';
 
 export default function LandingScreen() {
-  const {handleForgotPassword} = useForgotPassword();
 
   const navigation = useNavigation();
   const handleSignUp = () => {

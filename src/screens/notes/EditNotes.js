@@ -1,45 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, ScrollView, Text, TextInput, Pressable} from 'react-native';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {styles} from '../../assets/css/styles';
 import axios from 'axios';
 import {BASE_URL} from '../../hooks/HandleApis';
 
-const fetchData = async (
-  noteId,
-  setData,
-  setTopic,
-  setContent,
-  setUserid,
-  setLoading,
-) => {
-  try {
-    const response = await fetch(`${BASE_URL}/api/getNote/${noteId}`);
-    if (response.ok) {
-      const responseData = await response.json();
-      if (!responseData.error) {
-        setData(responseData);
-        setTopic(responseData.note_topic);
-        setContent(responseData.content);
-        setUserid(responseData.userID);
-        setLoading(false);
-      } else {
-        console.error('Note not found');
-        setLoading(false);
-      }
-    } else {
-      console.error('Failed to fetch data:', response.statusText);
-      setLoading(false);
-    }
-  } catch (error) {
-    console.error('Displaying notes failed:', error);
-    setLoading(false);
-  }
-};
-
 export default function EditNotes({route}) {
-  const {noteId} = route.params;
-  const {setReloadNotes} = route.params;
+  const {noteId, reloadNotes, setReloadNotes} = route.params;
   const navigation = useNavigation();
   const [data, setData] = useState({
     note_topic: '',
@@ -52,14 +19,44 @@ export default function EditNotes({route}) {
   const [content, setContent] = useState('');
   const [userID, setUserid] = useState('');
 
-  useFocusEffect(() => {
-    setLoading(false);
-    fetchData(noteId, setData, setTopic, setContent, setUserid, setLoading);
-  }, [noteId]);
+  // Fetch data on page load
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/getNote/${noteId}`);
+      if (response.ok) {
+        const responseData = await response.json();
+        if (!responseData.error) {
+          setData(responseData);
+          setTopic(responseData.note_topic);
+          setContent(responseData.content);
+          setUserid(responseData.userID);
+          setLoading(false);
+        } else {
+          console.error('Note not found');
+          setLoading(false);
+        }
+      } else {
+        console.error('Failed to fetch data:', response.statusText);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Displaying notes failed:', error);
+      setLoading(false);
+    }
+  };
 
   const updateNote = async () => {
     try {
-      console.log('The content: ', note_topic, content, noteId, userID);
+      // console.log('The content: ', note_topic, content, noteId, userID);
+      // console.log('setReloadNotes:', setReloadNotes);
+      // if (typeof setReloadNotes === 'function') {
+      //   setReloadNotes(true);
+      //   console.log('setReloadNotes called');
+      // }
       const response = await axios.post(
         `${BASE_URL}/api/updateNote/${noteId}`,
         {
@@ -70,7 +67,8 @@ export default function EditNotes({route}) {
       );
       if (response.status === 200) {
         setReloadNotes(true);
-        navigation.navigate('Notes');
+        console.log(reloadNotes);
+        navigation.navigate('DrawerNavigator', {screen: 'Notes'});
       }
     } catch (error) {
       console.error('Notes Update failed:', error);
