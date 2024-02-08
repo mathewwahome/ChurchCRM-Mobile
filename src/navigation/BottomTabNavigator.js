@@ -14,7 +14,7 @@ const events = 'Events';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator = ({userId, reloadNotes, setReloadNotes}) => {
+const BottomTabNavigator = ({userId, reloadNotes, setReloadNotes, setNoteId}) => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -69,8 +69,9 @@ const BottomTabNavigator = ({userId, reloadNotes, setReloadNotes}) => {
         children={() => (
           <Notes
             userId={userId}
-            reloadNotes={reloadNotes}
             setReloadNotes={setReloadNotes}
+            reloadNotes={reloadNotes}
+            setNoteId={setNoteId}
           />
         )}
         options={{tabBarVisible: false}}
