@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { View } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -23,11 +24,13 @@ import DrawerNavigator from './src/navigation/DrawerNavigator';
 import Notes from './src/screens/Notes';
 import EditNotes from './src/screens/notes/EditNotes';
 import ViewNote from './src/screens/notes/ViewNote';
+import DrawerNavigatorcss from './src/assets/css/DrawerNavigatorcss';
+import Icon from './src/ui/components/icon';
 function App() {
   const [reloadNotes, setReloadNotes] = useState(false);
   const {getStoredUserData} = useAuth();
   const [userId, setUserId] = useState();
-  const [notesId, setNotesId] = useState();
+  const [noteId, setNoteId] = useState(null);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -93,6 +96,24 @@ function App() {
                 )}
                 options={{headerShown: false}}
               />
+              <Stack.Screen 
+                  name="HomeTabs"
+                  children={() => (
+                    <BottomTabNavigator
+                      userId={userId}
+                      reloadNotes={reloadNotes}
+                      setReloadNotes={setReloadNotes}
+                    />
+                  )}
+                  options={{
+                    title: 'Home',
+                    headerRight: () => (
+                      <View style={DrawerNavigatorcss.headerRight}>
+                        <Icon name="bells" size={20} color="#fff" />
+                      </View>
+                    ),
+                  }}
+              />
               <Stack.Screen
                 name="ProfileScreen"
                 children={() => (
@@ -119,8 +140,7 @@ function App() {
                     userId={userId}
                     setReloadNotes={setReloadNotes}
                     reloadNotes={reloadNotes}
-                    setNotesId={setNotesId}
-                    notesId={notesId}
+                    setNoteId={setNoteId}
                   />
                 )}
                 options={{title: 'Notes'}}
@@ -141,7 +161,6 @@ function App() {
                 children={() => <ViewNote noteId={noteId} />}
                 options={{
                   title: 'Notes Read',
-                  // setReloadNotes: setReloadNotes,
                 }}
               />
 

@@ -12,17 +12,15 @@ export default function Notes({
   userId,
   reloadNotes,
   setReloadNotes,
-  setNotesId,
-  notesId,
+  setNoteId,
 }) {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  // const [noteId, setNotesId] = useState();
 
   useEffect(() => {
     fetchData();
-    console.log('hey', reloadNotes); //
+    console.log('Reloading: ', reloadNotes); //
     setReloadNotes(false);
   }, [reloadNotes]);
 
@@ -48,22 +46,9 @@ export default function Notes({
     navigation.navigate('NewNotes');
   };
 
-  const viewNoteScreen = noteUserId => {
-    // if (typeof setNotesId === 'function') {
-    //   setNotesId(notesId);
-    //   const my_user_note_id = notesId;
-    //   console.log(notesId);
-    //   if (my_user_note_id) {
-    //     console.log('Gotten notes ID: ', my_user_note_id);
-    //   }
-    // } else {
-    //   console.log(notesId);
-    // }
-    const note_user_id = noteUserId;
-    setNotesId(note_user_id);
-    console.log('The note ID: ', notesId);
-
-    // navigation.navigate('ViewNote', notesId);
+  const viewNoteScreen = myNoteId => {
+    setNoteId(myNoteId)
+    navigation.navigate('ViewNote');
   };
 
   const handleScroll = event => {
