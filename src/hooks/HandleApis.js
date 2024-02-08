@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://karencommunitychurch.org:4433';
+export const BASE_URL = 'https://45bf-41-90-184-172.ngrok-free.app';
 
 const config = {
   Accept: 'application/json',

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {View, ScrollView, Text, TouchableOpacity} from 'react-native';
-import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../assets/css/styles';
 import {useState, useEffect} from 'react';
@@ -8,49 +7,76 @@ import {useNavigation} from '@react-navigation/native';
 import {BASE_URL} from '../hooks/HandleApis';
 import GlobalCss from '../assets/css/GlobalCss';
 import moment from 'moment';
-export default function Notes({userId, reloadNotes, setReloadNotes}) {
+
+export default function Notes({
+  userId,
+  reloadNotes,
+  setReloadNotes,
+  setNotesId,
+  notesId,
+}) {
   const navigation = useNavigation();
-  console.log(userId);
-  const NewNoteScreen = () => {
-    console.log('handleMain executed');
-    navigation.navigate('NewNotes');
-  };
-
-  const editNoteScreen = noteId => {
-    navigation.navigate('ViewNote', {noteId});
-  };
-
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  // const [noteId, setNotesId] = useState();
 
   useEffect(() => {
-    const handleReload = () => {
-      if (reloadNotes) {
-        fetchData();
-      }
-    };
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/api/showNotes/${userId}`);
+    fetchData();
+    console.log('hey', reloadNotes); //
+    setReloadNotes(false);
+  }, [reloadNotes]);
 
-        if (response.data && !response.data.error) {
-          setData(response.data);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/showNotes/${userId}`);
+      if (response.ok) {
+        const responseData = await response.json();
+        if (!responseData.error) {
+          setData(responseData);
         } else {
           console.log('Error displaying notes.');
         }
-      } catch (error) {
-        if (error.response && error.response.status === 404) {
-          console.error(
-            'You dont have any available notes:',
-            error.response.status,
-          );
-        } else {
-          console.error('Error fetching notes:', error);
-        }
+      } else {
+        console.error('Failed to fetch notes:', response.statusText);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching notes:', error);
+    }
+  };
+  // ERROR  TypeError: setNotesId is not a function (it is undefined), js engine: hermes
+  const NewNoteScreen = () => {
+    navigation.navigate('NewNotes');
+  };
 
-    fetchData();
-  }, [reloadNotes, userId]);
+  const viewNoteScreen = noteUserId => {
+    // if (typeof setNotesId === 'function') {
+    //   setNotesId(notesId);
+    //   const my_user_note_id = notesId;
+    //   console.log(notesId);
+    //   if (my_user_note_id) {
+    //     console.log('Gotten notes ID: ', my_user_note_id);
+    //   }
+    // } else {
+    //   console.log(notesId);
+    // }
+    const note_user_id = noteUserId;
+    setNotesId(note_user_id);
+    console.log('The note ID: ', notesId);
+
+    // navigation.navigate('ViewNote', notesId);
+  };
+
+  const handleScroll = event => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    const height = event.nativeEvent.layoutMeasurement.height;
+    const contentHeight = event.nativeEvent.contentSize.height;
+
+    if (offsetY === 0 && !isRefreshing) {
+      setIsRefreshing(true);
+      setReloadNotes(true);
+      setIsRefreshing(false);
+    }
+  };
 
   return (
     <View>
@@ -60,7 +86,7 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
         </Text>
       </TouchableOpacity>
 
-      <ScrollView>
+      <ScrollView onScroll={handleScroll}>
         <View style={GlobalCss.container}>
           <ScrollView horizontal={false}>
             <View style={styles.rowContainer}>
@@ -68,13 +94,8 @@ export default function Notes({userId, reloadNotes, setReloadNotes}) {
                 data.map(notes => (
                   <TouchableOpacity
                     key={notes.id}
-                    onPress={() => editNoteScreen(notes.id)}
-                    style={[
-                      styles.notesContainer,
-                      {
-                        backgroundColor: '#087E8B',
-                      },
-                    ]}>
+                    onPress={() => viewNoteScreen(notes.id)}
+                    style={[styles.notesContainer]}>
                     <Text style={styles.notesDateText}>
                       {moment(notes.updated_at).format('YYYY/dddd - HH:mm')}
                     </Text>

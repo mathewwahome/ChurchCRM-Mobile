@@ -27,11 +27,12 @@ function App() {
   const [reloadNotes, setReloadNotes] = useState(false);
   const {getStoredUserData} = useAuth();
   const [userId, setUserId] = useState();
+  const [notesId, setNotesId] = useState();
 
   useEffect(() => {
     const fetchUserId = async () => {
       const storedUserData = await getStoredUserData();
-      console.log(storedUserData);
+      // console.log(storedUserData);
 
       if (storedUserData && storedUserData.retrieved_userId) {
         setUserId(storedUserData.retrieved_userId);
@@ -84,7 +85,11 @@ function App() {
               <Stack.Screen
                 name="DrawerNavigator"
                 children={() => (
-                  <DrawerNavigator userId={userId} setUserId={setUserId} />
+                  <DrawerNavigator
+                    userId={userId}
+                    setUserId={setUserId}
+                    setReloadNotes={setReloadNotes}
+                  />
                 )}
                 options={{headerShown: false}}
               />
@@ -114,21 +119,29 @@ function App() {
                     userId={userId}
                     setReloadNotes={setReloadNotes}
                     reloadNotes={reloadNotes}
+                    setNotesId={setNotesId}
+                    notesId={notesId}
                   />
                 )}
                 options={{title: 'Notes'}}
               />
               <Stack.Screen
                 name="EditNotes"
-                component={EditNotes}
-                initialParams={{setReloadNotes}}
+                children={() => (
+                  <EditNotes
+                    userId={userId}
+                    setReloadNotes={setReloadNotes}
+                    reloadNotes={reloadNotes}
+                    noteId={noteId}
+                  />
+                )}
               />
               <Stack.Screen
                 name="ViewNote"
-                component={ViewNote}
+                children={() => <ViewNote noteId={noteId} />}
                 options={{
-                  title: 'Documents',
-                  setReloadNotes: setReloadNotes,
+                  title: 'Notes Read',
+                  // setReloadNotes: setReloadNotes,
                 }}
               />
 

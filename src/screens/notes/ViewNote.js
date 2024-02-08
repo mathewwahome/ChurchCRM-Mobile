@@ -5,8 +5,9 @@ import {styles} from '../../assets/css/styles';
 import {BASE_URL} from '../../hooks/HandleApis';
 import GlobalCss from '../../assets/css/GlobalCss';
 
-export default function ViewNote({route, setReloadNotes}) {
-  const {noteId} = route.params;
+export default function ViewNote({noteId}) {
+  const my_note_id = noteId;
+  console.log('id: ', my_note_id);
   const navigation = useNavigation();
   const [data, setData] = useState({});
 
@@ -33,7 +34,7 @@ export default function ViewNote({route, setReloadNotes}) {
   }, [noteId]);
 
   const editNoteScreen = () => {
-    navigation.navigate('EditNotes', {noteId, setReloadNotes});
+    navigation.navigate('EditNotes', {noteId, reloadNotes, setReloadNotes});
   };
 
   return (

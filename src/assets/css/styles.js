@@ -43,6 +43,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     height: 100,
     borderRadius: 10,
+    backgroundColor: '#087E8B',
+    textAlignVertical: 'center',
   },
 
   notesDateText: {
