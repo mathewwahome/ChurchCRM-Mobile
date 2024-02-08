@@ -38,6 +38,8 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: '#000000',
+    marginRight: 5,
+    fontSize: 18,
   },
   image_logo: {
     borderWidth: 10,
@@ -61,6 +63,33 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#000000',
+  },
+
+  //The dropdown
+  dropdown: {
+    marginBottom: 10,
+    marginTop: 10,
+    height: 50,
+    width: '100%',
+    borderBottomWidth: 0.5,
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+    paddingLeft: 10,
+  },
+
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });
 export {styles};
