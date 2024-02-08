@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import colors from './Color';
 const styles = StyleSheet.create({
   // Landing Page styles
@@ -81,10 +81,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   forgot_password: {
-    fontSize: 20,
+    fontSize: 18,
     marginTop: 10,
     fontWeight: '600',
-    color: colors.black,
+    color: colors.text,
     textAlign: 'center',
   },
   signin: {
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   account: {
-    color: colors.black,
+    color: colors.text,
     fontWeight: '800',
     fontSize: 18,
   },
@@ -206,4 +206,4 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 });
-export {styles};
+export { styles };

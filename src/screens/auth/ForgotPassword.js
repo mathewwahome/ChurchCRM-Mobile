@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
-import {View, Text, TextInput, Pressable, ScrollView} from 'react-native';
-import {styles} from '../../assets/css/Login';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import CustomTextInput from '../../hooks/CustomTestInput';
 import GlobalCss from '../../assets/css/GlobalCss';
+import { styles } from '../../assets/css/AuthScreens';
 import axios from 'axios';
-import {BASE_URL} from '../../hooks/HandleApis';
-import {useRef} from 'react';
+import { BASE_URL } from '../../hooks/HandleApis';
+import { useRef } from 'react';
 import Icon from '../../ui/components/icon';
 import AppSnackbar from '../../hooks/SnackBar';
 
@@ -46,22 +47,18 @@ const ForgotPassword = () => {
   return (
     <View style={GlobalCss.container}>
       <ScrollView>
-        <Text style={styles.login_text}>
-          Enter your email to reset your password
+        <Text style={{ ...styles.login_text, fontSize: 16, textAlign: 'center' }}>
+          Enter the email address associated with your account
         </Text>
-
-        <View style={styles.inputContainer}>
-          <Icon name="mail" size={20} color="black" style={styles.icon} />
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={text => setEmail(text)}
-          />
-        </View>
-        <Pressable onPress={forgotPassword} style={styles.ForgotPasswordBtn}>
-          <Text style={GlobalCss.ForgotPasswordTxt}>Forgot password?</Text>
-        </Pressable>
+        <CustomTextInput
+          iconName="mail"
+          placeholder="Email"
+          value={email}
+          onChangeText={text => setEmail(text)}
+        />
+        <TouchableOpacity onPress={forgotPassword} style={styles.signin_btn}>
+          <Text style={styles.auth_btn_text}>Send Reset Link</Text>
+        </TouchableOpacity>
         <AppSnackbar ref={appSnackbarRef} />
       </ScrollView>
     </View>
