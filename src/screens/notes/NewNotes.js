@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, ScrollView, Text, TextInput, Pressable} from 'react-native';
+import {View, ScrollView, Text, TextInput, Pressable, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../../assets/css/styles';
 import axios from 'axios';
@@ -23,7 +23,7 @@ export default function NewNotes({userId, setReloadNotes}) {
       console.log('Notes data: ', response.data);
       if (response.status === 200) {
         setReloadNotes(true);
-        navigation.navigate('DrawerNavigator', {screen: 'Notes'});
+        navigation.navigate('Notes');
       }
     } catch (error) {
       console.error('Notes Save failed:', error);
@@ -48,9 +48,9 @@ export default function NewNotes({userId, setReloadNotes}) {
           onChangeText={setContent}
         />
 
-        <Pressable style={styles.submitNotesButton} onPress={saveNotes}>
+        <TouchableOpacity style={styles.submitNotesButton} onPress={saveNotes}>
           <Text style={styles.submitNotes}> Add Notes</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );

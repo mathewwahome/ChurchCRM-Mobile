@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {View, ScrollView, Text, TextInput, Pressable} from 'react-native';
+import {View, ScrollView, Text, TextInput, Pressable, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../../assets/css/styles';
 import axios from 'axios';
 import {BASE_URL} from '../../hooks/HandleApis';
 
-export default function EditNotes({route}) {
-  const {noteId, reloadNotes, setReloadNotes} = route.params;
+export default function EditNotes({ noteId, reloadNotes, setReloadNotes }) {
   const navigation = useNavigation();
   const [data, setData] = useState({
     note_topic: '',
@@ -67,8 +66,7 @@ export default function EditNotes({route}) {
       );
       if (response.status === 200) {
         setReloadNotes(true);
-        console.log(reloadNotes);
-        navigation.navigate('DrawerNavigator', {screen: 'Notes'});
+        navigation.navigate('Notes');
       }
     } catch (error) {
       console.error('Notes Update failed:', error);
@@ -93,9 +91,9 @@ export default function EditNotes({route}) {
           onChangeText={text => setContent(text)}
         />
         <View>
-          <Pressable style={styles.submitNotesButton} onPress={updateNote}>
+          <TouchableOpacity style={styles.submitNotesButton} onPress={updateNote}>
             <Text style={styles.submitNotes}>Update Note</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
