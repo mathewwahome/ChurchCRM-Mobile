@@ -22,6 +22,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {useCallback} from 'react';
 import useAuth from '../../hooks/HandleAuth';
 
+import {Dropdown} from 'react-native-element-dropdown';
 export default function ProfileScreen({userId, setUserId}) {
   const {handleLogout} = useAuth();
   const [data, setData] = useState([]);
@@ -59,6 +60,7 @@ export default function ProfileScreen({userId, setUserId}) {
     }
   };
   // Update details
+
   const handleUpdate = async () => {
     console.log(data);
     const formData = new FormData();
@@ -66,7 +68,7 @@ export default function ProfileScreen({userId, setUserId}) {
     formData.append('email', data.email);
     formData.append('phone', data.phone);
     formData.append('password', data.password);
-    formData.append('membership_status', data.membership_status);
+    formData.append('membership_status', value);
 
     if (data.profile_photo_path) {
       const uriParts = data.profile_photo_path.split('.');
@@ -79,7 +81,7 @@ export default function ProfileScreen({userId, setUserId}) {
       });
       try {
         const response = await axios.post(
-          `${BASE_URL}/api/update_user/${userId}`,
+          `${BASE_URL}/api/updateuser/${userId}`,
           formData,
           {
             headers: {
@@ -87,12 +89,15 @@ export default function ProfileScreen({userId, setUserId}) {
             },
           },
         );
-        if (response === 200) {
+        console.log(response);
+        if (response.status === 200) {
           toggleModal();
-          console.log(response);
+          appSnackbarRef.current.showSnackbar('Profile Update Successfully.');
         }
       } catch (error) {
-        console.error('failed');
+        appSnackbarRef.current.showSnackbar(
+          'Failed to update profile. Please try again.',
+        );
       }
     }
   };
@@ -134,6 +139,13 @@ export default function ProfileScreen({userId, setUserId}) {
       }
     });
   }, [data.profile_photo_path]);
+  //dropdown
+  const membership = [
+    {label: 'New Member', value: 'New Member'},
+    {label: 'Non Member', value: 'Non Member'},
+    {label: 'Member', value: 'Member'},
+  ];
+  const [value, setValue] = useState(null);
 
   return (
     <View style={GlobalCss.container}>
@@ -181,12 +193,13 @@ export default function ProfileScreen({userId, setUserId}) {
         </View>
 
         <View>
-          <Modal
-            isVisible={isModalVisible}
-            userId={userId}
-            style={{paddingTop: 100}}>
-            <View style={{flex: 1}}>
-              <ScrollView>
+          {' '}
+          <ScrollView>
+            <Modal
+              isVisible={isModalVisible}
+              userId={userId}
+              style={{paddingTop: 100}}>
+              <View style={{flex: 1}}>
                 <View style={styles.login_view}>
                   <SafeAreaView style={styles.login_form}>
                     <Text
@@ -272,7 +285,34 @@ export default function ProfileScreen({userId, setUserId}) {
                           setData(data => ({...data, password: text}))
                         }
                       />
+                      <Dropdown
+                        style={styles.dropdown}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        data={membership}
+                        search
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        placeholder="Select item"
+                        searchPlaceholder="Search..."
+                        value={value}
+                        onChange={item => {
+                          setValue(item.value);
+                        }}
+                        renderLeftIcon={() => (
+                          <Icon
+                            style={styles.icon}
+                            color="black"
+                            name="person"
+                            size={20}
+                          />
+                        )}
+                      />
                     </View>
+                    <AppSnackbar ref={appSnackbarRef} />
 
                     <View
                       style={{
@@ -301,10 +341,9 @@ export default function ProfileScreen({userId, setUserId}) {
                     </View>
                   </SafeAreaView>
                 </View>
-                <AppSnackbar ref={appSnackbarRef} />
-              </ScrollView>
-            </View>
-          </Modal>
+              </View>
+            </Modal>
+          </ScrollView>
         </View>
       </View>
 
