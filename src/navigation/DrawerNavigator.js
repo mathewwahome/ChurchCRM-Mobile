@@ -96,6 +96,7 @@ const DrawerNavigator = ({
   setUserId,
   reloadNotes,
   setReloadNotes,
+  setNoteId,
   navigation,
 }) => {
   const [userData, setUserData] = useState(null);
@@ -151,6 +152,7 @@ const DrawerNavigator = ({
             userId={userId}
             reloadNotes={reloadNotes}
             setReloadNotes={setReloadNotes}
+            setNoteId={setNoteId}
           />
         )}
         options={{

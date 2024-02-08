@@ -92,6 +92,8 @@ function App() {
                     userId={userId}
                     setUserId={setUserId}
                     setReloadNotes={setReloadNotes}
+                    reloadNotes={reloadNotes}
+                    setNoteId={setNoteId}
                   />
                 )}
                 options={{headerShown: false}}
@@ -103,6 +105,7 @@ function App() {
                       userId={userId}
                       reloadNotes={reloadNotes}
                       setReloadNotes={setReloadNotes}
+                      setNoteId={setNoteId}
                     />
                   )}
                   options={{
@@ -132,18 +135,6 @@ function App() {
                   <NewNotes userId={userId} setReloadNotes={setReloadNotes} />
                 )}
                 options={{title: 'New Note'}}
-              />
-              <Stack.Screen
-                name="Notes"
-                children={() => (
-                  <Notes
-                    userId={userId}
-                    setReloadNotes={setReloadNotes}
-                    reloadNotes={reloadNotes}
-                    setNoteId={setNoteId}
-                  />
-                )}
-                options={{title: 'Notes'}}
               />
               <Stack.Screen
                 name="EditNotes"
