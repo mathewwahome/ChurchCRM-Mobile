@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {View, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
-import {styles} from '../../assets/css/HomeScreen';
-import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
-import {useNavigation} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView, Text, Image, TouchableOpacity } from 'react-native';
+import { styles } from '../../assets/css/HomeScreen';
+import { BASE_URL, fetchDataByEndpoint } from '../../hooks/HandleApis';
+import { useNavigation } from '@react-navigation/native';
 
 export const fetchSermonsNotes = async () => {
   return fetchDataByEndpoint('fetchSermonnotes');
@@ -39,13 +39,14 @@ export default function SermonNotes() {
               key={sermonnotes.id}
               onPress={() =>
                 navigation.navigate('SermonNotesView', {
-                  announcement: sermonnotes,
+                  sermon_note: sermonnotes,
                   imageUri: `${BASE_URL}/Notes_Thumbnails/${sermonnotes.notesimage}`,
+                  sermon_note_id: sermonnotes.id
                 })
               }>
               <View key={sermonnotes.id}>
-                <View style={{flexDirection: 'row', padding: 10}}>
-                  <View style={{marginRight: 10}}>
+                <View style={{ flexDirection: 'row', padding: 10 }}>
+                  <View style={{ marginRight: 10 }}>
                     <Image
                       style={styles.image}
                       source={{
@@ -63,7 +64,11 @@ export default function SermonNotes() {
                       )}
                     </Text>
                     <Text style={styles.sermonText}>
-                      {sermonnotes.sermondescription.slice(0, 25)}
+                      {sermonnotes.sermondescription.length > 25 ? 
+                      (sermonnotes.sermondescription.slice(0, 25)+'...') : 
+                      (sermonnotes.sermondescription)
+                      }
+
                     </Text>
                   </View>
                 </View>
