@@ -6,7 +6,6 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {TextInput} from 'react-native-paper';
 
 import useAuth from '../../hooks/HandleAuth';
@@ -20,6 +19,7 @@ import GlobalCss from '../../assets/css/GlobalCss';
 
 export default function LoginScreen({setUserId}) {
   const {handleLogin} = useAuth();
+  const {handleForgotPassword} = useForgotPassword();
 
   const [showPassword, setShowPassword] = useState(false);
   const appSnackbarRef = useRef();
@@ -57,8 +57,6 @@ export default function LoginScreen({setUserId}) {
       }
     }
   };
-
-  const {handleForgotPassword} = useForgotPassword();
 
   return (
     <View style={GlobalCss.container}>

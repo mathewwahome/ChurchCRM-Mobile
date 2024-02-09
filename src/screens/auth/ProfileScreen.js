@@ -8,6 +8,7 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
+import {useCallback} from 'react';
 import axios from 'axios';
 import Modal from 'react-native-modal';
 import {useRef} from 'react';
@@ -19,11 +20,12 @@ import GlobalCss from '../../assets/css/GlobalCss';
 import {styles} from '../../assets/css/ProfileScreen';
 import CustomTextInput from '../../hooks/CustomTestInput';
 import {launchImageLibrary} from 'react-native-image-picker';
-import {useCallback} from 'react';
+import {Dropdown} from 'react-native-element-dropdown';
+import {useNavigation} from '@react-navigation/native';
 import useAuth from '../../hooks/HandleAuth';
 
-import {Dropdown} from 'react-native-element-dropdown';
 export default function ProfileScreen({userId, setUserId}) {
+  const navigation = useNavigation();
   const {handleLogout} = useAuth();
   const [data, setData] = useState([]);
   const appSnackbarRef = useRef();
@@ -146,7 +148,9 @@ export default function ProfileScreen({userId, setUserId}) {
     {label: 'Member', value: 'Member'},
   ];
   const [value, setValue] = useState(null);
-
+  const ChangePassword = () => {
+    navigation.navigate('ChangePassword');
+  };
   return (
     <View style={GlobalCss.container}>
       <View style={styles.header}>
@@ -165,35 +169,34 @@ export default function ProfileScreen({userId, setUserId}) {
 
       <View style={styles.content}>
         <View style={styles.containerSection}>
-          <View style={styles.row}>
-            <Text style={styles.icon}>
-              <Icon name="person" />
-              {data.name}
-            </Text>
-            <Icon name="edit" style={styles.icon} onPress={toggleModal} />
-          </View>
+          <Text style={styles.icon}>
+            <Icon size={20} name="person" />
+            {data.name}
+          </Text>
+          <Icon name="edit" style={styles.icon} onPress={toggleModal} />
         </View>
         <View style={styles.containerSection}>
-          <View style={styles.row}>
-            <Text style={styles.icon}>
-              <Icon name="phone" />
-              {data.phone}
-            </Text>
-            <Icon name="edit" style={styles.icon} onPress={toggleModal} />
-          </View>
+          <Text style={styles.icon}>
+            <Icon size={20} name="phone" />
+            {data.phone}
+          </Text>
+          <Icon name="edit" style={styles.icon} onPress={toggleModal} />
         </View>
         <View style={styles.containerSection}>
-          <View style={styles.row}>
-            <Text style={styles.icon}>
-              <Icon name="person" />
-              {data.membership_status}
-            </Text>
-            <Icon name="edit" style={styles.icon} onPress={toggleModal} />
-          </View>
+          <Text style={styles.icon}>
+            <Icon size={20} name="person" />
+            {data.membership_status}
+          </Text>
+          <Icon name="edit" style={styles.icon} onPress={toggleModal} />
         </View>
-
+        <View style={styles.containerSection}>
+          <Text>
+            <Icon size={20} name="remove-red-eye" />
+            <Text style={styles.profiletxt}>Change Password</Text>
+          </Text>
+          <Icon name="edit" style={styles.icon} onPress={ChangePassword} />
+        </View>
         <View>
-          {' '}
           <ScrollView>
             <Modal
               isVisible={isModalVisible}

@@ -26,21 +26,23 @@ const styles = StyleSheet.create({
     flex: 4,
   },
   containerSection: {
-    // flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
     padding: 20,
     justifyContent: 'space-between',
   },
-  row: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  profiletxt: {
+    color: '#000000',
+    paddingLeft: 10,
+    fontSize: 18,
   },
   icon: {
     color: '#000000',
-    marginRight: 5,
+    marginRight: 10,
     fontSize: 18,
+
   },
+
   image_logo: {
     borderWidth: 10,
     width: 80,

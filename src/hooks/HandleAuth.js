@@ -76,11 +76,34 @@ const useAuth = () => {
       return null;
     }
   };
-
+  // Password Change
+  const handleChangePassword = async (
+    currentpassword,
+    newpassword,
+    confirmpassword,
+  ) => {
+    try {
+      let user = await AsyncStorage.getItem('userId');
+      const response = await fetch(`${BASE_URL}/api/passwordchange/${user}`, {
+        method: 'POST',
+        headers: config,
+        body: JSON.stringify({
+          currentpassword,
+          newpassword,
+          confirmpassword,
+        }),
+      });
+      await response.json();
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
   return {
     handleLogin,
     handleLogout,
     getStoredUserData,
+    handleChangePassword,
   };
 };
 

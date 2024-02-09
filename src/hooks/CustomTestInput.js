@@ -30,7 +30,11 @@ const CustomTextInput = ({
         <TouchableOpacity
           style={styles.eyeIconContainer}
           onPress={togglePasswordVisibility}>
-          <Icon name={showPassword ? 'eye' : 'eye'} size={20} color="#555555" />
+          <Icon
+            name={showPassword ? 'eye' : 'eyeo'}
+            size={20}
+            color="#555555"
+          />
           {/* eye-slash */}
         </TouchableOpacity>
       )}
