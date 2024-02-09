@@ -26,18 +26,27 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     marginBottom: 10,
   },
+  itemImage: {
+    width: '100%',
+    height: 200,
+    resizeMode: 'cover',
+    marginBottom: 10,
+    borderRadius: 5,
+  },
   dataDate: {
     color: '#A29E90',
     fontSize: 13,
     fontWeight: '700',
-    paddingTop: 7,
+    paddingTop: 0,
   },
   dataTopic: {
     color: '#000000',
-    fontSize: 20,
-    fontWeight: '800',
-    paddingTop: 7,
-    paddingBottom: 7,
+    fontSize: 18,
+    fontWeight: '600',
+    marginTop: 0,
+    borderBottomWidth: 1,
+    borderBottomColor
+    // paddingBottom: 7,
   },
   dataParagraph: {
     fontSize: 12,
