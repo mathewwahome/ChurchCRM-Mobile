@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import colors from './Color';
 const styles = StyleSheet.create({
   // Landing Page styles
@@ -205,5 +205,18 @@ const styles = StyleSheet.create({
   eye_icon: {
     marginRight: 10,
   },
+  rowContainer: {
+    flexDirection: 'row', // Display items in a row
+    alignItems: 'center', // Align items vertically in the center
+  },
+
+  showPasswordText: {
+    marginLeft: 5,
+    fontSize: 16,
+  },
+  check_icon: {
+    marginRight: 10,
+    marginLeft: 10,
+  },
 });
-export { styles };
+export {styles};

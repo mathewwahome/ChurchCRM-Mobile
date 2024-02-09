@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View } from 'react-native';
+import {View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -21,11 +21,12 @@ import SermonsStackNavigator from './src/navigation/stack-navigators/SermonsStac
 import VerseOfTheDay from './src/screens/VerseOfTheDay/VerseOfTheDay';
 import useAuth from './src/hooks/HandleAuth';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
-import Notes from './src/screens/Notes';
 import EditNotes from './src/screens/notes/EditNotes';
 import ViewNote from './src/screens/notes/ViewNote';
 import DrawerNavigatorcss from './src/assets/css/DrawerNavigatorcss';
 import Icon from './src/ui/components/icon';
+import ChangePassword from './src/screens/auth/ChangePassword';
+import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 function App() {
   const [reloadNotes, setReloadNotes] = useState(false);
   const {getStoredUserData} = useAuth();
@@ -98,24 +99,24 @@ function App() {
                 )}
                 options={{headerShown: false}}
               />
-              <Stack.Screen 
-                  name="HomeTabs"
-                  children={() => (
-                    <BottomTabNavigator
-                      userId={userId}
-                      reloadNotes={reloadNotes}
-                      setReloadNotes={setReloadNotes}
-                      setNoteId={setNoteId}
-                    />
-                  )}
-                  options={{
-                    title: 'Home',
-                    headerRight: () => (
-                      <View style={DrawerNavigatorcss.headerRight}>
-                        <Icon name="bells" size={20} color="#fff" />
-                      </View>
-                    ),
-                  }}
+              <Stack.Screen
+                name="HomeTabs"
+                children={() => (
+                  <BottomTabNavigator
+                    userId={userId}
+                    reloadNotes={reloadNotes}
+                    setReloadNotes={setReloadNotes}
+                    setNoteId={setNoteId}
+                  />
+                )}
+                options={{
+                  title: 'Home',
+                  headerRight: () => (
+                    <View style={DrawerNavigatorcss.headerRight}>
+                      <Icon name="bells" size={20} color="#fff" />
+                    </View>
+                  ),
+                }}
               />
               <Stack.Screen
                 name="ProfileScreen"
@@ -190,6 +191,7 @@ function App() {
                 name="SermonNotesView"
                 component={SermonNotesView}
               />
+              <Stack.Screen name="ChangePassword" component={ChangePassword} />
             </>
           )}
         </Stack.Navigator>
