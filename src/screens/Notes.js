@@ -7,7 +7,14 @@ import {useNavigation} from '@react-navigation/native';
 import {BASE_URL} from '../hooks/HandleApis';
 import GlobalCss from '../assets/css/GlobalCss';
 import moment from 'moment';
-
+import {
+  Menu,
+  MenuProvider,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import {styles as flex} from '../assets/css/flex';
 export default function Notes({
   userId,
   reloadNotes,
@@ -47,7 +54,7 @@ export default function Notes({
   };
 
   const viewNoteScreen = myNoteId => {
-    setNoteId(myNoteId)
+    setNoteId(myNoteId);
     navigation.navigate('ViewNote');
   };
 
@@ -74,18 +81,70 @@ export default function Notes({
       <ScrollView onScroll={handleScroll}>
         <View style={GlobalCss.container}>
           <ScrollView horizontal={false}>
-            <View style={styles.rowContainer}>
+            <View style={styles.colContainer}>
               {data.length > 0 ? (
                 data.map(notes => (
-                  <TouchableOpacity
-                    key={notes.id}
-                    onPress={() => viewNoteScreen(notes.id)}
-                    style={[styles.notesContainer]}>
-                    <Text style={styles.notesDateText}>
-                      {moment(notes.updated_at).format('YYYY/dddd - HH:mm')}
-                    </Text>
-                    <Text style={styles.notesTopic}>{notes.note_topic}</Text>
-                  </TouchableOpacity>
+                  <>
+                    <View style={[flex.notesContainer]}>
+                      <TouchableOpacity
+                        key={notes.id}
+                        onPress={() => viewNoteScreen(notes.id)}
+                        style={flex.TouchableOpacity}>
+                        <Text style={flex.notesDateText}>
+                          {moment(notes.updated_at).format('YYYY/dddd - HH:mm')}
+                        </Text>
+                        <Text style={flex.notesTopic}>{notes.note_topic}</Text>
+                      </TouchableOpacity>
+
+                      <MenuProvider style={styles.MenuProvider}>
+                        <Menu
+                          style={styles.Menu}
+                          onSelect={value =>
+                            alert(`Selected number: ${value}`)
+                          }>
+                          <MenuTrigger
+                            style={flex.MenuTrigger}
+                            children={
+                              <Icon
+                                name={'vertical-shades'}
+                                type={'entypo'}
+                                size={20}
+                                color="#ffffff"
+                              />
+                            }
+                          />
+                          <MenuOptions style={flex.MenuOptions}>
+                            <MenuOption
+                              value={2}
+                              children={
+                                <Icon name={'edit'} color="#000000" size={20} />
+                              }
+                            />
+                            <MenuOption
+                              value={1}
+                              children={
+                                <Icon
+                                  name={'share'}
+                                  color="#000000"
+                                  size={20}
+                                />
+                              }
+                            />
+                            <MenuOption
+                              value={3}
+                              children={
+                                <Icon
+                                  name={'delete-forever'}
+                                  color="#000000"
+                                  size={20}
+                                />
+                              }
+                            />
+                          </MenuOptions>
+                        </Menu>
+                      </MenuProvider>
+                    </View>
+                  </>
                 ))
               ) : (
                 <Text style={styles.loadingText}>Loading ...</Text>

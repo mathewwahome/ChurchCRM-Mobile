@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 0,
     borderBottomWidth: 1,
-    borderBottomColor
+    // borderBottomColor: 
     // paddingBottom: 7,
   },
   dataParagraph: {

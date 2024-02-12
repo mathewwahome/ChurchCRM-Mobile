@@ -6,7 +6,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {BASE_URL, fetchDataByEndpoint} from '../../hooks/HandleApis';
 import {styles} from '../../assets/css/Global';
-
+import {styles as sermonstyles} from '../../assets/css/SermonsScreen';
 const Stack = createStackNavigator();
 
 export const fetchSermons = async () => {
@@ -45,18 +45,14 @@ const Sermons = () => {
                 onPress={() =>
                   navigation.navigate('VideoPlayer', {sermon: sermon})
                 }>
-                <View style={{flexDirection: 'column', padding: 10}}>
-                  <View
-                    style={{
-                      backgroundColor: '#0A7E8B',
-                      borderRadius: 10,
-                    }}>
-                    <Image
-                      style={styles.image}
-                      source={{
-                        uri: `${BASE_URL}/SermonThumbnails/${sermon.Thumbnail}`,
-                      }}
-                    />
+                <View style={sermonstyles.sermonContainer}>
+                  <Image
+                    style={styles.image}
+                    source={{
+                      uri: `${BASE_URL}/SermonThumbnails/${sermon.Thumbnail}`,
+                    }}
+                  />
+                  <View style={sermonstyles.containertest}>
                     <Text style={styles.text}>
                       {new Date(sermon.created_at).toLocaleDateString(
                         undefined,
@@ -67,7 +63,7 @@ const Sermons = () => {
                         },
                       )}
                     </Text>
-                    <Text style={styles.title}>
+                    <Text style={sermonstyles.title}>
                       {sermon.Title.slice(0, 40)}...
                     </Text>
                   </View>
@@ -89,7 +85,7 @@ const SermonsStackNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Book" component={Sermons} />
+      <Stack.Screen name="Sermon" component={Sermons} />
     </Stack.Navigator>
   );
 };
