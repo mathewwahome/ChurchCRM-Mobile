@@ -60,8 +60,8 @@ export default function ChangePassword() {
       <ScrollView>
         <View style={styles.login_view}>
           <SafeAreaView style={styles.login_form}>
-            <Text>Change Password</Text>
             <View>
+              <Text style={styles.text}>Currrent Password</Text>
               <CustomTextInput
                 iconName="lock"
                 placeholder="Current Password"
@@ -71,6 +71,8 @@ export default function ChangePassword() {
                   setUserData(data => ({...data, currentpassword: text}))
                 }
               />
+              <Text style={styles.text}>New Password</Text>
+
               <CustomTextInput
                 iconName="lock"
                 placeholder="New Password"
@@ -80,6 +82,8 @@ export default function ChangePassword() {
                   setUserData(data => ({...data, newpassword: text}))
                 }
               />
+              <Text style={styles.text}>Confirm Password</Text>
+
               <CustomTextInput
                 iconName="lock"
                 placeholder="Confirm Password"
@@ -91,7 +95,7 @@ export default function ChangePassword() {
               />
               <View style={styles.rowContainer}>
                 <Icon
-                  style={[styles.check_icon, {marginRight: 5}]}
+                  style={styles.check_icon}
                   name={showPassword ? 'checksquare' : 'checksquareo'}
                   onPress={togglePasswordVisibility}
                   color="black"
