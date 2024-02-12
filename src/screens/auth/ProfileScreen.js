@@ -162,8 +162,9 @@ export default function ProfileScreen({userId, setUserId}) {
             }}
           />
         </View>
-        <Text style={styles.headerText}>
-          {data.name} <Icon name="person" style={styles.icon} />
+        <Text style={styles.headerText} onPress={toggleModal}>
+          {data.name}
+          <Icon name="edit" style={styles.icon} />
         </Text>
       </View>
 

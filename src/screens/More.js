@@ -5,6 +5,7 @@ import {ScrollView, View, Text, Image, TouchableOpacity} from 'react-native';
 import Icon from '../ui/components/icon';
 import {styles} from '../assets/css/MoreScreen';
 import {BASE_URL} from '../hooks/HandleApis';
+import ProfileScreen from './auth/ProfileScreen';
 
 const menuItems = [
   {
@@ -54,7 +55,9 @@ export default function More({userId}) {
         });
     }
   }, [userId]);
-
+  const NavigateProfileScreen = () => {
+    navigation.navigate(ProfileScreen);
+  };
   const navigateToScreen = screenName => {
     navigation.navigate(screenName);
   };
@@ -84,7 +87,7 @@ export default function More({userId}) {
               style={styles.image_logo}
             />
           </View>
-          <Text style={styles.username}>
+          <Text style={styles.username} onPress={NavigateProfileScreen}>
             {data.name} <Icon name="rightcircle" style={styles.icon} />
           </Text>
         </View>
