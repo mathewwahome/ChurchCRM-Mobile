@@ -33,28 +33,20 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: '#087E8B',
   },
-  rowContainer: {
+  colContainer: {
     flexDirection: 'col',
     padding: 10,
     resizeMode: 'cover',
     paddingBottom: 20,
   },
-  notesContainer: {
-    marginBottom: 20,
-    height: 100,
-    borderRadius: 10,
-    backgroundColor: '#087E8B',
-    textAlignVertical: 'center',
-  },
+ 
 
-  notesDateText: {
-    position: 'absolute',
-    bottom: 35,
-    left: 10,
-    color: 'white',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
+ 
+
+  //Menu css
+  
+  //End Menu css
+
   loadingText: {
     fontSize: 32,
     fontWeight: '800',
@@ -69,14 +61,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 3,
     borderTopColor: '#E53436',
   },
-  notesTopic: {
-    position: 'absolute',
-    bottom: 10,
-    left: 10,
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
+  
   notesInput: {
     flex: 1,
     height: 40,
@@ -150,6 +135,5 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     width: '100%',
   },
-  
 });
 export {styles};
