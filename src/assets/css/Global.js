@@ -41,12 +41,21 @@ const styles = StyleSheet.create({
   },
   dataTopic: {
     color: '#000000',
+    fontSize: 2,
+    fontWeight: '600',
+    paddingTop: 0,
+    // borderBottomColor:
+    // paddingBottom: 7,
+  },
+  dataSermonTopic: {
+    color: '#000000',
     fontSize: 18,
     fontWeight: '600',
     marginTop: 0,
     borderBottomWidth: 1,
+    paddingBottom: 7,
+    marginBottom: 5,
     // borderBottomColor:
-    // paddingBottom: 7,
   },
   dataParagraph: {
     fontSize: 12,

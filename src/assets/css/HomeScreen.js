@@ -113,13 +113,14 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '800',
+    paddingLeft: 10,
+    paddingTop: 10,
   },
   sermonNoteContainer: {
-    padding: 10,
     backgroundColor: '#087E8B',
   },
   sermonDate: {
-    color: '#369DAE',
+    color: '#58BDC8',
     fontSize: 13,
     fontWeight: '700',
     paddingTop: 7,
