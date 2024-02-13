@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
+  Pressable,
 } from 'react-native';
 import {useCallback} from 'react';
 import axios from 'axios';
@@ -69,7 +70,6 @@ export default function ProfileScreen({userId, setUserId}) {
     formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('phone', data.phone);
-    formData.append('password', data.password);
     formData.append('membership_status', value);
 
     if (data.profile_photo_path) {
@@ -141,6 +141,7 @@ export default function ProfileScreen({userId, setUserId}) {
       }
     });
   }, [data.profile_photo_path]);
+
   //dropdown
   const membership = [
     {label: 'New Member', value: 'New Member'},
@@ -151,6 +152,31 @@ export default function ProfileScreen({userId, setUserId}) {
   const ChangePassword = () => {
     navigation.navigate('ChangePassword');
   };
+  const AccountDeletion = async () => {
+    console.log(userId);
+
+    try {
+      let responce = await fetch.post(`${BASE_URL}/api/deleteuser`, {
+        userId: userId,
+      });
+    } catch (error) {}
+  };
+
+  //Profile section
+  const ProfileSection = ({iconName, text, onPress}) => {
+    return (
+      <Pressable onPress={onPress}>
+        <View style={styles.containerSection}>
+          <Text style={styles.icon}>
+            <Icon size={20} name={iconName} />
+            {text}
+          </Text>
+          <Icon name="edit" style={styles.icon} />
+        </View>
+      </Pressable>
+    );
+  };
+
   return (
     <View style={GlobalCss.container}>
       <View style={styles.header}>
@@ -162,83 +188,58 @@ export default function ProfileScreen({userId, setUserId}) {
             }}
           />
         </View>
-        <Text style={styles.headerText}>
-          {data.name} <Icon name="person" style={styles.icon} />
+        <Text style={styles.headerText} onPress={toggleModal}>
+          {data.name}
+          <Icon name="edit" style={styles.icon} />
         </Text>
       </View>
 
       <View style={styles.content}>
-        <View style={styles.containerSection}>
-          <Text style={styles.icon}>
-            <Icon size={20} name="person" />
-            {data.name}
-          </Text>
-          <Icon name="edit" style={styles.icon} onPress={toggleModal} />
+        <View>
+          <ProfileSection
+            iconName="person"
+            text={data.name}
+            onPress={toggleModal}
+          />
+          <ProfileSection
+            iconName="phone"
+            text={data.phone}
+            onPress={toggleModal}
+          />
+          <ProfileSection
+            iconName="person"
+            text={data.membership_status}
+            onPress={toggleModal}
+          />
+          <ProfileSection
+            iconName="remove-red-eye"
+            text="Change Password"
+            onPress={ChangePassword}
+          />
+          <ProfileSection
+            iconName="delete"
+            text="Account Deletion"
+            onPress={AccountDeletion}
+          />
         </View>
-        <View style={styles.containerSection}>
-          <Text style={styles.icon}>
-            <Icon size={20} name="phone" />
-            {data.phone}
-          </Text>
-          <Icon name="edit" style={styles.icon} onPress={toggleModal} />
-        </View>
-        <View style={styles.containerSection}>
-          <Text style={styles.icon}>
-            <Icon size={20} name="person" />
-            {data.membership_status}
-          </Text>
-          <Icon name="edit" style={styles.icon} onPress={toggleModal} />
-        </View>
-        <View style={styles.containerSection}>
-          <Text>
-            <Icon size={20} name="remove-red-eye" />
-            <Text style={styles.profiletxt}>Change Password</Text>
-          </Text>
-          <Icon name="edit" style={styles.icon} onPress={ChangePassword} />
-        </View>
+
         <View>
           <ScrollView>
             <Modal
               isVisible={isModalVisible}
               userId={userId}
-              style={{paddingTop: 100}}>
-              <View style={{flex: 1}}>
+              style={styles.modal}>
+              <View style={styles.modalView}>
                 <View style={styles.login_view}>
                   <SafeAreaView style={styles.login_form}>
-                    <Text
-                      style={{
-                        ...authstyles.login_text,
-                        color: '#ffffff',
-                        borderBottomColor: '#369DAE',
-                        borderBottomWidth: 2,
-                      }}>
-                      Edit Details
-                    </Text>
+                    <Text style={styles.login_text}>Edit Details</Text>
                     <View>
-                      <View
-                        style={{
-                          ...styles.account_container,
-                          flexDirection: 'column',
-                          justifyContent: 'space-between',
-                          paddingTop: 20,
-                        }}>
-                        <Text
-                          style={{
-                            ...authstyles.login_text,
-                            color: '#ffffff',
-                            fontWeight: '600',
-                            fontSize: 16,
-                          }}>
-                          Profile Photo
-                        </Text>
+                      <View style={styles.account_container}>
+                        <Text style={styles.login_text}>Profile Photo</Text>
                         <TouchableOpacity
                           onPress={handleChoosePhoto}
-                          style={{...styles.signOutButton, width: '65%'}}>
-                          <Text
-                            style={{
-                              ...authstyles.auth_btn_text,
-                              color: '#ffffff',
-                            }}>
+                          style={styles.signOutButton}>
+                          <Text style={styles.auth_btn_text}>
                             Choose from device
                           </Text>
                         </TouchableOpacity>
@@ -279,15 +280,6 @@ export default function ProfileScreen({userId, setUserId}) {
                         }
                       />
 
-                      <CustomTextInput
-                        iconName="lock"
-                        placeholder="Password"
-                        secureTextEntry
-                        value={data.password}
-                        onChangeText={text =>
-                          setData(data => ({...data, password: text}))
-                        }
-                      />
                       <Dropdown
                         style={styles.dropdown}
                         placeholderStyle={styles.placeholderStyle}

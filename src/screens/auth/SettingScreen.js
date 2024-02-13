@@ -1,13 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  Image,
-  ImageBackground,
-  StyleSheet,
-  Switch,
-} from 'react-native';
+import {View, ScrollView, Text, Switch} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import RadioGroup from 'react-native-radio-buttons-group';

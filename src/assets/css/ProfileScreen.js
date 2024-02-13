@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     color: '#000000',
     marginRight: 10,
     fontSize: 18,
-
   },
 
   image_logo: {
@@ -92,6 +91,22 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  login_text: {
+    color: '#ffffff',
+    borderBottomColor: '#369DAE',
+    borderBottomWidth: 2,
+  },
+  account_container: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    paddingTop: 20,
+  },
+  modal: {
+    paddingTop: 100,
+  },
+  modalView: {
+    flex: 1,
   },
 });
 export {styles};
