@@ -21,6 +21,7 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import moment from 'moment';
+
 export default function Notes({
   userId,
   reloadNotes,
@@ -54,6 +55,12 @@ export default function Notes({
       console.error('Error fetching notes:', error);
     }
   };
+
+  const refreshData = () => {
+    setIsRefreshing(true);
+    fetchData().then(() => setIsRefreshing(false));
+  };
+
   const NewNoteScreen = () => {
     navigation.navigate('NewNotes');
   };
@@ -69,9 +76,27 @@ export default function Notes({
     const contentHeight = event.nativeEvent.contentSize.height;
 
     if (offsetY === 0 && !isRefreshing) {
-      setIsRefreshing(true);
-      setReloadNotes(true);
-      setIsRefreshing(false);
+      refreshData();
+    }
+  };
+
+  const deleteNote = async myNoteId => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/deletenote/${myNoteId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete note');
+      }
+
+      console.log('Note deleted successfully');
+      refreshData(); // Refresh data after successful deletion
+    } catch (error) {
+      console.error('Error deleting note:', error.message);
     }
   };
 
@@ -108,14 +133,22 @@ export default function Notes({
                             </Pressable>
                           </MenuOption>
                           <MenuOption>
-                            <Icon name={'share'} color="#000000" size={20} />
+                            <Pressable
+                              key={notes.id}
+                              onPress={() => viewNoteScreen(notes.id)}>
+                              <Icon name={'share'} color="#000000" size={20} />
+                            </Pressable>
                           </MenuOption>
                           <MenuOption>
-                            <Icon
-                              name={'delete-forever'}
-                              color="#000000"
-                              size={20}
-                            />
+                            <Pressable
+                              key={notes.id}
+                              onPress={() => deleteNote(notes.id)}>
+                              <Icon
+                                name={'delete-forever'}
+                                color="#000000"
+                                size={20}
+                              />
+                            </Pressable>
                           </MenuOption>
                         </MenuOptions>
                       </Menu>
