@@ -1,20 +1,27 @@
 import * as React from 'react';
-import {View, ScrollView, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../assets/css/styles';
 import {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {BASE_URL} from '../hooks/HandleApis';
 import GlobalCss from '../assets/css/GlobalCss';
-import moment from 'moment';
+import {styles as card} from '../assets/css/Card';
 import {
-  Menu,
   MenuProvider,
+  Menu,
   MenuOptions,
   MenuOption,
   MenuTrigger,
 } from 'react-native-popup-menu';
-import {styles as flex} from '../assets/css/flex';
+import moment from 'moment';
+
 export default function Notes({
   userId,
   reloadNotes,
@@ -48,7 +55,12 @@ export default function Notes({
       console.error('Error fetching notes:', error);
     }
   };
-  // ERROR  TypeError: setNotesId is not a function (it is undefined), js engine: hermes
+
+  const refreshData = () => {
+    setIsRefreshing(true);
+    fetchData().then(() => setIsRefreshing(false));
+  };
+
   const NewNoteScreen = () => {
     navigation.navigate('NewNotes');
   };
@@ -64,9 +76,27 @@ export default function Notes({
     const contentHeight = event.nativeEvent.contentSize.height;
 
     if (offsetY === 0 && !isRefreshing) {
-      setIsRefreshing(true);
-      setReloadNotes(true);
-      setIsRefreshing(false);
+      refreshData();
+    }
+  };
+
+  const deleteNote = async myNoteId => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/deletenote/${myNoteId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete note');
+      }
+
+      console.log('Note deleted successfully');
+      refreshData(); // Refresh data after successful deletion
+    } catch (error) {
+      console.error('Error deleting note:', error.message);
     }
   };
 
@@ -84,67 +114,46 @@ export default function Notes({
             <View style={styles.colContainer}>
               {data.length > 0 ? (
                 data.map(notes => (
-                  <>
-                    <View style={[flex.notesContainer]}>
-                      <TouchableOpacity
-                        key={notes.id}
-                        onPress={() => viewNoteScreen(notes.id)}
-                        style={flex.TouchableOpacity}>
-                        <Text style={flex.notesDateText}>
-                          {moment(notes.updated_at).format('YYYY/dddd - HH:mm')}
-                        </Text>
-                        <Text style={flex.notesTopic}>{notes.note_topic}</Text>
-                      </TouchableOpacity>
-
-                      <MenuProvider style={styles.MenuProvider}>
-                        <Menu
-                          style={styles.Menu}
-                          onSelect={value =>
-                            alert(`Selected number: ${value}`)
-                          }>
-                          <MenuTrigger
-                            style={flex.MenuTrigger}
-                            children={
+                  <View style={card.cardContainer}>
+                    <Text style={card.notesDateText}>
+                      {moment(notes.updated_at).format('YYYY/dddd - HH:mm')}
+                    </Text>
+                    <Text style={card.notesTopic}>{notes.note_topic}</Text>
+                    <MenuProvider style={card.menuProvider}>
+                      <Menu style={card.menuContainer}>
+                        <MenuTrigger style={card.menuTrigger}>
+                          <Icon name={'more-vert'} size={20} color="#ffffff" />
+                        </MenuTrigger>
+                        <MenuOptions style={card.menuOptions}>
+                          <MenuOption>
+                            <Pressable
+                              key={notes.id}
+                              onPress={() => viewNoteScreen(notes.id)}>
+                              <Icon name={'edit'} color="#000000" size={20} />
+                            </Pressable>
+                          </MenuOption>
+                          <MenuOption>
+                            <Pressable
+                              key={notes.id}
+                              onPress={() => viewNoteScreen(notes.id)}>
+                              <Icon name={'share'} color="#000000" size={20} />
+                            </Pressable>
+                          </MenuOption>
+                          <MenuOption>
+                            <Pressable
+                              key={notes.id}
+                              onPress={() => deleteNote(notes.id)}>
                               <Icon
-                                name={'vertical-shades'}
-                                type={'entypo'}
+                                name={'delete-forever'}
+                                color="#000000"
                                 size={20}
-                                color="#ffffff"
                               />
-                            }
-                          />
-                          <MenuOptions style={flex.MenuOptions}>
-                            <MenuOption
-                              value={2}
-                              children={
-                                <Icon name={'edit'} color="#000000" size={20} />
-                              }
-                            />
-                            <MenuOption
-                              value={1}
-                              children={
-                                <Icon
-                                  name={'share'}
-                                  color="#000000"
-                                  size={20}
-                                />
-                              }
-                            />
-                            <MenuOption
-                              value={3}
-                              children={
-                                <Icon
-                                  name={'delete-forever'}
-                                  color="#000000"
-                                  size={20}
-                                />
-                              }
-                            />
-                          </MenuOptions>
-                        </Menu>
-                      </MenuProvider>
-                    </View>
-                  </>
+                            </Pressable>
+                          </MenuOption>
+                        </MenuOptions>
+                      </Menu>
+                    </MenuProvider>
+                  </View>
                 ))
               ) : (
                 <Text style={styles.loadingText}>Loading ...</Text>
