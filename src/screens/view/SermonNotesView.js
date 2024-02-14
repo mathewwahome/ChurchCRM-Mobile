@@ -13,17 +13,17 @@ import { styles as homestyles } from '../../assets/css/HomeScreen';
 import React, { useState } from 'react';
 import RNFetchBlob from 'rn-fetch-blob';
 import { useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 export const fetchSermonsNotes = async (note_id) => {
   return fetchDataByEndpoint(`fetch_other_notes/${note_id}`);
 };
 
-const SermonNotesView = ({ route }) => {
+const SermonNotesclickedView = ({ route }) => {
   const { sermon_note, imageUri, sermon_note_id } = route.params;
   const [refreshing, setRefreshing] = useState(false);
   const [sermonsNotesLoading, setSermonsNotesLoading] = useState(true);
   const [sermonsNotesData, setSermonsNotesData] = useState([]);
-
-
+  const navigation = useNavigation();
 
 
   const onRefresh = () => {
@@ -108,8 +108,8 @@ const SermonNotesView = ({ route }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const sermonNotes = await fetchSermonsNotes(sermon_note_id);
-        setSermonsNotesData(sermonNotes);
+        const sermonNotesclicked = await fetchSermonsNotes(sermon_note_id);
+        setSermonsNotesData(sermonNotesclicked);
         setSermonsNotesLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -117,33 +117,34 @@ const SermonNotesView = ({ route }) => {
     };
 
     fetchData();
-  }, []);
+  }, [sermon_note_id]);
 
   return (
     <ScrollView
-      style={styles.container}
+      
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
-      <Image style={styles.itemImage} source={{ uri: imageUri }} />
-      <Text style={styles.dataDate}>
-        {new Date(sermon_note.created_at).toLocaleDateString(undefined, {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })}
-      </Text>
-      <Text style={styles.dataTopic}>Description</Text>
-      <Text style={styles.dataTopic}>{sermon_note.Topic}</Text>
-      <Text style={styles.text}>{sermon_note.sermondescription}</Text>
-      <TouchableOpacity
-        onPress={() =>
-          downloadSermon(sermon_note_id, sermon_note.notesupload)
-        }
-        style={styles.downloadNotesButton}>
-        <Text style={styles.downloadNotesText}>Download Notes</Text>
+      <View style={styles.container}>
+        <Image style={styles.itemImage} source={{ uri: imageUri }} />
+        <Text style={styles.dataDate}>
+          {new Date(sermon_note.created_at).toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </Text>
+        <Text style={styles.dataSermonTopic}>Description</Text>
+        <Text style={styles.text}>{sermon_note.sermondescription}</Text>
+        <TouchableOpacity
+          onPress={() =>
+            downloadSermon(sermon_note_id, sermon_note.notesupload)
+          }
+          style={styles.downloadNotesButton}>
+          <Text style={styles.downloadNotesText}>Download Notes</Text>
 
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
 
       {/* Sermon note scroll container */}
       <View style={homestyles.sermonNoteContainer}>
@@ -152,46 +153,53 @@ const SermonNotesView = ({ route }) => {
           {sermonsNotesLoading ? (
             <Text style={homestyles.loadingText}>Loading sermon Notes...</Text>
           ) : sermonsNotesData && sermonsNotesData.length > 0 ? (
-            sermonsNotesData.map(sermonnotes => (
-              <TouchableOpacity
-                key={sermonnotes.id}
-                onPress={() =>
-                  navigation.navigate('SermonNotesView', {
-                    sermon_note: sermonnotes,
-                    imageUri: `${BASE_URL}/Notes_Thumbnails/${sermonnotes.notesimage}`,
-                    sermon_note_id: sermonnotes.id
-                  })
-                }>
-                <View key={sermonnotes.id}>
-                  <View style={{ flexDirection: 'row', padding: 10 }}>
-                    <View style={{ marginRight: 10 }}>
-                      <Image
-                        style={homestyles.image}
-                        source={{
-                          uri: `${BASE_URL}/Notes_Thumbnails/${sermonnotes.notesimage}`,
-                        }}
-                      />
-                      <Text style={homestyles.sermonDate}>
-                        {new Date(sermonnotes.created_at).toLocaleDateString(
-                          undefined,
-                          {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          },
-                        )}
-                      </Text>
-                      <Text style={homestyles.sermonText}>
-                        {sermonnotes.sermondescription.length > 25 ?
-                          (sermonnotes.sermondescription.slice(0, 25) + '...') :
-                          (sermonnotes.sermondescription)
-                        }
+            sermonsNotesData.map(sermonnotesclicked => (
+              sermonnotesclicked.id !== sermon_note.id ? (
+                <TouchableOpacity
+                  key={sermonnotesclicked.id}
+                  onPress={() => {
+                    navigation.navigate('SermonNotesView', {
+                      sermon_note: sermonnotesclicked,
+                      imageUri: `${BASE_URL}/Notes_Thumbnails/${sermonnotesclicked.notesimage}`,
+                      sermon_note_id: sermonnotesclicked.id
+                    })
+                    console.log("The clicked ID: ", sermonnotesclicked.id)
+                  }
+                  }>
+                  <View key={sermonnotesclicked.id}>
+                    <View style={{ flexDirection: 'row', padding: 10 }}>
+                      <View style={{ marginRight: 10 }}>
+                        <Image
+                          style={homestyles.image}
+                          source={{
+                            uri: `${BASE_URL}/Notes_Thumbnails/${sermonnotesclicked.notesimage}`,
+                          }}
+                        />
+                        <Text style={homestyles.sermonDate}>
+                          {new Date(sermonnotesclicked.created_at).toLocaleDateString(
+                            undefined,
+                            {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                            },
+                          )}
+                        </Text>
+                        <Text style={homestyles.sermonText}>
+                          {sermonnotesclicked.sermondescription.length > 25 ?
+                            (sermonnotesclicked.sermondescription.slice(0, 25) + '...') :
+                            (sermonnotesclicked.sermondescription)
+                          }
 
-                      </Text>
+                        </Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-              </TouchableOpacity>
+                </TouchableOpacity>
+              ) :
+              (
+                  <Text style={homestyles.loadingText}>No Sermon Notes available</Text>
+              )
             ))
           ) : (
             <Text style={homestyles.loadingText}>No Sermon Notes available</Text>
@@ -203,4 +211,4 @@ const SermonNotesView = ({ route }) => {
   );
 };
 
-export default SermonNotesView;
+export default SermonNotesclickedView;
