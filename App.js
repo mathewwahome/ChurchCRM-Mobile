@@ -27,6 +27,9 @@ import DrawerNavigatorcss from './src/assets/css/DrawerNavigatorcss';
 import Icon from './src/ui/components/icon';
 import ChangePassword from './src/screens/auth/ChangePassword';
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
+import ResetCode from './src/screens/auth/ResetCode';
+import NewPassword from './src/screens/auth/NewPassword';
+
 function App() {
   const [reloadNotes, setReloadNotes] = useState(false);
   const {getStoredUserData} = useAuth();
@@ -82,6 +85,16 @@ function App() {
                 name="ForgotPassword"
                 component={ForgotPassword}
                 options={{title: 'Reset Password'}}
+              />
+              <Stack.Screen
+                name="Resetpasswordcode"
+                component={ResetCode}
+                options={{title: 'Reset Code'}}
+              />
+              <Stack.Screen
+                name="NewPassword"
+                component={NewPassword}
+                options={{title: 'New Password'}}
               />
             </>
           ) : (

@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   Pressable,
+  Share,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../assets/css/styles';
@@ -99,6 +100,16 @@ export default function Notes({
       console.error('Error deleting note:', error.message);
     }
   };
+  //share
+  // Inside your functional component
+  const shareNote = noteText => {
+    Share.share({
+      message: noteText,
+      title: 'Share Note',
+    })
+      .then(result => console.log(result))
+      .catch(error => console.log(error));
+  };
 
   return (
     <View>
@@ -135,7 +146,7 @@ export default function Notes({
                           <MenuOption>
                             <Pressable
                               key={notes.id}
-                              onPress={() => viewNoteScreen(notes.id)}>
+                              onPress={() => shareNote(notes.note_topic)}>
                               <Icon name={'share'} color="#000000" size={20} />
                             </Pressable>
                           </MenuOption>
