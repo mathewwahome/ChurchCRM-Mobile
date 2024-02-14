@@ -99,11 +99,29 @@ const useAuth = () => {
       throw error;
     }
   };
+  const handleResetPassword = async (newpassword, confirmpassword) => {
+    try {
+      let code = await AsyncStorage.getItem('resetCode');
+      const response = await fetch(`${BASE_URL}/api/resetpassword/${code}`, {
+        method: 'POST',
+        headers: config,
+        body: JSON.stringify({
+          newpassword,
+          confirmpassword,
+        }),
+      });
+      await response.json();
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
   return {
     handleLogin,
     handleLogout,
     getStoredUserData,
     handleChangePassword,
+    handleResetPassword,
   };
 };
 
