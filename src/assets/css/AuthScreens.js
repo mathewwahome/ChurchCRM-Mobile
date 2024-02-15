@@ -2,6 +2,11 @@ import {StyleSheet} from 'react-native';
 import colors from './Color';
 const styles = StyleSheet.create({
   // Landing Page styles
+  text: {
+    color: '#000000',
+    marginTop: 20,
+    fontSize: 18,
+  },
   landing_screen_container: {
     paddingVertical: 60,
     marginTop: 50,
