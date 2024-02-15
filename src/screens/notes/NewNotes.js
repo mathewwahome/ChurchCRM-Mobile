@@ -44,11 +44,6 @@ export default function NewNotes({userId, setReloadNotes}) {
     <Text style={{color: tintColor}}>H1</Text>
   );
 
-  const getContent = async () => {
-    const htmlContent = await richText.current.getContentHtml();
-    setContent(htmlContent);
-  };
-
   return (
     <ScrollView>
       <View style={styles.newNotesContainer}>
@@ -78,23 +73,22 @@ export default function NewNotes({userId, setReloadNotes}) {
             ]}
             iconMap={{[actions.heading1]: handleHead}}
           />
-          <RichEditor
-            style={[
-              styles.takeNotesIn,
-              {backgroundColor: 'white', color: 'black'},
-            ]}
-            ref={richText}
-            onChange={descriptionText => {
-              console.log('descriptionText:', descriptionText);
-            }}
-            value={content}
-            onChangeText={setContent}
-          />
+          <ScrollView>
+            <RichEditor
+              style={[
+                styles.textarea,
+                { backgroundColor: 'white', color: 'black' },
+              ]}
+              ref={richText}
+              onChange={(text) => setContent(text) }
+              value={content}
+            />
+          </ScrollView>
+          
         </KeyboardAvoidingView>
         <TouchableOpacity
           style={styles.submitNotesButton}
           onPress={() => {
-            getContent();
             saveNotes();
           }}>
           <Text style={styles.submitNotes}> Add Notes</Text>

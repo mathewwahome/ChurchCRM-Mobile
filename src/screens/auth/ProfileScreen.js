@@ -190,7 +190,7 @@ export default function ProfileScreen({userId, setUserId}) {
         </View>
         <Text style={styles.headerText} onPress={toggleModal}>
           {data.name}
-          <Icon name="edit" style={styles.icon} />
+          <Icon name="edit" style={authstyles.icon} />
         </Text>
       </View>
 

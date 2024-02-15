@@ -18,6 +18,11 @@ const GlobalCss = StyleSheet.create({
     fontSize: 18,
     color: '#344953',
   },
+  usernotetext: {
+    fontSize: 20,
+    color: '#344953',
+    backgroundColor: 'transparent',
+  },
 });
 
 export default GlobalCss;
