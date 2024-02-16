@@ -71,22 +71,6 @@ const VideoPlayer = ({route}) => {
     });
 
     config(configOptions || {})
-    // Platform.select({
-    //   android: {
-    //     fileCache: true,
-    //     addAndroidDownloads: {
-    //       useDownloadManager: true,
-    //       notification: true,
-    //       path: `${dir}/${Math.random()}/${sermon.Title}.${fileExtension}`,
-    //       mime: mimeType,
-    //     },
-    //   },
-    //   ios: {
-    //     fileCache: true,
-    //     path: `${dir}/${Math.random()}/${sermon.Title}.${fileExtension}`, 
-    //     appendExt: fileExtension,
-    //   },
-    // })
       .fetch('GET', `${BASE_URL}/api/download_notes/${sermonId}`)
       .then(response => {
         console.log(response);
@@ -99,21 +83,23 @@ const VideoPlayer = ({route}) => {
   return (
     <ScrollView style={styles.container}>
       <View>
-        <YoutubePlayer height={250} play={false} videoId={videoId} />
+        <YoutubePlayer height={180} play={false} videoId={videoId} />
       </View>
       <View>
-        <Text style={styles.text}>
-          {new Date(sermon.created_at).toLocaleDateString(undefined, {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
-        </Text>
-        <View style={{borderBottomWidth: 1, borderBottomColor: 'black'}} />
+        <View style={styles.videoPlayerTitle}>
+          <Text style={styles.title}>{sermon.Title} | </Text>
+          <Text style={styles.videoPlayerDate}>
+            {new Date(sermon.created_at).toLocaleDateString(undefined, {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </Text>
+        </View>
+        <View style={{borderBottomWidth: 1, borderBottomColor: 'black', marginBottom: 10}} />
 
-        <Text style={styles.title}>{sermon.Title}</Text>
 
-        <Text style={styles.text}>{sermon.Sermon_Description}</Text>
+        <Text style={styles.videoDescription}>{sermon.Sermon_Description}</Text>
 
         <TouchableOpacity
           onPress={() => downloadSermon(sermon.id, sermon.Sermon_Notes)}

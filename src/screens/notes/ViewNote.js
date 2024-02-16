@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { styles } from '../../assets/css/styles';
 import { BASE_URL } from '../../hooks/HandleApis';
 import GlobalCss from '../../assets/css/GlobalCss';
+import Icon from '../../ui/components/icon';
 // import { RichEditor } from 'react-native-pell-rich-editor';
 import AutoHeightWebView from 'react-native-autoheight-webview'
 // import WebView from 'react-native-webview';
@@ -43,17 +45,17 @@ export default function ViewNote({ noteId }) {
 const [contentHeight, setContentHeight] = useState(null)
   return (
     <ScrollView>
-      <View>
-        <Text style={GlobalCss.title}>{data.note_topic}</Text>
+      <View style={GlobalCss.viewNoteContainer}>
+        <Text style={GlobalCss.noteTitle}>{data.note_topic}</Text>
         
           <View style={{flex: 1}}>
             <AutoHeightWebView
-              style={{ width: Dimensions.get('window').width - 15, height: contentHeight * 3.07 }}
-            customScript={`document.body.style.background = 'lightyellow'; window.ReactNativeWebView.postMessage(document.body.scrollHeight);`}
+            style={{ width: Dimensions.get('window').width - 15, height: contentHeight * 3.07, marginBottom: 10, }}
+            customScript={`document.body.style.background = 'transparent'; document.body.style.color = '#344953'; window.ReactNativeWebView.postMessage(document.body.scrollHeight);`}
               customStyle={`
           * {
             font-family: 'Times New Roman';
-            font-size: 18px;
+            font-size: 16px;
           }
           
         `}
@@ -71,21 +73,12 @@ const [contentHeight, setContentHeight] = useState(null)
               scalesPageToFit={true}
               scrollEnabled={true}
               viewportContent={'width=device-width, user-scalable=no'}
-            /*
-            other react-native-webview props
-            */
             />
-          </View>
-     
-        {/* <RichEditor
-          initialContentHTML={data.content}
-          readOnly={true}
-          style={GlobalCss.text}
-        /> */}
+          </View>      
         <Pressable
-          style={styles.submitNotesButton}
-          onPress={() => editNoteScreen(data.id)}>
-          <Text style={styles.submitNotes}>Edit Note</Text>
+          style={GlobalCss.editNotesButton}
+          onPress={() => editNoteScreen()}>
+          <Text style={GlobalCss.editNotesText}>Edit</Text>
         </Pressable>
       </View>
     </ScrollView>

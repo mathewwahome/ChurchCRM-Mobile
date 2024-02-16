@@ -73,7 +73,7 @@ export default function Events() {
 
   return (
     <View style={styles.Container}>
-      <ScrollView>
+      <ScrollView horizontal={false}>
         <View style={styles.eventContainer}>
           {/* Upcoming Events Section */}
           <View style={styles.eventSection}>

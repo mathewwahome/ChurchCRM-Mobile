@@ -45,8 +45,8 @@ export default function SermonNotes() {
                 })
               }>
               <View key={sermonnotes.id}>
-                <View style={{ flexDirection: 'row', padding: 10 }}>
-                  <View style={{ marginRight: 10 }}>
+                <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10, paddingLeft: 10 }}>
+                  <View style={{ marginRight: 3 }}>
                     <Image
                       style={styles.image}
                       source={{

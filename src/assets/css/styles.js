@@ -10,7 +10,28 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 20,
   },
-
+  notestouchableOpacity: {
+    display: 'flex',
+  },
+  notesModal: {
+    width: '40%',
+    height: '20%',
+    backgroundColor: '#fff'
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    maxHeight: '80%',
+    overflow: 'hidden',
+  },
   input: {
     flex: 1,
     marginLeft: 10,
@@ -26,10 +47,7 @@ const styles = StyleSheet.create({
   notesTitle: {
     fontSize: 18,
     fontWeight: '900',
-    marginTop: 10,
-    marginBottom: 10,
-    marginRight: 25,
-    paddingStart: 20,
+    paddingLeft: 10,
     textAlign: 'right',
     color: '#087E8B',
   },
@@ -40,12 +58,13 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
  
-
- 
-
-  //Menu css
-  
-  //End Menu css
+  notesPageTitle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'flex-end',
+    padding: 10
+  },
 
   loadingText: {
     fontSize: 32,

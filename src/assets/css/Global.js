@@ -12,14 +12,31 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  videoPlayerTitle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
+    marginBottom: 5,    
+  },
+  videoPlayerDate: {
+    color: 'black',
+    fontSize: 14,
+    fontWeight: '700',
+    alignSelf: 'center',
+    color: '#000',
+  },
   title: {
     color: 'black',
     fontSize: 18,
     fontWeight: '900',
-    marginBottom: 20,
-    marginTop: 10,
+    alignSelf: 'center'
   },
-
+  videoDescription: {
+    fontWeight: '400',
+    color: 'black',
+    fontSize: 16,
+  },
   image: {
     width: '100%',
     height: 200,

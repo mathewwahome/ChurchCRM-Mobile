@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {View} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import LandingScreen from './src/LandingScreen';
 import LoginScreen from './src/screens/auth/LoginScreen';
 import SignupScreen from './src/screens/auth/SignupScreen';
@@ -17,22 +17,19 @@ import SermonNotesView from './src/screens/view/SermonNotesView';
 import EventView from './src/screens/view/EventView';
 import VideoPlayer from './src/screens/view/VideoPlayer';
 import SplashScreen from './src/SplashScreen';
-import SermonsStackNavigator from './src/navigation/stack-navigators/SermonsStackNavigator';
 import VerseOfTheDay from './src/screens/VerseOfTheDay/VerseOfTheDay';
 import useAuth from './src/hooks/HandleAuth';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
 import EditNotes from './src/screens/notes/EditNotes';
 import ViewNote from './src/screens/notes/ViewNote';
-import DrawerNavigatorcss from './src/assets/css/DrawerNavigatorcss';
-import Icon from './src/ui/components/icon';
 import ChangePassword from './src/screens/auth/ChangePassword';
-import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 import ResetCode from './src/screens/auth/ResetCode';
 import NewPassword from './src/screens/auth/NewPassword';
+import SermonScreen from './src/screens/sermons/SermonScreen';
 
 function App() {
   const [reloadNotes, setReloadNotes] = useState(false);
-  const {getStoredUserData} = useAuth();
+  const { getStoredUserData } = useAuth();
   const [userId, setUserId] = useState();
   const [noteId, setNoteId] = useState(null);
 
@@ -62,39 +59,39 @@ function App() {
               <Stack.Screen
                 name="SplashScreen"
                 component={SplashScreen}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="LandingScreen"
                 component={LandingScreen}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="LoginScreen"
                 children={() => (
                   <LoginScreen setUserId={setUserId} userId={userId} />
                 )}
-                options={{title: 'Login'}}
+                options={{ title: 'Login' }}
               />
               <Stack.Screen
                 name="SignupScreen"
                 component={SignupScreen}
-                options={{title: 'Register'}}
+                options={{ title: 'Register' }}
               />
               <Stack.Screen
                 name="ForgotPassword"
                 component={ForgotPassword}
-                options={{title: 'Reset Password'}}
+                options={{ title: 'Reset Password' }}
               />
               <Stack.Screen
                 name="Resetpasswordcode"
                 component={ResetCode}
-                options={{title: 'Reset Code'}}
+                options={{ title: 'Reset Code' }}
               />
               <Stack.Screen
                 name="NewPassword"
                 component={NewPassword}
-                options={{title: 'New Password'}}
+                options={{ title: 'New Password' }}
               />
             </>
           ) : (
@@ -110,45 +107,33 @@ function App() {
                     setNoteId={setNoteId}
                   />
                 )}
-                options={{headerShown: false}}
+                options={{ headerShown: false, title: '' }}
               />
-              <Stack.Screen
-                name="HomeTabs"
-                children={() => (
-                  <BottomTabNavigator
-                    userId={userId}
-                    reloadNotes={reloadNotes}
-                    setReloadNotes={setReloadNotes}
-                    setNoteId={setNoteId}
-                  />
-                )}
-                options={{
-                  title: 'Home',
-                  headerRight: () => (
-                    <View style={DrawerNavigatorcss.headerRight}>
-                      <Icon name="bells" size={20} color="#fff" />
-                    </View>
-                  ),
-                }}
-              />
+              
               <Stack.Screen
                 name="ProfileScreen"
                 children={() => (
                   <ProfileScreen userId={userId} setUserId={setUserId} />
                 )}
-                options={{title: 'Profile'}}
+                options={{ title: 'Profile' }}
               />
               <Stack.Screen
                 name="SettingScreen"
                 component={SettingScreen}
-                options={{title: 'Settings'}}
+                options={{ title: 'Settings' }}
               />
               <Stack.Screen
                 name="NewNotes"
                 children={() => (
                   <NewNotes userId={userId} setReloadNotes={setReloadNotes} />
                 )}
-                options={{title: 'New Note'}}
+                options={{
+                  title: 'Notes',
+                  headerStyle: {
+                    backgroundColor: '#087E8B',
+                    height: 50,
+                  },
+                }}
               />
               <Stack.Screen
                 name="EditNotes"
@@ -165,39 +150,75 @@ function App() {
                 name="ViewNote"
                 children={() => <ViewNote noteId={noteId} />}
                 options={{
-                  title: 'Notes Read',
+                  title: 'Notes',
+                  headerStyle: {
+                    backgroundColor: '#087E8B',
+                    height: 50,
+                  },
                 }}
               />
 
               <Stack.Screen
                 name="DocumentViewer"
                 component={DocumentViewer}
-                options={{title: 'Documents'}}
+                options={{
+                  title: 'Documents',
+                  headerStyle: {
+                    backgroundColor: '#087E8B',
+                    height: 50,
+                  },
+                }}
               />
               <Stack.Screen
                 name="EventsScreen"
                 component={EventsScreen}
-                options={{title: 'Events'}}
+                options={{
+                  title: 'Events',
+                  headerStyle: {
+                    backgroundColor: '#087E8B',
+                    height: 50,
+                  },
+                }}
               />
               <Stack.Screen
                 name="AnnouncementView"
                 component={AnnouncementView}
-                options={{title: 'Announcement'}}
+                options={{
+                  title: 'Announcements',
+                  headerStyle: {
+                    backgroundColor: '#087E8B',
+                    height: 50,
+                  },
+                }}
               />
               <Stack.Screen
                 name="EventView"
                 component={EventView}
-                options={{title: 'Event'}}
+                options={{ title: 'Event',
+                  headerStyle: {
+                    backgroundColor: '#087E8B',
+                    height: 50,
+                  }, }}
               />
               <Stack.Screen
                 name="VideoPlayer"
                 component={VideoPlayer}
-                options={{title: 'Video'}}
+                options={{ 
+                  title: 'Sermon', 
+                  headerStyle: {
+                    backgroundColor: '#087E8B',
+                    height: 50,
+                  }, }}
               />
               <Stack.Screen
                 name="SavedSermonsScreen"
-                component={SermonsStackNavigator}
-                options={{title: 'Sermons'}}
+                component={SermonScreen}
+                options={{ 
+                  title: 'Sermons',
+                  headerStyle: {
+                    backgroundColor: '#087E8B',
+                    height: 50,
+                  }, }}
               />
               <Stack.Screen name="VerseOfDayScreen" component={VerseOfTheDay} />
               <Stack.Screen

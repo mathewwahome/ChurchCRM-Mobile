@@ -47,8 +47,7 @@ const CustomDrawerContent = ({...props}) => {
               />
             </View>
             <Text style={DrawerNavigatorcss.NameText}>
-              <Icon name="user" />
-              {userData.name}
+                Hi {userData.name}
             </Text>
             <Text style={DrawerNavigatorcss.EmailText}>{userData.email}</Text>
           </>
@@ -57,6 +56,7 @@ const CustomDrawerContent = ({...props}) => {
 
       {Object.entries(props.descriptors).map(([key, descriptor], index) => {
         const focused = index === props.state.index;
+
         return (
           <DrawerItem
             key={key}
@@ -146,7 +146,7 @@ const DrawerNavigator = ({
         />
       )}>
       <Drawer.Screen
-        name="HomeTabs"
+        name="HomeScreens"
         children={() => (
           <BottomTabNavigator
             userId={userId}
@@ -157,6 +157,7 @@ const DrawerNavigator = ({
         )}
         options={{
           title: 'Home',
+          headerTitle: '',
           headerRight: () => (
             <View style={DrawerNavigatorcss.headerRight}>
               <Icon name="bells" size={20} color="#fff" />
@@ -168,10 +169,10 @@ const DrawerNavigator = ({
         name="ProfileScreen"
         children={() => <ProfileScreen userId={userId} setUserId={setUserId} />}
         options={{
-          title: 'ProfileScreen',
+          title: 'Profile',
           labelStyle: DrawerNavigatorcss.drawerLabelWhite,
           headerTitle: () => (
-            <Text style={DrawerNavigatorcss.headerTitle}>ProfileScreen</Text>
+            <Text style={DrawerNavigatorcss.headerTitle}>Profile</Text>
           ),
         }}
       />
