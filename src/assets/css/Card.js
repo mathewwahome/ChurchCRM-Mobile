@@ -1,50 +1,76 @@
 import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   cardContainer: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
-    marginVertical: 5,
-    marginHorizontal: 10,
     marginBottom: 20,
-    height: 100,
+    height: 90,
     borderRadius: 10,
     backgroundColor: '#087E8B',
-    textAlignVertical: 'center',
+    padding: 10,
   },
-
+  notesCardText: {
+    alignItems: 'flex-start', 
+  },
   notesDateText: {
     color: '#ffffff',
-    position: 'absolute',
-    bottom: 35,
-    left: 10,
     fontSize: 12,
     fontWeight: 'bold',
+    paddingBottom: 1,
+  },
+  modalParent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  threeDotsIcon: {
+    marginLeft: 'auto',
+  },
+  notesModal: {
+    width: '40%',
+    height: 'auto',
+    backgroundColor: '#f7f7f7',
+    marginTop: 150,
+    position: 'absolute',
+    right: 0, // Adjust this value as needed to position it correctly
+    top: 0,
   },
   notesTopic: {
     color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
-    position: 'absolute',
-    bottom: 10,
-    left: 10,
   },
-  menuProvider: {
+  modalContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 5,
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#087E8B',    
+  },
+  iconText: {
+    color: '#086c75',
+    fontSize: 16,
+    fontWeight: '500',
+    paddingLeft: 25,
+  },
+  overlay: {
     flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  menuContainer: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
+  modalView: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: '50%',
+    maxHeight: '80%',
+    overflow: 'hidden',
   },
-  menuTrigger: {
-    padding: 10,
-  },
-  menuOptions: {
-    backgroundColor: '#ffffff',
-    borderRadius: 8,
-  },
+
 });
 
 export {styles};

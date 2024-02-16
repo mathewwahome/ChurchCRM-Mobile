@@ -23,7 +23,7 @@ export default function EventsScreen() {
   };
 
   return (
-    <ScrollView
+    <ScrollView horizontal={false}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
