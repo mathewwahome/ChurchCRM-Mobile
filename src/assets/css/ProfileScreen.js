@@ -74,15 +74,18 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomWidth: 0.5,
     backgroundColor: '#ffffff',
+    color: '#000000',
     borderRadius: 5,
     paddingLeft: 10,
   },
 
   placeholderStyle: {
     fontSize: 16,
+    color: '#000000',
   },
   selectedTextStyle: {
     fontSize: 16,
+    color: '#000000',
   },
   iconStyle: {
     width: 20,
@@ -91,6 +94,7 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+    color: '#000000',
   },
   login_text: {
     color: '#ffffff',

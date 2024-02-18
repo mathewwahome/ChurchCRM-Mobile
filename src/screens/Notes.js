@@ -203,39 +203,3 @@ export default function Notes({
     </View>
   );
 }
-
-{/* <MenuProvider style={card.menuProvider}>
-                      <Menu style={card.menuContainer}>
-                        <MenuTrigger style={card.menuTrigger}>
-                          <Icon name={'more-vert'} size={20} color="#ffffff" />
-                        </MenuTrigger>
-                        <MenuOptions style={card.menuOptions}>
-                          <MenuOption>
-                            <Pressable
-                              key={notes.id}
-                              onPress={() => viewNoteScreen(notes.id)}>
-                              <Icon name={'edit'} color="#000000" size={20} />
-                            </Pressable>
-                          </MenuOption>
-                          <MenuOption>
-                            <Pressable
-                              key={notes.id}
-                              onPress={() => shareNote(notes.note_topic)}>
-                              <Icon name={'share'} color="#000000" size={20} />
-                            </Pressable>
-                          </MenuOption>
-                          <MenuOption>
-                            <Pressable
-                              key={notes.id}
-                              onPress={() => deleteNote(notes.id)}>
-                              <Icon
-                                name={'delete-forever'}
-                                color="#000000"
-                                size={20}
-                              />
-                            </Pressable>
-                          </MenuOption>
-                        </MenuOptions>
-                      </Menu>
-                    </MenuProvider>
-*/}

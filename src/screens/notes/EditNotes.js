@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../../assets/css/styles';
@@ -96,11 +97,20 @@ export default function EditNotes({noteId, reloadNotes, setReloadNotes}) {
             ]}
             iconMap={{[actions.heading1]: handleHead}}
           />
-          <RichEditor
-            style={{backgroundColor: 'white', color: 'black'}}
-            ref={richText}
-            onChange={() => {}}
-          />
+
+          <Pressable
+            style={styles.inputfield}
+            onPress={() => {
+              richText.current.focusContentEditor();
+            }}>
+            <ScrollView>
+              <RichEditor
+                style={styles.textarea}
+                ref={richText}
+                onChange={() => {}}
+              />
+            </ScrollView>
+          </Pressable>
         </KeyboardAvoidingView>
         <View>
           <TouchableOpacity

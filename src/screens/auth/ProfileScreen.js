@@ -31,26 +31,29 @@ export default function ProfileScreen({userId, setUserId}) {
   const [data, setData] = useState([]);
   const appSnackbarRef = useRef();
   // dropdown selection
-
+  //
   useEffect(() => {
     if (userId) {
-      fetch(`${BASE_URL}/api/profile/${userId}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          setData(data);
-          // console.log('User Data:', data);
-        })
-        .catch(error => {
-          console.error('Error fetching user data:', error);
-        });
+      fetchData();
     }
   }, [userId]);
 
+  const fetchData = () => {
+    fetch(`${BASE_URL}/api/profile/${userId}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setData(data);
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+  };
+  //
   const handleSignOut = async () => {
     try {
       // Call handleLogout to sign the user out
@@ -93,6 +96,7 @@ export default function ProfileScreen({userId, setUserId}) {
         );
         console.log(response);
         if (response.status === 200) {
+          fetchData();
           toggleModal();
           appSnackbarRef.current.showSnackbar('Profile Update Successfully.');
         }
