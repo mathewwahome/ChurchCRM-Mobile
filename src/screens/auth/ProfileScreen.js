@@ -56,11 +56,8 @@ export default function ProfileScreen({userId, setUserId}) {
   //
   const handleSignOut = async () => {
     try {
-      // Call handleLogout to sign the user out
-      const test = await handleLogout();
-      console.log('signing out:');
-
-      setUserId(test.userId);
+      const logout = await handleLogout();
+      setUserId(logout.userId);
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -68,7 +65,6 @@ export default function ProfileScreen({userId, setUserId}) {
   // Update details
 
   const handleUpdate = async () => {
-    console.log(data);
     const formData = new FormData();
     formData.append('name', data.name);
     formData.append('email', data.email);
@@ -84,27 +80,28 @@ export default function ProfileScreen({userId, setUserId}) {
         name: `profile_photo.${fileType}`,
         type: `image/${fileType}`,
       });
-      try {
-        const response = await axios.post(
-          `${BASE_URL}/api/updateuser/${userId}`,
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
+    }
+
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/updateuser/${userId}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
           },
-        );
-        console.log(response);
-        if (response.status === 200) {
-          fetchData();
-          toggleModal();
-          appSnackbarRef.current.showSnackbar('Profile Update Successfully.');
-        }
-      } catch (error) {
-        appSnackbarRef.current.showSnackbar(
-          'Failed to update profile. Please try again.',
-        );
+        },
+      );
+      console.log(response);
+      if (response.status === 200) {
+        fetchData();
+        toggleModal();
+        appSnackbarRef.current.showSnackbar('Profile Update Successfully.');
       }
+    } catch (error) {
+      appSnackbarRef.current.showSnackbar(
+        'Failed to update profile. Please try again.',
+      );
     }
   };
 
@@ -148,21 +145,22 @@ export default function ProfileScreen({userId, setUserId}) {
 
   //dropdown
   const membership = [
-    {label: 'New Member', value: 'New Member'},
-    {label: 'Non Member', value: 'Non Member'},
-    {label: 'Member', value: 'Member'},
+    {label: 'New Member', value: 'New Member', style: {color: 'black'}},
+    {label: 'Non Member', value: 'Non Member', style: {color: 'black'}},
+    {label: 'Member', value: 'Member', style: {color: 'black'}},
   ];
   const [value, setValue] = useState(null);
   const ChangePassword = () => {
     navigation.navigate('ChangePassword');
   };
   const AccountDeletion = async () => {
-    console.log(userId);
-
     try {
-      let responce = await fetch.post(`${BASE_URL}/api/deleteuser`, {
+      let response = await fetch.post(`${BASE_URL}/api/deleteuser`, {
         userId: userId,
       });
+      if (response.status === 200) {
+        setUserId(null);
+      }
     } catch (error) {}
   };
 
