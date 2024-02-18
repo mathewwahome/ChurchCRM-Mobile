@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   notesModal: {
     width: '40%',
     height: '20%',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   overlay: {
     flex: 1,
@@ -40,9 +40,13 @@ const styles = StyleSheet.create({
   textarea: {
     flex: 1,
     marginLeft: 10,
-    height: 100,
+    color: '#000000',
+    minHeight: 200,
   },
-
+  inputfield: {
+    minHeight: 200,
+    backgroundColor: '#fff',
+  },
   // Notes Page Styling
   notesTitle: {
     fontSize: 18,
@@ -57,13 +61,13 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     paddingBottom: 20,
   },
- 
+
   notesPageTitle: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignSelf: 'flex-end',
-    padding: 10
+    padding: 10,
   },
 
   loadingText: {
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 3,
     borderTopColor: '#E53436',
   },
-  
+
   notesInput: {
     flex: 1,
     height: 40,
