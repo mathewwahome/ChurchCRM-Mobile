@@ -25,10 +25,8 @@ const CustomDrawerContent = ({...props}) => {
 
   const handleSignOut = async () => {
     try {
-      const test = await handleLogout();
-      console.log('signing out:');
-
-      setUserId(test.userId);
+      const logout = await handleLogout();
+      setUserId(logout.userId);
     } catch (error) {
       console.error('Error signing out:', error);
     }

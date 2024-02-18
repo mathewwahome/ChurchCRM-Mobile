@@ -56,11 +56,8 @@ export default function ProfileScreen({userId, setUserId}) {
   //
   const handleSignOut = async () => {
     try {
-      // Call handleLogout to sign the user out
-      const test = await handleLogout();
-      console.log('signing out:');
-
-      setUserId(test.userId);
+      const logout = await handleLogout();
+      setUserId(logout.userId);
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -162,6 +159,7 @@ export default function ProfileScreen({userId, setUserId}) {
         userId: userId,
       });
       if (response.status === 200) {
+        setUserId(null);
       }
     } catch (error) {}
   };
